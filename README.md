@@ -8,8 +8,7 @@
 KPCJumpBarControl
 ==============
 
- Borrowed initially from the excellent [LITabControl](https://github.com/monyschuk/LITabControl).
-
+A jump bar similar to Xcode's allowing to easily display and naivigate accross a tree of objects.
 
 
 Installation
@@ -35,7 +34,7 @@ Customization
 Highlighting
 ------------
 
-The tabs control support the possibility to be highlighted. This is useful when you have multiple subviews, each with 
+The jump bar control support the possibility to be highlighted. This is useful when you have multiple subviews, each with 
 jump bars, and you need to indicate to the user which subview is actually 'active'. (In the screenshot above, the upper 
 bar has a darker background than the lower ones).
 
