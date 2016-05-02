@@ -32,21 +32,18 @@
 
 - (NSIndexPath *)KPC_subIndexPathFromPosition:(NSUInteger)position
 {
-    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length - position)];
+    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length - position - 1)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathToPosition:(NSUInteger)position
 {
-    if (position == 0) {
-        return [NSIndexPath indexPathWithIndex:[self indexAtPosition:0]];
-    }
     return [self KPC_subIndexPathWithRange:NSMakeRange(0, position)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathWithRange:(NSRange)range
 {
     NSIndexPath *path = [[NSIndexPath alloc] init];
-    for (NSUInteger position = range.location; position < (range.location + range.length) ; position ++) {
+    for (NSUInteger position = range.location; position <= (range.location + range.length) ; position ++) {
         path = [path indexPathByAddingIndex:[self indexAtPosition:position]];
     }
     return path;

@@ -204,15 +204,12 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     self.hasCompressedSegments = NO;
     KPCJumpBarSegmentControl *lastSegmentControl = nil;
     NSMenu *currentMenu = self.menu;
-
-    NSIndexPath *atThisPointIndexPath = [[NSIndexPath alloc] init];
     CGFloat baseX = 0;
     
     for (NSUInteger position = 0; position < self.selectedIndexPath.length; position ++) {
         NSUInteger selectedIndex = [self.selectedIndexPath indexAtPosition:position];
-        atThisPointIndexPath = [atThisPointIndexPath indexPathByAddingIndex:selectedIndex];
         
-        KPCJumpBarSegmentControl *lastSegmentControl = [self segmentControlAtLevel:atThisPointIndexPath.length-1];
+        KPCJumpBarSegmentControl *lastSegmentControl = [self segmentControlAtLevel:position];
         lastSegmentControl.isLastSegment = (position == (self.selectedIndexPath.length - 1));
         lastSegmentControl.indexInLevel = selectedIndex;
         [lastSegmentControl select];
