@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F3C27271CD72FFD00465AF7 /* KPCIndexPathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F3C27261CD72FFD00465AF7 /* KPCIndexPathTests.m */; };
 		9F54FD691CD5E9F200DA73C1 /* KPCJumpBarControl.h in Headers */ = {isa = PBXBuildFile; fileRef = 9F54FD681CD5E9F200DA73C1 /* KPCJumpBarControl.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9F54FD701CD5E9F200DA73C1 /* KPCJumpBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */; };
 		9F54FD751CD5E9F200DA73C1 /* KPCJumpBarControlTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F54FD741CD5E9F200DA73C1 /* KPCJumpBarControlTests.m */; };
@@ -64,6 +65,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F3C27261CD72FFD00465AF7 /* KPCIndexPathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPCIndexPathTests.m; sourceTree = "<group>"; };
 		9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPCJumpBarControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F54FD681CD5E9F200DA73C1 /* KPCJumpBarControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPCJumpBarControl.h; sourceTree = "<group>"; };
 		9F54FD6A1CD5E9F200DA73C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = KPCJumpBarControl/Info.plist; sourceTree = "<group>"; };
@@ -128,9 +130,9 @@
 			isa = PBXGroup;
 			children = (
 				9F54FD671CD5E9F200DA73C1 /* KPCJumpBarControl */,
-				9F54FD7F1CD5EA2100DA73C1 /* Supporting files */,
 				9F54FD731CD5E9F200DA73C1 /* KPCJumpBarControlTests */,
 				9F54FD8C1CD5EFAE00DA73C1 /* KPCJumpBarControlDemo */,
+				9F54FD7F1CD5EA2100DA73C1 /* Supporting files */,
 				9F54FD661CD5E9F200DA73C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -169,6 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				9F54FD741CD5E9F200DA73C1 /* KPCJumpBarControlTests.m */,
+				9F3C27261CD72FFD00465AF7 /* KPCIndexPathTests.m */,
 				9F54FD761CD5E9F200DA73C1 /* Info.plist */,
 			);
 			path = KPCJumpBarControlTests;
@@ -369,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F3C27271CD72FFD00465AF7 /* KPCIndexPathTests.m in Sources */,
 				9F54FD751CD5E9F200DA73C1 /* KPCJumpBarControlTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,6 +602,7 @@
 				9F54FD7B1CD5E9F200DA73C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F54FD7C1CD5E9F200DA73C1 /* Build configuration list for PBXNativeTarget "KPCJumpBarControlTests" */ = {
 			isa = XCConfigurationList;
@@ -606,6 +611,7 @@
 				9F54FD7E1CD5E9F200DA73C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F54FD9C1CD5EFAE00DA73C1 /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemo" */ = {
 			isa = XCConfigurationList;
@@ -614,6 +620,7 @@
 				9F54FD9E1CD5EFAE00DA73C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
