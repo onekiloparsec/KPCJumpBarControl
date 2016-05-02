@@ -98,11 +98,7 @@ const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag = -1;
     if (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) {
         NSImage *separatorImage = [NSImage imageNamed:@"KPCJumpBarAccessorySeparator"];
         NSPoint p = NSMakePoint(baseLeft + 1, self.frame.size.height / 2.0 - separatorImage.size.height / 2.0);
-        [separatorImage drawAtPoint:p
-                           fromRect:NSZeroRect 
-						  operation:NSCompositeSourceOver 
-						   fraction:fraction];  
-		
+        [separatorImage drawAtPoint:p fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
         baseLeft += separatorImage.size.width + KPCJumpBarItemControlMargin;
     }
     else {
@@ -111,11 +107,7 @@ const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag = -1;
     
     if (self.representedObject.icon != nil) {
         NSPoint p = NSMakePoint(baseLeft, floorf(self.frame.size.height / 2.0 - self.representedObject.icon.size.height / 2.0));
-        [self.representedObject.icon drawAtPoint:p
-                                        fromRect:NSZeroRect
-                                       operation:NSCompositeSourceOver
-                                        fraction:fraction];
-		
+        [self.representedObject.icon drawAtPoint:p fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
         baseLeft += ceil(self.representedObject.icon.size.width) + KPCJumpBarItemControlMargin;
     }
     
@@ -126,16 +118,16 @@ const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag = -1;
         if (width > 0) {
 			CGRect r = CGRectMake(baseLeft, 1.0, width, 20.0);
             [self.representedObject.title drawInRect:r withAttributes:attributes];
-            baseLeft += width + KPCJumpBarItemControlMargin;  
+            baseLeft += width + KPCJumpBarItemControlMargin;
         }
     }
     
     if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
-        NSImage *separatorImage = [NSImage imageNamed:@"KPCJumpBarSeparator"];
-        [separatorImage drawAtPoint:NSMakePoint(baseLeft, self.frame.size.height / 2.0 - separatorImage.size.height / 2.0)
-                           fromRect:NSZeroRect 
-						  operation:NSCompositeSourceOver 
-						   fraction:fraction];  
+        NSBundle *bundle = [NSBundle bundleForClass:self.class];
+        NSImage *separatorImage = [bundle imageForResource:@"KPCJumpBarSeparator"];
+        NSPoint o = NSMakePoint(baseLeft-3, 4.0);
+        NSRect r = NSMakeRect(o.x, o.y, 11, 16);
+        [separatorImage drawInRect:r fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:fraction];
     }
 }
 

@@ -128,7 +128,6 @@
 			isa = PBXGroup;
 			children = (
 				9F54FD671CD5E9F200DA73C1 /* KPCJumpBarControl */,
-				9F54FDA41CD5F19A00DA73C1 /* Resources */,
 				9F54FD7F1CD5EA2100DA73C1 /* Supporting files */,
 				9F54FD731CD5E9F200DA73C1 /* KPCJumpBarControlTests */,
 				9F54FD8C1CD5EFAE00DA73C1 /* KPCJumpBarControlDemo */,
@@ -208,13 +207,6 @@
 				9F54FD911CD5EFAE00DA73C1 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9F54FDA41CD5F19A00DA73C1 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
