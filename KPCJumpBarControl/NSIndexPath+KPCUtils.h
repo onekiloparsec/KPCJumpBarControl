@@ -13,14 +13,14 @@
 - (NSInteger)KPC_lastIndex;
 
 - (NSIndexPath *)KPC_indexPathByAddingIndexPath:(NSIndexPath *)indexPath;
-- (NSIndexPath *)KPC_indexPathByAddingIndexInFront:(NSUInteger)index;
+- (NSIndexPath *)KPC_indexPathByAddingIndexInFront:(NSInteger)index;
 
 - (NSIndexPath *)KPC_subIndexPathFromPosition:(NSUInteger)position;
 - (NSIndexPath *)KPC_subIndexPathToPosition:(NSUInteger)position;
 - (NSIndexPath *)KPC_subIndexPathWithRange:(NSRange)range;
 
-- (NSIndexPath *)KPC_indexPathByReplacingIndexAtPosition:(NSUInteger)position withIndex:(NSUInteger)index;
-- (NSIndexPath *)KPC_indexPathByReplacingLastIndexWithIndex:(NSUInteger)index;
+- (NSIndexPath *)KPC_indexPathByReplacingIndexAtPosition:(NSUInteger)position withIndex:(NSInteger)index;
+- (NSIndexPath *)KPC_indexPathByReplacingLastIndexWithIndex:(NSInteger)index;
 - (NSIndexPath *)KPC_indexPathByIncrementingLastIndex;
 
 - (NSIndexPath *)KPC_indexPathByFillingWithIndexPath:(NSIndexPath *)complementIndexPath;

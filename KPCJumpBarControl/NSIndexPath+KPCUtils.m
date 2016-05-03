@@ -24,7 +24,7 @@
     return path;
 }
 
-- (NSIndexPath *)KPC_indexPathByAddingIndexInFront:(NSUInteger)index
+- (NSIndexPath *)KPC_indexPathByAddingIndexInFront:(NSInteger)index
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:index];
     return [indexPath KPC_indexPathByAddingIndexPath:self];
@@ -32,7 +32,7 @@
 
 - (NSIndexPath *)KPC_subIndexPathFromPosition:(NSUInteger)position
 {
-    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length - position - 1)];
+    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length-1 - position)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathToPosition:(NSUInteger)position
@@ -42,14 +42,20 @@
 
 - (NSIndexPath *)KPC_subIndexPathWithRange:(NSRange)range
 {
+    if (range.location + range.length == self.length || range.location >= self.length) {
+        return [[NSIndexPath alloc] init];
+    }
+    
     NSIndexPath *path = [[NSIndexPath alloc] init];
-    for (NSUInteger position = range.location; position <= (range.location + range.length) ; position ++) {
+    NSUInteger end = MIN(range.location + range.length, self.length-1);
+    for (NSUInteger position = range.location; position <= end ; position ++) {
         path = [path indexPathByAddingIndex:[self indexAtPosition:position]];
     }
+    
     return path;
 }
 
-- (NSIndexPath *)KPC_indexPathByReplacingIndexAtPosition:(NSUInteger)position withIndex:(NSUInteger)index
+- (NSIndexPath *)KPC_indexPathByReplacingIndexAtPosition:(NSUInteger)position withIndex:(NSInteger)index
 {
     if (position == 0) {
         NSIndexPath *trailIndexPath = [self KPC_subIndexPathFromPosition:position+1];
@@ -66,7 +72,7 @@
     }
 }
 
-- (NSIndexPath *)KPC_indexPathByReplacingLastIndexWithIndex:(NSUInteger)index
+- (NSIndexPath *)KPC_indexPathByReplacingLastIndexWithIndex:(NSInteger)index
 {
     return [self KPC_indexPathByReplacingIndexAtPosition:[self length]-1 withIndex:index];
 }
