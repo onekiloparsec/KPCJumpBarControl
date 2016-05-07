@@ -14,5 +14,9 @@
 
 @property(nonatomic, weak) IBOutlet KPCJumpBarControl *jumpBar;
 
+@property(nonatomic, weak) IBOutlet NSTextField *selectedItemTitle;
+@property(nonatomic, weak) IBOutlet NSImageView *selectedItemIcon;
+@property(nonatomic, weak) IBOutlet NSTextField *selectedItemIndexPath;
+
 @end
 

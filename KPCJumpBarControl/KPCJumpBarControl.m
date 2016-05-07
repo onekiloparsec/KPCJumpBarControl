@@ -18,8 +18,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
 
 @interface KPCJumpBarControl () <KPCJumpBarSegmentControlDelegate>
 @property(nonatomic, strong) NSMenu *menu;
-@property(nonatomic, weak) id mainTarget;
-@property(nonatomic, assign) SEL mainAction;
 
 @property(nonatomic, strong) NSIndexPath *selectedIndexPath;
 
@@ -66,13 +64,67 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     self.changeFontAndImageInMenu = YES;
 }
 
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+    [super viewWillMoveToWindow:newWindow];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowDidResignKeyNotification
+                                                  object:self.window];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:NSWindowDidBecomeKeyNotification
+                                                  object:self.window];
+}
+
+- (void)viewDidMoveToWindow
+{
+    [super viewDidMoveToWindow];
+    
+    if (self.window != nil) {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(setNeedsDisplay)
+                                                     name:NSWindowDidResignKeyNotification
+                                                   object:self.window];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(setNeedsDisplay)
+                                                     name:NSWindowDidBecomeKeyNotification
+                                                   object:self.window];
+    }
+}
+
 #pragma mark - Public Methods -
 
-- (void)useItemsTree:(NSArray <id<KPCJumpBarItem>> * _Nonnull)itemsTree target:(id)target action:(SEL)action
+- (void)useItemsTree:(NSArray <id<KPCJumpBarItem>> * _Nonnull)itemsTree
 {
-    self.mainTarget = target;
-    self.mainAction = action;
-    self.menu = [NSMenu KPC_menuWithSegmentsTree:itemsTree target:self action:@selector(performItemAction:)];
+    self.menu = [NSMenu KPC_menuWithSegmentsTree:itemsTree target:self action:@selector(selectJumpBarControlItem:)];
+    
+    if (self.menu != nil && [[self.menu itemArray] count] > 0) {
+        self.selectedIndexPath = [NSIndexPath indexPathWithIndex:0];
+    }
+    if (self.changeFontAndImageInMenu) {
+        [self changeFontAndImageInMenu:self.menu];
+    }
+
+    [self layoutSegments];
+}
+
+- (void)selectJumpBarControlItem:(NSMenuItem *)sender
+{
+    NSIndexPath *nextSelectedIndexPath = [sender KPC_indexPath];
+    id<KPCJumpBarItem> nextSelectedItem = [sender representedObject];
+    
+    if ([self.delegate respondsToSelector:@selector(jumpBarControl:willSelectItem:atIndexPath:)]) {
+        [self.delegate jumpBarControl:self willSelectItem:nextSelectedItem atIndexPath:nextSelectedIndexPath];
+    }
+
+    self.selectedIndexPath = nextSelectedIndexPath;
+    [self layoutSegments];
+
+    if ([self.delegate respondsToSelector:@selector(jumpBarControl:didSelectItem:atIndexPath:)]) {
+        [self.delegate jumpBarControl:self didSelectItem:nextSelectedItem atIndexPath:nextSelectedIndexPath];
+    }
 }
 
 - (id<KPCJumpBarItem> _Nullable)itemAtIndexPath:(NSIndexPath * _Nonnull)indexPath
@@ -85,27 +137,31 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     return [self itemAtIndexPath:self.selectedIndexPath];
 }
 
-- (void)performItemAction:(NSMenuItem *)sender
+- (void)select
 {
-    self.selectedIndexPath = [sender KPC_indexPath];
-    [self layoutSegments];
-    
-    if (self.mainTarget && self.mainAction) {
-        if ([self.mainTarget respondsToSelector:self.mainAction]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self.mainTarget performSelector:self.mainAction withObject:sender.representedObject];
-#pragma clang diagnostic pop
+    self.isSelected = YES;
+    NSArray *subviews = [self subviews];
+    [subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[KPCJumpBarSegmentControl class]]) {
+            [(KPCJumpBarSegmentControl *)obj select];
         }
-        else {
-            [NSException raise:NSInvalidArgumentException
-                        format:@"Unrecognized selector '%@' send to instance %p of class '%@'",
-             NSStringFromSelector(self.mainAction), self.mainTarget, NSStringFromClass([self.mainTarget class])];
-        }
-    }
+    }];
+    [self setNeedsDisplay];
 }
 
-#pragma mark - Overrides -
+- (void)deselect
+{
+    self.isSelected = NO;
+    NSArray *subviews = [self subviews];
+    [subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isKindOfClass:[KPCJumpBarSegmentControl class]]) {
+            [(KPCJumpBarSegmentControl *)obj deselect];
+        }
+    }];
+    [self setNeedsDisplay];
+}
+
+#pragma mark - Overrides
 
 - (BOOL)isFlipped
 {
@@ -115,24 +171,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
 - (NSMenu *)menuForEvent:(NSEvent *)event
 {
     return nil;
-}
-
-- (void)setMenu:(NSMenu *)newMenu
-{
-    [super setMenu:newMenu];
-    
-    if (self.menu != nil && [[self.menu itemArray] count] > 0) {
-        self.selectedIndexPath = [NSIndexPath indexPathWithIndex:0];
-    }
-    if (self.changeFontAndImageInMenu) {
-        [self changeFontAndImageInMenu:self.menu];
-    }
-    
-    [self layoutSegments];
-    
-//        if ([self.delegate respondsToSelector:@selector(jumpBar:didSelectItemAtIndexPath:)]) {
-//            [self.delegate jumpBar:self didSelectItemAtIndexPath:self.selectedIndexPath];
-//        }
 }
 
 - (void)setEnabled:(BOOL)flag
@@ -173,30 +211,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
             [self layoutSegments];
         }
     }
-}
-
-- (void)select
-{
-    self.isSelected = YES;
-    NSArray *subviews = [self subviews];
-    [subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[KPCJumpBarSegmentControl class]]) {
-            [(KPCJumpBarSegmentControl *)obj select];
-        }
-    }];
-    [self setNeedsDisplay];
-}
-
-- (void)deselect
-{
-    self.isSelected = NO;
-    NSArray *subviews = [self subviews];
-    [subviews enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj isKindOfClass:[KPCJumpBarSegmentControl class]]) {
-            [(KPCJumpBarSegmentControl *)obj deselect];
-        }
-    }];
-    [self setNeedsDisplay];
 }
 
 - (void)layoutSegments
@@ -266,16 +280,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     }
 }
 
-- (void)removeUnusedLabels
-{
-    NSView *viewToRemove = nil;
-    NSUInteger position = self.selectedIndexPath.length;
-    while ((viewToRemove = [self viewWithTag:position])) {
-        [viewToRemove removeFromSuperview];
-        position ++;
-    }
-}
-
 #pragma mark - Drawing
 
 - (void)drawRect:(NSRect)dirtyRect
@@ -304,35 +308,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     NSRectFill(dirtyRect);
 }
 
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow
-{
-    [super viewWillMoveToWindow:newWindow];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSWindowDidResignKeyNotification
-                                                  object:self.window];
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:NSWindowDidBecomeKeyNotification
-                                                  object:self.window];
-}
-
-- (void)viewDidMoveToWindow
-{
-    [super viewDidMoveToWindow];
-    
-    if (self.window != nil) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(setNeedsDisplay)
-                                                     name:NSWindowDidResignKeyNotification
-                                                   object:self.window];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(setNeedsDisplay)
-                                                     name:NSWindowDidBecomeKeyNotification
-                                                   object:self.window];
-    }
-}
 
 #pragma mark - Helper
 
@@ -417,48 +392,36 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     [self layoutSegments];
 }
 
-- (void)setSubmenu:(NSMenu *)subMenu atIndexPath:(NSIndexPath *)indexPath
-{
-    NSMenuItem *item = [self.menu KPC_menuItemAtIndexPath:indexPath];
-    [item setSubmenu:subMenu];
-}
+#pragma mark - KPCJumpBarSegmentControlDelegate
 
-- (void)setSelectedMenuItem:(NSMenuItem *)selectedMenuItem
+- (void)jumpBarSegmentControlDidReceiveMouseDown:(KPCJumpBarSegmentControl *)segmentControl
 {
-    NSIndexPath* indexPath = [NSIndexPath indexPathWithIndex:[selectedMenuItem.menu indexOfItem:selectedMenuItem]];
-    while (selectedMenuItem.parentItem != nil) {
-        indexPath = [indexPath KPC_indexPathByAddingIndexInFront:[selectedMenuItem.menu indexOfItem:selectedMenuItem]];
-        selectedMenuItem = selectedMenuItem.parentItem;
+    NSIndexPath *subIndexPath = [self.selectedIndexPath KPC_subIndexPathToPosition:segmentControl.tag+1]; // To be inclusing, one must add 1
+    NSMenu *clickedMenu = [[self.menu KPC_menuItemAtIndexPath:subIndexPath] menu];
+    NSArray *items = [[clickedMenu itemArray] valueForKey:@"representedObject"];
+    
+    if ([self.delegate respondsToSelector:@selector(jumpBarControl:willOpenMenuAtIndexPath:withItems:)]) {
+        [self.delegate jumpBarControl:self willOpenMenuAtIndexPath:subIndexPath withItems:items];
     }
-    self.selectedIndexPath = indexPath;
-}
-
-#pragma mark - KPCJumpBarItemControlDelegate
-
-- (NSMenu *)menuToPresentWhenClickedForJumpBarLabel:(KPCJumpBarSegmentControl *)label
-{
-    NSIndexPath *subIndexPath = [self.selectedIndexPath KPC_subIndexPathToPosition:label.tag];
-    NSMenu *activeMenu = [[self.menu KPC_menuItemAtIndexPath:subIndexPath] menu];
-    if ([self.delegate respondsToSelector:@selector(jumpBarControl:willOpenMenuAtIndexPath:)]) {
-        [self.delegate jumpBarControl:self willOpenMenuAtIndexPath:subIndexPath];
+    
+    // Avoid to call menuWillOpen: as it will duplicate with popUpMenuPositioningItem:...
+    id<NSMenuDelegate> menuDelegate = clickedMenu.delegate;
+    clickedMenu.delegate = nil;
+    
+    CGFloat xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag ? - 9 : - 16);
+    [clickedMenu popUpMenuPositioningItem:[clickedMenu itemAtIndex:segmentControl.indexInLevel]
+                               atLocation:NSMakePoint(xPoint , segmentControl.frame.size.height - 4)
+                                   inView:segmentControl];
+    
+    clickedMenu.delegate = menuDelegate;
+    
+    items = [[clickedMenu itemArray] valueForKey:@"representedObject"]; // Better to grab them again, as it may have change a bit inside.
+    
+    if ([self.delegate respondsToSelector:@selector(jumpBarControl:didOpenMenuAtIndexPath:withItems:)]) {
+        [self.delegate jumpBarControl:self didOpenMenuAtIndexPath:subIndexPath withItems:items];
     }
-    return activeMenu;
-}
-
-- (void)jumpBarLabel:(KPCJumpBarSegmentControl *)label didReceivedClickOnItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSIndexPath *subIndexPath = [self.selectedIndexPath KPC_subIndexPathToPosition:label.tag - 1];
-    self.selectedIndexPath = [subIndexPath KPC_indexPathByAddingIndexPath:indexPath];
 }
 
 @end
 
 
-NSRect NSRectInsetWithEdgeInsets(NSRect inRect, NSEdgeInsets insets)
-{
-    inRect.size.height -= (insets.top + insets.bottom);
-    inRect.size.width -= (insets.left + insets.right);
-    inRect.origin.x += insets.left;
-    inRect.origin.y += insets.top;
-    return inRect;
-}

@@ -9,11 +9,15 @@
 #import <Cocoa/Cocoa.h>
 
 @class KPCJumpBarControl;
+@protocol KPCJumpBarItem;
 
 @protocol KPCJumpBarControlDelegate <NSControlTextEditingDelegate>
 
 @optional
-- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar willOpenMenuAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
-- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar didSelectItemAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar willOpenMenuAtIndexPath:(NSIndexPath * _Nonnull)indexPath withItems:(NSArray <id<KPCJumpBarItem>> * _Nonnull)items;
+- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar didOpenMenuAtIndexPath:(NSIndexPath * _Nonnull)indexPath withItems:(NSArray <id<KPCJumpBarItem>> * _Nonnull)items;
+
+- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar willSelectItem:(id<KPCJumpBarItem> _Nonnull)item atIndexPath:(NSIndexPath * _Nonnull)indexPath;
+- (void)jumpBarControl:(KPCJumpBarControl * _Nonnull)jumpBar didSelectItem:(id<KPCJumpBarItem> _Nonnull)item atIndexPath:(NSIndexPath * _Nonnull)indexPath;
 
 @end

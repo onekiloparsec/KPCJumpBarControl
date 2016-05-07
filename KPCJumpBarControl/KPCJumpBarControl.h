@@ -24,7 +24,7 @@ FOUNDATION_EXPORT const unsigned char KPCJumpBarControlVersionString[];
 
 @property(nullable, nonatomic, assign) IBOutlet id<KPCJumpBarControlDelegate> delegate;
 
-- (void)useItemsTree:(NSArray <id<KPCJumpBarItem>> * _Nonnull)itemsTree target:(id _Nullable)target action:(SEL _Nullable)action;
+- (void)useItemsTree:(NSArray <id<KPCJumpBarItem>> * _Nonnull)itemsTree;
 
 - (id<KPCJumpBarItem> _Nullable)itemAtIndexPath:(NSIndexPath * _Nonnull)indexPath;
 - (NSIndexPath * _Nullable)selectedIndexPath;

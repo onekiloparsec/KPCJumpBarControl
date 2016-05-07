@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -679,15 +679,65 @@
                                     <constraint firstAttribute="height" constant="24" id="ffe-oK-WN5"/>
                                 </constraints>
                             </customView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VZd-no-Dsi">
+                                <rect key="frame" x="194" y="127" width="92" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item Selected" id="Dag-kD-9py">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eC2-7P-AdH">
+                                <rect key="frame" x="222" y="102" width="37" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="6lR-OE-2rc"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="33" id="NzV-sR-s2P"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="zsK-Ww-LTz">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tpv-Cb-Elj">
+                                <rect key="frame" x="200" y="102" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="16" id="XHb-Fb-mCC"/>
+                                    <constraint firstAttribute="height" constant="16" id="lBn-Xy-dZQ"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vWv-7N-i4F"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mRf-FC-igX">
+                                <rect key="frame" x="194" y="77" width="92" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="sXh-2k-L3n"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item Selected" id="Nrl-Z9-CzS">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="eC2-7P-AdH" firstAttribute="leading" secondItem="tpv-Cb-Elj" secondAttribute="trailing" constant="8" id="Frc-bK-ncg"/>
                             <constraint firstItem="ZXb-2K-9xW" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="H8w-GN-jzN"/>
+                            <constraint firstItem="eC2-7P-AdH" firstAttribute="top" secondItem="VZd-no-Dsi" secondAttribute="bottom" constant="8" id="Jp0-zC-XHQ"/>
+                            <constraint firstItem="VZd-no-Dsi" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="JuI-u3-fRe"/>
+                            <constraint firstItem="VZd-no-Dsi" firstAttribute="centerY" secondItem="m2S-Jp-Qdl" secondAttribute="centerY" id="LhJ-c2-sxQ"/>
                             <constraint firstAttribute="trailing" secondItem="ZXb-2K-9xW" secondAttribute="trailing" id="MQZ-z2-IYJ"/>
+                            <constraint firstItem="mRf-FC-igX" firstAttribute="centerX" secondItem="m2S-Jp-Qdl" secondAttribute="centerX" id="O7w-Yd-vKb"/>
                             <constraint firstItem="ZXb-2K-9xW" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="XdF-R9-FfC"/>
+                            <constraint firstItem="mRf-FC-igX" firstAttribute="top" secondItem="tpv-Cb-Elj" secondAttribute="bottom" constant="8" id="gKX-b5-DGH"/>
+                            <constraint firstItem="tpv-Cb-Elj" firstAttribute="centerY" secondItem="eC2-7P-AdH" secondAttribute="centerY" id="pNn-SR-4dd"/>
+                            <constraint firstItem="eC2-7P-AdH" firstAttribute="centerX" secondItem="VZd-no-Dsi" secondAttribute="centerX" id="rlF-Ub-neI"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="jumpBar" destination="ZXb-2K-9xW" id="wsS-Qd-l48"/>
+                        <outlet property="selectedItemIcon" destination="tpv-Cb-Elj" id="v8j-dB-sdg"/>
+                        <outlet property="selectedItemIndexPath" destination="mRf-FC-igX" id="W5k-fc-g4D"/>
+                        <outlet property="selectedItemTitle" destination="eC2-7P-AdH" id="EuL-go-Kd1"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
