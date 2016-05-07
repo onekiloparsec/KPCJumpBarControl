@@ -361,35 +361,32 @@ const NSInteger KPCJumpBarControlTag = -9999999;
     }
 }
 
-- (void)renameComponentWithText:(NSString *)text atIndexPath:(NSIndexPath *)indexPath
-{
-//    KPCJumpBarItemControl *label = [self viewWithTag:indexPath.length];
-//    label.representedObject.title = text;
-    
-    NSMenuItem *componentItem = [self.menu KPC_menuItemAtIndexPath:indexPath];
-    NSMenu *componentMenu = componentItem.menu;
-    NSInteger index = [componentMenu indexOfItem:componentItem];
-    
-    NSMenuItem *newItem = [[NSMenuItem alloc] initWithTitle:text
-                                                     action:componentItem.action
-                                              keyEquivalent:componentItem.keyEquivalent];
-    
-    [newItem setEnabled:[componentItem isEnabled]];
-    [newItem setIndentationLevel:[componentItem indentationLevel]];
-    [newItem setImage:[componentItem image]];
-    [newItem setTarget:[componentItem target]];
-    [newItem setTag:[componentItem tag]];
-    [newItem setState:[componentItem state]];
-    [newItem setSubmenu:[componentItem submenu]];
-    [newItem setToolTip:[componentItem toolTip]];
-    [newItem setRepresentedObject:[componentItem representedObject]];
-    
-    [componentMenu setTitle:text];
-    [componentMenu insertItem:newItem atIndex:index];
-    [componentMenu removeItemAtIndex:index+1];
-    
-    [self layoutSegments];
-}
+//- (void)renameComponentWithText:(NSString *)text atIndexPath:(NSIndexPath *)indexPath
+//{
+//    NSMenuItem *componentItem = [self.menu KPC_menuItemAtIndexPath:indexPath];
+//    NSMenu *componentMenu = componentItem.menu;
+//    NSInteger index = [componentMenu indexOfItem:componentItem];
+//    
+//    NSMenuItem *newItem = [[NSMenuItem alloc] initWithTitle:text
+//                                                     action:componentItem.action
+//                                              keyEquivalent:componentItem.keyEquivalent];
+//    
+//    [newItem setEnabled:[componentItem isEnabled]];
+//    [newItem setIndentationLevel:[componentItem indentationLevel]];
+//    [newItem setImage:[componentItem image]];
+//    [newItem setTarget:[componentItem target]];
+//    [newItem setTag:[componentItem tag]];
+//    [newItem setState:[componentItem state]];
+//    [newItem setSubmenu:[componentItem submenu]];
+//    [newItem setToolTip:[componentItem toolTip]];
+//    [newItem setRepresentedObject:[componentItem representedObject]];
+//    
+//    [componentMenu setTitle:text];
+//    [componentMenu insertItem:newItem atIndex:index];
+//    [componentMenu removeItemAtIndex:index+1];
+//    
+//    [self layoutSegments];
+//}
 
 #pragma mark - KPCJumpBarSegmentControlDelegate
 
