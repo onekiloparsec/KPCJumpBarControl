@@ -205,17 +205,9 @@
 				9F54FD961CD5EFAE00DA73C1 /* Assets.xcassets */,
 				9F54FD981CD5EFAE00DA73C1 /* Main.storyboard */,
 				9F54FD9B1CD5EFAE00DA73C1 /* Info.plist */,
-				9F54FD901CD5EFAE00DA73C1 /* Supporting Files */,
-			);
-			path = KPCJumpBarControlDemo;
-			sourceTree = "<group>";
-		};
-		9F54FD901CD5EFAE00DA73C1 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
 				9F54FD911CD5EFAE00DA73C1 /* main.m */,
 			);
-			name = "Supporting Files";
+			path = KPCJumpBarControlDemo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
