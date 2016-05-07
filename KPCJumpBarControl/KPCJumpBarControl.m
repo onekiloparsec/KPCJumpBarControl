@@ -364,7 +364,6 @@ const NSInteger KPCJumpBarControlTag = -9999999;
 - (void)renameComponentWithText:(NSString *)text atIndexPath:(NSIndexPath *)indexPath
 {
 //    KPCJumpBarItemControl *label = [self viewWithTag:indexPath.length];
-#warning check
 //    label.representedObject.title = text;
     
     NSMenuItem *componentItem = [self.menu KPC_menuItemAtIndexPath:indexPath];
