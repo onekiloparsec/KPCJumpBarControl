@@ -68,21 +68,12 @@ const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag = -1;
 
 - (void)mouseDown:(NSEvent *)theEvent 
 {
+    [super mouseDown:theEvent];
+
     if (self.isEnabled) {
-		self.selected = YES;
-		
-        self.clickedMenu = [self.delegate menuToPresentWhenClickedForJumpBarLabel:self];
-		
-		// Avoid to call menuWillOpen: as it will duplicate with popUpMenuPositioningItem:...
-		id<NSMenuDelegate> menuDelegate = self.clickedMenu.delegate;
-        self.clickedMenu.delegate = nil;
-		
-        CGFloat xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag ? - 9 : - 16);
-        [self.clickedMenu popUpMenuPositioningItem:[self.clickedMenu itemAtIndex:self.indexInLevel] 
-                                        atLocation:NSMakePoint(xPoint , self.frame.size.height - 4) 
-											inView:self];  
-		
-		self.clickedMenu.delegate = menuDelegate;
+        if ([self.delegate respondsToSelector:@selector(jumpBarSegmentControlDidReceiveMouseDown:)]) {
+            [self.delegate jumpBarSegmentControlDidReceiveMouseDown:self];
+        }        
     }
 }
 
@@ -113,7 +104,9 @@ const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag = -1;
     
     if (self.representedObject.title != nil) {
         CGFloat width = self.frame.size.width - baseLeft - KPCJumpBarItemControlMargin;
-        if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) width -= 7.0;
+        if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
+            width -= 7.0;
+        }
         
         if (width > 0) {
 			CGRect r = CGRectMake(baseLeft, 1.0, width, 20.0);

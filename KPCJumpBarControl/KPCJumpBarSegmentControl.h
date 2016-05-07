@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+extern const NSInteger KPCJumpBarItemControlAccessoryMenuLabelTag;
+
 @protocol KPCJumpBarItem;
 @protocol KPCJumpBarSegmentControlDelegate;
 
@@ -26,6 +28,5 @@
 @end
 
 @protocol KPCJumpBarSegmentControlDelegate <NSObject>
-- (NSMenu *)menuToPresentWhenClickedForJumpBarLabel:(KPCJumpBarSegmentControl *)label;
-- (void)jumpBarLabel:(KPCJumpBarSegmentControl *)label didReceivedClickOnItemAtIndexPath:(NSIndexPath *)indexPath;
+- (void)jumpBarSegmentControlDidReceiveMouseDown:(KPCJumpBarSegmentControl *)segmentControl;
 @end
