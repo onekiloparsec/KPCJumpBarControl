@@ -32,22 +32,29 @@
 
 - (NSIndexPath *)KPC_subIndexPathFromPosition:(NSUInteger)position
 {
+    if (position > self.length-1 || self.length == 0) {
+        return [[NSIndexPath alloc] init];
+    }
     return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length-1 - position)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathToPosition:(NSUInteger)position
 {
-    return [self KPC_subIndexPathWithRange:NSMakeRange(0, position)];
+    if (position < 1 || self.length == 0) {
+        return [[NSIndexPath alloc] init];
+    }
+    return [self KPC_subIndexPathWithRange:NSMakeRange(0, position-1)]; // We must insert -1 because of the INCLUSIVE <= end below.
 }
 
 - (NSIndexPath *)KPC_subIndexPathWithRange:(NSRange)range
 {
-    if (range.location + range.length == self.length || range.location >= self.length) {
+    if (range.location > self.length-1 || self.length == 0) {
         return [[NSIndexPath alloc] init];
     }
     
-    NSIndexPath *path = [[NSIndexPath alloc] init];
     NSUInteger end = MIN(range.location + range.length, self.length-1);
+    
+    NSIndexPath *path = [[NSIndexPath alloc] init];
     for (NSUInteger position = range.location; position <= end ; position ++) {
         path = [path indexPathByAddingIndex:[self indexAtPosition:position]];
     }

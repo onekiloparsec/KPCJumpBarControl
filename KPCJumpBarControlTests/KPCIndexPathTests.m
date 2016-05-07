@@ -181,6 +181,7 @@
 }
 
 
+
 - (void)testSubIndexPathFromPositionZeroOfLengthTwoIndexPath
 {
     const NSUInteger indexes[] = { 17, 29, };
@@ -208,6 +209,7 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
     XCTAssertEqualObjects([[NSIndexPath alloc] init], [indexPath KPC_subIndexPathFromPosition:10]);
 }
+
 
 
 - (void)testSubIndexPathFromPositionZeroOfLengthNineIndexPath
@@ -262,5 +264,131 @@
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
     XCTAssertEqualObjects([[NSIndexPath alloc] init], [indexPath KPC_subIndexPathFromPosition:10]);
 }
+
+
+
+# pragma mark - KPC_subIndexPathToPosition
+
+- (void)testSubIndexPathToPositionZeroOfEmptyIndexPath
+{
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:0]);
+}
+
+- (void)testSubIndexPathToPositionOneOfEmptyIndexPath
+{
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:1]);
+}
+
+- (void)testSubIndexPathToPositionTenOfEmptyIndexPath
+{
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:10]);
+}
+
+
+
+- (void)testSubIndexPathToPositionZeroOfLengthOneIndexPath
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:42];
+    XCTAssertEqualObjects([[NSIndexPath alloc] init], [indexPath KPC_subIndexPathToPosition:0]);
+}
+
+- (void)testSubIndexPathToPositionOneOfLengthOneIndexPath
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:42];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:1]);
+}
+
+- (void)testSubIndexPathToPositionTenOfLengthOneIndexPath
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:42];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:10]);
+}
+
+
+
+- (void)testSubIndexPathToPositionZeroOfLengthTwoIndexPath
+{
+    const NSUInteger indexes[] = { 17, 29, };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+    XCTAssertEqualObjects([[NSIndexPath alloc] init], [indexPath KPC_subIndexPathToPosition:0]);
+}
+
+- (void)testSubIndexPathToPositionOneOfLengthTwoIndexPath
+{
+    const NSUInteger indexes[] = { 17, 29, };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+    XCTAssertEqualObjects([NSIndexPath indexPathWithIndex:17], [indexPath KPC_subIndexPathToPosition:1]);
+}
+
+- (void)testSubIndexPathToPositionTwoOfLengthTwoIndexPath
+{
+    const NSUInteger indexes[] = { 17, 29, };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:2]);
+}
+
+- (void)testSubIndexPathToPositionTenOfLengthTwoIndexPath
+{
+    const NSUInteger indexes[] = { 17, 29, };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:2];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:10]);
+}
+
+
+
+- (void)testSubIndexPathToPositionZeroOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    XCTAssertEqualObjects([[NSIndexPath alloc] init], [indexPath KPC_subIndexPathToPosition:0]);
+}
+
+- (void)testSubIndexPathToPositionOneOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    XCTAssertEqualObjects([NSIndexPath indexPathWithIndex:11], [indexPath KPC_subIndexPathToPosition:1]);
+}
+
+- (void)testSubIndexPathToPositionTwoOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    
+    const NSUInteger finalIndexes[] = { 11, 22 };
+    NSIndexPath *finalIndexPath = [NSIndexPath indexPathWithIndexes:finalIndexes length:2];
+    
+    XCTAssertEqualObjects(finalIndexPath, [indexPath KPC_subIndexPathToPosition:2]);
+}
+
+- (void)testSubIndexPathToPositionHeightOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    
+    const NSUInteger finalIndexes[] = { 11, 22, 33, 44, 55, 66, 77, 88 };
+    NSIndexPath *finalIndexPath = [NSIndexPath indexPathWithIndexes:finalIndexes length:8];
+    
+    XCTAssertEqualObjects(finalIndexPath, [indexPath KPC_subIndexPathToPosition:8]);
+}
+
+- (void)testSubIndexPathToPositionNineOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:9]);
+}
+
+- (void)testSubIndexPathToPositionTenOfLengthNineIndexPath
+{
+    const NSUInteger indexes[] = { 11, 22, 33, 44, 55, 66, 77, 88, 99 };
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:indexes length:9];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_subIndexPathToPosition:10]);
+}
+
+
 
 @end
