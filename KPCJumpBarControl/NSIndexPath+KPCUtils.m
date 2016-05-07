@@ -35,7 +35,7 @@
     if (position > self.length-1 || self.length == 0) {
         return [[NSIndexPath alloc] init];
     }
-    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length-1 - position)];
+    return [self KPC_subIndexPathWithRange:NSMakeRange(position, self.length - position)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathToPosition:(NSUInteger)position
@@ -43,19 +43,19 @@
     if (position < 1 || self.length == 0) {
         return [[NSIndexPath alloc] init];
     }
-    return [self KPC_subIndexPathWithRange:NSMakeRange(0, position-1)]; // We must insert -1 because of the INCLUSIVE <= end below.
+    return [self KPC_subIndexPathWithRange:NSMakeRange(0, position)];
 }
 
 - (NSIndexPath *)KPC_subIndexPathWithRange:(NSRange)range
 {
-    if (range.location > self.length-1 || self.length == 0) {
+    if (range.location > self.length-1 || self.length == 0 || NSMaxRange(range) == 0) {
         return [[NSIndexPath alloc] init];
     }
     
-    NSUInteger end = MIN(range.location + range.length, self.length-1);
+    NSUInteger end = MIN(NSMaxRange(range), self.length); // Use length, and not length-1 because of strictly "<"end below.
     
     NSIndexPath *path = [[NSIndexPath alloc] init];
-    for (NSUInteger position = range.location; position <= end ; position ++) {
+    for (NSUInteger position = range.location; position < end ; position ++) {
         path = [path indexPathByAddingIndex:[self indexAtPosition:position]];
     }
     
@@ -64,7 +64,10 @@
 
 - (NSIndexPath *)KPC_indexPathByReplacingIndexAtPosition:(NSUInteger)position withIndex:(NSInteger)index
 {
-    if (position == 0) {
+    if (self.length == 0) {
+        return [[NSIndexPath alloc] init];
+    }
+    else if (position == 0) {
         NSIndexPath *trailIndexPath = [self KPC_subIndexPathFromPosition:position+1];
         return [[NSIndexPath indexPathWithIndex:index] KPC_indexPathByAddingIndexPath:trailIndexPath];
     }
@@ -88,13 +91,6 @@
 {
     NSInteger lastIndex = [self indexAtPosition:[self length]-1];
     return [self KPC_indexPathByReplacingIndexAtPosition:[self length]-1 withIndex:lastIndex+1];
-}
-
-- (NSIndexPath *)KPC_indexPathByFillingWithIndexPath:(NSIndexPath *)complementIndexPath
-{
-    NSAssert([self length] <= [complementIndexPath length], @"Index length is wrong.");
-    NSIndexPath *cutIndexPath = [complementIndexPath KPC_subIndexPathToPosition:[self length]];
-    return [self KPC_indexPathByAddingIndexPath:cutIndexPath];
 }
 
 @end

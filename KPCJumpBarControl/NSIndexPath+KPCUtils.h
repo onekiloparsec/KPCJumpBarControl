@@ -23,6 +23,4 @@
 - (NSIndexPath *)KPC_indexPathByReplacingLastIndexWithIndex:(NSInteger)index;
 - (NSIndexPath *)KPC_indexPathByIncrementingLastIndex;
 
-- (NSIndexPath *)KPC_indexPathByFillingWithIndexPath:(NSIndexPath *)complementIndexPath;
-
 @end
