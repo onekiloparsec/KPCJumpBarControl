@@ -93,4 +93,16 @@
     return [self KPC_indexPathByReplacingIndexAtPosition:[self length]-1 withIndex:lastIndex+1];
 }
 
+- (NSString *)KPC_stringValue
+{
+    NSMutableString *reprensentation = [[NSMutableString alloc] initWithCapacity:[self length] * 2 - 1];
+    [reprensentation appendFormat:@"%ld", [self indexAtPosition:0]];
+    
+    for (NSUInteger position = 1; position < self.length ; position ++) {
+        [reprensentation appendFormat:@".%ld", [self indexAtPosition:position]];
+    }
+    
+    return reprensentation;
+}
+
 @end
