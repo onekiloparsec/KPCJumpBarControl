@@ -17,8 +17,8 @@
 
     KPCJumpBarItem *rootSegment = [KPCJumpBarItem itemWithTitle:@"level 0" icon:[NSImage imageNamed:@"Oval"]];
     
-    KPCJumpBarItem *segment1Item0 = [KPCJumpBarItem itemWithTitle:@"level 1" icon:[NSImage imageNamed:@"Polygon"]];
-    KPCJumpBarItem *segment1Item1 = [KPCJumpBarItem itemWithTitle:@"level 1" icon:[NSImage imageNamed:@"Rectangle"]];
+    KPCJumpBarItem *segment1Item0 = [KPCJumpBarItem itemWithTitle:@"level 1.0" icon:[NSImage imageNamed:@"Polygon"]];
+    KPCJumpBarItem *segment1Item1 = [KPCJumpBarItem itemWithTitle:@"level 1.1" icon:[NSImage imageNamed:@"Rectangle"]];
     
     rootSegment.children = @[segment1Item0, segment1Item1];
     
