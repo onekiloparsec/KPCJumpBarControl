@@ -94,7 +94,7 @@ const NSInteger KPCJumpBarControlTag = -9999999;
         if ([self.mainTarget respondsToSelector:self.mainAction]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [self.mainTarget performSelector:self.mainAction withObject:sender];
+            [self.mainTarget performSelector:self.mainAction withObject:sender.representedObject];
 #pragma clang diagnostic pop
         }
         else {
