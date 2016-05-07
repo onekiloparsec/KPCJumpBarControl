@@ -130,4 +130,26 @@
     XCTAssertEqualObjects(finalIndexPath3, [indexPath KPC_indexPathByReplacingIndexAtPosition:8 withIndex:+27]);
 }
 
+
+# pragma mark - KPC_indexPathByIncrementingLastIndex
+
+- (void)testIndexPathIncrementingLastIndexOfEmptyIndexPath
+{
+    NSIndexPath *indexPath = [[NSIndexPath alloc] init];
+    XCTAssertEqualObjects(indexPath, [indexPath KPC_indexPathByIncrementingLastIndex]);
+}
+
+- (void)testIndexPathIncrementingLastIndexOfLengthOneIndexPath
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:99];
+    XCTAssertEqualObjects([NSIndexPath indexPathWithIndex:100], [indexPath KPC_indexPathByIncrementingLastIndex]);
+}
+
+- (void)testIndexPathIncrementingLastIndexOfLengthTwoIndexPath
+{
+    NSIndexPath *indexPath = [[NSIndexPath indexPathWithIndex:77] indexPathByAddingIndex:99];
+    NSIndexPath *finalIndexPath = [[NSIndexPath indexPathWithIndex:77] indexPathByAddingIndex:100];
+    XCTAssertEqualObjects(finalIndexPath, [indexPath KPC_indexPathByIncrementingLastIndex]);
+}
+
 @end
