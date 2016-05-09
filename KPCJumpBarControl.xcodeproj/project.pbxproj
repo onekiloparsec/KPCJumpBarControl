@@ -22,6 +22,7 @@
 		9F54FDA61CD5F1E000DA73C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */; };
 		9F6CC8A41CDF25B400072EC6 /* JumpBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */; };
 		9FFEB78E1CE0FA2F00F861D9 /* IndexPathTests_sub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */; };
+		9FFEB7901CE10BED00F861D9 /* IndexPathTests_replacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB78F1CE10BED00F861D9 /* IndexPathTests_replacing.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +66,8 @@
 		9F54FDB91CD6073C00DA73C1 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9F54FDBA1CD6073C00DA73C1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarItem.swift; sourceTree = "<group>"; };
-		9FFBCDD21CDE2BA2005534D7 /* KPCIndexPathTests_replacing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPCIndexPathTests_replacing.m; sourceTree = "<group>"; };
 		9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathTests_sub.swift; sourceTree = "<group>"; };
+		9FFEB78F1CE10BED00F861D9 /* IndexPathTests_replacing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathTests_replacing.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +149,7 @@
 			children = (
 				9F3CCB261CE08ECB005669BD /* IndexPathTests_adding.swift */,
 				9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */,
-				9FFBCDD21CDE2BA2005534D7 /* KPCIndexPathTests_replacing.m */,
+				9FFEB78F1CE10BED00F861D9 /* IndexPathTests_replacing.swift */,
 				9F3CCB301CE08FF2005669BD /* Info.plist */,
 			);
 			path = KPCJumpBarControlTests;
@@ -308,6 +309,7 @@
 			files = (
 				9FFEB78E1CE0FA2F00F861D9 /* IndexPathTests_sub.swift in Sources */,
 				9F3CCB371CE09041005669BD /* IndexPathTests_adding.swift in Sources */,
+				9FFEB7901CE10BED00F861D9 /* IndexPathTests_replacing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

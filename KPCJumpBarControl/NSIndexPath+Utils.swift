@@ -82,6 +82,9 @@ extension NSIndexPath {
     }
     
     func indexPathByIncrementingLastIndex() -> NSIndexPath {
+        if self.length == 0 {
+            return NSIndexPath()
+        }
         let lastIndex = self.indexAtPosition(self.length-1);
         return self.indexPathByReplacingIndexAtPosition(self.length-1, withIndex:lastIndex+1);
     }
