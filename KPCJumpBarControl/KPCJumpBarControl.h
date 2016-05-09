@@ -14,8 +14,6 @@ FOUNDATION_EXPORT double KPCJumpBarControlVersionNumber;
 //! Project version string for KPCJumpBarControl.
 FOUNDATION_EXPORT const unsigned char KPCJumpBarControlVersionString[];
 
-#import <KPCJumpBarControl/KPCJumpBarControlDelegate.h>
-#import <KPCJumpBarControl/KPCJumpBarItem.h>
 #import <KPCJumpBarControl/NSIndexPath+KPCUtils.h>
 
 @protocol KPCJumpBarControlDelegate;

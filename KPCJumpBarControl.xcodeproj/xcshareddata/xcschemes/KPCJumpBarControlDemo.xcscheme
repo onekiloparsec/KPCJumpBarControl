@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F54FD8A1CD5EFAE00DA73C1"
+               BlueprintIdentifier = "9F3CCB3B1CE0944E005669BD"
                BuildableName = "KPCJumpBarControlDemo.app"
                BlueprintName = "KPCJumpBarControlDemo"
                ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F54FD8A1CD5EFAE00DA73C1"
+            BlueprintIdentifier = "9F3CCB3B1CE0944E005669BD"
             BuildableName = "KPCJumpBarControlDemo.app"
             BlueprintName = "KPCJumpBarControlDemo"
             ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
@@ -55,7 +55,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F54FD8A1CD5EFAE00DA73C1"
+            BlueprintIdentifier = "9F3CCB3B1CE0944E005669BD"
             BuildableName = "KPCJumpBarControlDemo.app"
             BlueprintName = "KPCJumpBarControlDemo"
             ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
@@ -74,7 +74,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "9F54FD8A1CD5EFAE00DA73C1"
+            BlueprintIdentifier = "9F3CCB3B1CE0944E005669BD"
             BuildableName = "KPCJumpBarControlDemo.app"
             BlueprintName = "KPCJumpBarControlDemo"
             ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">

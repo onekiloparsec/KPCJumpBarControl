@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "NSIndexPath+KPCUtils.h"
 
 @interface KPCIndexPathTests_adding : XCTestCase
 
@@ -25,48 +24,48 @@
     [super tearDown];
 }
 
-# pragma mark - KPC_lastIndex
+# pragma mark - lastIndex
 
 - (void)testLastIndexEmptyIndexPath
 {
     NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-    XCTAssertTrue([indexPath KPC_lastIndex] == NSNotFound);
+    XCTAssertTrue([indexPath lastIndex] == NSNotFound);
 }
 
 - (void)testLastIndexNullOneLevelIndexPath
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:0];
-    XCTAssertTrue([indexPath KPC_lastIndex] == 0);
+    XCTAssertTrue([indexPath lastIndex] == 0);
 }
 
 - (void)testLastIndexNegativeOneLevelIndexPath
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:-23];
-    XCTAssertTrue([indexPath KPC_lastIndex] == -23);
+    XCTAssertTrue([indexPath lastIndex] == -23);
 }
 
 - (void)testLastIndexPositiveOneLevelIndexPath
 {
     NSIndexPath *indexPath = [NSIndexPath indexPathWithIndex:42];
-    XCTAssertTrue([indexPath KPC_lastIndex] == 42);
+    XCTAssertTrue([indexPath lastIndex] == 42);
 }
 
 - (void)testLastIndexNullMultipleLevelIndexPath
 {
     NSIndexPath *indexPath = [[[NSIndexPath indexPathWithIndex:17] indexPathByAddingIndex:34] indexPathByAddingIndex:0];
-    XCTAssertTrue([indexPath KPC_lastIndex] == 0);
+    XCTAssertTrue([indexPath lastIndex] == 0);
 }
 
 - (void)testLastIndexNegativeMultipleLevelIndexPath
 {
     NSIndexPath *indexPath = [[[NSIndexPath indexPathWithIndex:17] indexPathByAddingIndex:34] indexPathByAddingIndex:-24];
-    XCTAssertTrue([indexPath KPC_lastIndex] == -24);
+    XCTAssertTrue([indexPath lastIndex] == -24);
 }
 
 - (void)testLastIndexPositiveMultipleLevelIndexPath
 {
     NSIndexPath *indexPath = [[[NSIndexPath indexPathWithIndex:17] indexPathByAddingIndex:34] indexPathByAddingIndex:43];
-    XCTAssertTrue([indexPath KPC_lastIndex] == 43);
+    XCTAssertTrue([indexPath lastIndex] == 43);
 }
 
 
