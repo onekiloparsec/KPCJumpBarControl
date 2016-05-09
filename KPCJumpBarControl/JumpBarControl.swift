@@ -195,7 +195,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
             let selectedIndex = self.selectedIndexPath!.indexAtPosition(position)
     
             lastSegmentControl = self.segmentControlAtLevel(position)
-            lastSegmentControl!.isLastSegment = (position == self.selectedIndexPath?.lastIndex())
+            lastSegmentControl!.isLastSegment = (position == self.selectedIndexPath!.length-1)
             lastSegmentControl!.indexInLevel = selectedIndex
             lastSegmentControl!.select()
     
@@ -211,7 +211,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
             currentMenu = item!.submenu
         }
     
-        let endX = lastSegmentControl!.frame.size.width + lastSegmentControl!.frame.origin.x
+        let endX = CGRectGetMaxX(lastSegmentControl!.frame)
     
         if self.frame.size.width < endX {
             self.hasCompressedSegments = true;
