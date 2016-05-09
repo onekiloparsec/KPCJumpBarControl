@@ -1,4 +1,4 @@
-language: objective-c
+language: swift 
 xcode_project: KPCJumpBarControl.xcodeproj
 xcode_scheme: KPCJumpBarControl
 osx_image: xcode7
