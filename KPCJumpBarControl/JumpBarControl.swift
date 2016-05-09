@@ -82,8 +82,15 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     override public func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(NSControl.setNeedsDisplay), name:NSWindowDidResignKeyNotification, object:self.window)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(NSControl.setNeedsDisplay), name:NSWindowDidBecomeKeyNotification, object:self.window)
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector:#selector(NSControl.setNeedsDisplay),
+                                                         name:NSWindowDidResignKeyNotification,
+                                                         object:self.window)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+                                                         selector:#selector(NSControl.setNeedsDisplay),
+                                                         name:NSWindowDidBecomeKeyNotification,
+                                                         object:self.window)
     }
 
     // MARK: - Public Methods

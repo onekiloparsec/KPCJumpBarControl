@@ -10,6 +10,7 @@ import AppKit
 
 let KPCJumpBarItemControlAccessoryMenuLabelTag: NSInteger = -1
 let KPCJumpBarItemControlMargin: CGFloat = 4.0;
+let KPCJumpBarItemIconMaxHeight: CGFloat = 16.0;
 
 protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
     func jumpBarSegmentControlDidReceiveMouseDown(segmentControl: JumpBarSegmentControl)
@@ -28,8 +29,8 @@ class JumpBarSegmentControl : NSControl {
     
         if let obj = self.representedObject {
             var width: CGFloat = (2 + (obj.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin;
-            if let title: NSString = obj.title! as NSString {
-                let textSize = title.sizeWithAttributes(self.attributes())
+            if obj.title.characters.count > 0 {
+                let textSize = obj.title.sizeWithAttributes(self.attributes())
                 width += ceil(textSize.width);
             }
             if let img = obj.icon {
@@ -117,13 +118,13 @@ class JumpBarSegmentControl : NSControl {
         }
         
         if let img = self.representedObject!.icon {
-            let side = min(24.0, CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin)
+            let side = CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin
             let r = NSMakeRect(baseLeft, KPCJumpBarItemControlMargin, side, side)
             img.drawInRect(r, fromRect:NSZeroRect, operation: .CompositeSourceOver, fraction:fraction);
             baseLeft += ceil(side) + KPCJumpBarItemControlMargin;
         }
         
-        if let title = self.representedObject!.title {
+        if let obj = self.representedObject {
             var width = self.frame.size.width - baseLeft - KPCJumpBarItemControlMargin;
             if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
                 width -= 7.0;
@@ -131,7 +132,7 @@ class JumpBarSegmentControl : NSControl {
         
             if (width > 0) {
                 let r = CGRectMake(baseLeft, 1.0, width, 20.0);
-                title.drawInRect(r, withAttributes:attributes);
+                obj.title.drawInRect(r, withAttributes:attributes);
                 baseLeft += width + KPCJumpBarItemControlMargin;
             }
         }

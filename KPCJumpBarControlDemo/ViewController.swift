@@ -59,7 +59,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
         print(#function)
         
         self.selectedItemIcon?.image = item.icon
-        self.selectedItemTitle?.stringValue = (item.title != nil) ? item.title! : ""
+        self.selectedItemTitle?.stringValue = item.title
         self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
     }
 }

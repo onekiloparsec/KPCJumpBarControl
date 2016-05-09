@@ -8,6 +8,50 @@
 
 import AppKit
 
+class MenuItem: NSMenuItem {
+    override internal var image: NSImage? {
+        get {
+            if let obj: JumpBarItemProtocol = self.representedObject as? JumpBarItemProtocol {
+                return obj.icon?.scaleToSize(NSMakeSize(KPCJumpBarItemIconMaxHeight, KPCJumpBarItemIconMaxHeight))
+            }
+            return nil
+        }
+        set {}
+    }
+
+    override internal var title: String {
+        get {
+            if let obj: JumpBarItemProtocol = self.representedObject as? JumpBarItemProtocol {
+                return obj.title
+            }
+            return ""
+        }
+        set {}
+    }
+}
+
+extension NSImage {
+    
+    func scaleToSize(newSize: NSSize) -> NSImage {
+        
+        if (self.valid) {
+            if self.size.width == newSize.width && self.size.height == newSize.height {
+                return self;
+            }
+        }
+        
+        let oldRect = NSMakeRect(0.0, 0.0, self.size.width, self.size.height);
+        let newRect = NSMakeRect(0,0,newSize.width,newSize.height);
+            
+        let newImage = NSImage(size: newSize);
+        newImage.lockFocus()
+        self.drawInRect(newRect, fromRect:oldRect, operation:.CompositeCopy, fraction:1.0);
+        newImage.unlockFocus();
+        
+        return newImage;
+    }
+}
+
 extension NSMenu {
     
     static func menuWithSegmentsTree(segmentsTree: Array<JumpBarItemProtocol>, target: AnyObject, action: Selector) -> NSMenu {
@@ -16,16 +60,11 @@ extension NSMenu {
         
         for (idx, segment) in segmentsTree.enumerate() {
             
-            if segment.title != nil && idx == 0 {
-                menu.title = segment.title!
+            if idx == 0 {
+                menu.title = segment.title
             }
         
-            let item = NSMenuItem()
-            if segment.title != nil {
-                item.title = segment.title!
-            }
-            
-            item.image = segment.icon
+            let item = MenuItem()            
             item.enabled = true
             item.representedObject = segment
             item.target = target

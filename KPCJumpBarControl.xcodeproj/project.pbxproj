@@ -685,6 +685,7 @@
 				9F3CCB361CE08FF2005669BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F3CCB481CE0944E005669BD /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemo" */ = {
 			isa = XCConfigurationList;
@@ -693,6 +694,7 @@
 				9F3CCB4A1CE0944E005669BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9F54FD5F1CD5E9F200DA73C1 /* Build configuration list for PBXProject "KPCJumpBarControl" */ = {
 			isa = XCConfigurationList;
