@@ -116,6 +116,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
         self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
         
+        self.removeSegmentsFromLevel(nextSelectedIndexPath.length)
         self.selectedIndexPath = nextSelectedIndexPath
         self.layoutSegments()
     
@@ -155,17 +156,27 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
     // MARK: - Layout
     
+    private func removeSegmentsFromLevel(level: Int) {
+        if level < self.selectedIndexPath?.length {
+            for l in level..<self.selectedIndexPath!.length {
+                if let superfluousSegmentControl = self.segmentControlAtLevel(l, createIfNecessary: false) {
+                    superfluousSegmentControl.removeFromSuperview()
+                }
+            }
+        }
+    }
+    
     private func layoutSegmentsIfNeeded(withNewSize size:CGSize) {
 
         if (self.hasCompressedSegments)  {
             self.layoutSegments();
         }
         else {
-            let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.length);
-            let endFloat = lastSegmentControl.frame.size.width + lastSegmentControl.frame.origin.x;
+            let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.length)!
+            let endFloat = lastSegmentControl.frame.size.width + lastSegmentControl.frame.origin.x
     
             if (size.width < endFloat) {
-                self.layoutSegments();
+                self.layoutSegments()
             }
         }
     }
@@ -210,10 +221,10 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
             for position in 0..<self.selectedIndexPath!.length {
                 var pos = position
                 if position == self.selectedIndexPath!.length {
-                    pos = KPCJumpBarControlAccessoryMenuLabelTag - 1;
+                    pos = KPCJumpBarControlAccessoryMenuLabelTag - 1
                 }
     
-                let segmentControl = self.segmentControlAtLevel(pos);
+                let segmentControl = self.segmentControlAtLevel(pos)!
     
                 if ((overMargin + segmentControl.minimumWidth() - segmentControl.frame.size.width) < 0) {
                     var frame = segmentControl.frame
@@ -231,11 +242,11 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
             var baseX: CGFloat = CGFloat(0);
             for position in 0..<self.selectedIndexPath!.length {
-                let segmentControl = self.segmentControlAtLevel(position);
-                var frame = segmentControl.frame;
-                frame.origin.x = baseX;
-                baseX += frame.size.width;
-                segmentControl.frame = frame;
+                let segmentControl = self.segmentControlAtLevel(position)!
+                var frame = segmentControl.frame
+                frame.origin.x = baseX
+                baseX += frame.size.width
+                segmentControl.frame = frame
             }
         }
     }
@@ -272,10 +283,11 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
     // MARK: - Helpers
     
-    private func segmentControlAtLevel(level: Int) -> JumpBarSegmentControl {
+    private func segmentControlAtLevel(level: Int, createIfNecessary: Bool = true) -> JumpBarSegmentControl? {
         
         var segmentControl: JumpBarSegmentControl? = self.viewWithTag(level) as! JumpBarSegmentControl?;
-        if (segmentControl == nil || segmentControl == self) { // Check for == self is when at root.
+        
+        if (segmentControl == nil || segmentControl == self) && createIfNecessary == true { // Check for == self is when at root.
             segmentControl = JumpBarSegmentControl()
             segmentControl!.tag = level;
             segmentControl!.frame = NSMakeRect(0, 0, 0, self.frame.size.height);
@@ -284,7 +296,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
             self.addSubview(segmentControl!)
         }
         
-        return segmentControl!
+        return segmentControl
     }
     
     private func changeFontAndImageInMenu(subMenu: NSMenu) {
