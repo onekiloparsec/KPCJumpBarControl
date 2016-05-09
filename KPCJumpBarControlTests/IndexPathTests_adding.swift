@@ -38,12 +38,12 @@ class IndexPathTests_adding: XCTestCase {
     
     func testLastIndexPositiveOneLevelIndexPath() {
         let indexPath = NSIndexPath(index:42)
-            XCTAssertTrue(indexPath.lastIndex() == 42)
+        XCTAssertTrue(indexPath.lastIndex() == 42)
     }
     
     func testLastIndexNullMultipleLevelIndexPath() {
         let indexPath = NSIndexPath(index:17).indexPathByAddingIndex(34).indexPathByAddingIndex(0)
-            XCTAssertTrue(indexPath.lastIndex() == 0)
+        XCTAssertTrue(indexPath.lastIndex() == 0)
     }
     
     func testLastIndexNegativeMultipleLevelIndexPath() {

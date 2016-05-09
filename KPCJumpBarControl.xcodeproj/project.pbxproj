@@ -19,11 +19,9 @@
 		9F3CCB411CE0944E005669BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CCB401CE0944E005669BD /* ViewController.swift */; };
 		9F3CCB501CE09583005669BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3CCB4E1CE09583005669BD /* Main.storyboard */; };
 		9F3CCB531CE0BFE3005669BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FD961CD5EFAE00DA73C1 /* Assets.xcassets */; };
-		9F54FD921CD5EFAE00DA73C1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F54FD911CD5EFAE00DA73C1 /* main.m */; };
-		9F54FDA11CD5F03700DA73C1 /* KPCJumpBarControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */; };
-		9F54FDA31CD5F04E00DA73C1 /* KPCJumpBarControl.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9F54FDA61CD5F1E000DA73C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */; };
 		9F6CC8A41CDF25B400072EC6 /* JumpBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */; };
+		9FFEB78E1CE0FA2F00F861D9 /* IndexPathTests_sub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,31 +39,9 @@
 			remoteGlobalIDString = 9F54FD641CD5E9F200DA73C1;
 			remoteInfo = KPCJumpBarControl;
 		};
-		9F54FD9F1CD5F03100DA73C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9F54FD5C1CD5E9F200DA73C1 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9F54FD641CD5E9F200DA73C1;
-			remoteInfo = KPCJumpBarControl;
-		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		9F54FDA21CD5F03C00DA73C1 /* Copy Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				9F54FDA31CD5F04E00DA73C1 /* KPCJumpBarControl.framework in Copy Frameworks */,
-			);
-			name = "Copy Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		9F3C27261CD72FFD00465AF7 /* KPCIndexPathTests_adding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPCIndexPathTests_adding.m; sourceTree = "<group>"; };
 		9F3CCB191CDF2B0E005669BD /* JumpBarSegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarSegmentControl.swift; sourceTree = "<group>"; };
 		9F3CCB1B1CDFA421005669BD /* JumpBarControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarControlDelegate.swift; sourceTree = "<group>"; };
 		9F3CCB1D1CDFA458005669BD /* JumpBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarControl.swift; sourceTree = "<group>"; };
@@ -74,7 +50,6 @@
 		9F3CCB231CE078BD005669BD /* NSIndexPath+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSIndexPath+Utils.swift"; sourceTree = "<group>"; };
 		9F3CCB261CE08ECB005669BD /* IndexPathTests_adding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathTests_adding.swift; sourceTree = "<group>"; };
 		9F3CCB2C1CE08FF2005669BD /* KPCJumpBarControlTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KPCJumpBarControlTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9F3CCB2E1CE08FF2005669BD /* KPCJumpBarControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KPCJumpBarControlTests.swift; sourceTree = "<group>"; };
 		9F3CCB301CE08FF2005669BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F3CCB3C1CE0944E005669BD /* KPCJumpBarControlDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPCJumpBarControlDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F3CCB3E1CE0944E005669BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +58,6 @@
 		9F3CCB4F1CE09583005669BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPCJumpBarControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F54FD6A1CD5E9F200DA73C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = KPCJumpBarControl/Info.plist; sourceTree = "<group>"; };
-		9F54FD8B1CD5EFAE00DA73C1 /* KPCJumpBarControlDemoObjC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPCJumpBarControlDemoObjC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F54FD911CD5EFAE00DA73C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9F54FD961CD5EFAE00DA73C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = KPCJumpBarControl/Images.xcassets; sourceTree = "<group>"; };
@@ -92,7 +66,7 @@
 		9F54FDBA1CD6073C00DA73C1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarItem.swift; sourceTree = "<group>"; };
 		9FFBCDD21CDE2BA2005534D7 /* KPCIndexPathTests_replacing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPCIndexPathTests_replacing.m; sourceTree = "<group>"; };
-		9FFBCDD31CDE2BA2005534D7 /* KPCIndexPathTests_sub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPCIndexPathTests_sub.m; sourceTree = "<group>"; };
+		9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexPathTests_sub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,14 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9F54FD881CD5EFAE00DA73C1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9F54FDA11CD5F03700DA73C1 /* KPCJumpBarControl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +123,6 @@
 			isa = PBXGroup;
 			children = (
 				9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */,
-				9F54FD8B1CD5EFAE00DA73C1 /* KPCJumpBarControlDemoObjC.app */,
 				9F3CCB2C1CE08FF2005669BD /* KPCJumpBarControlTests.xctest */,
 				9F3CCB3C1CE0944E005669BD /* KPCJumpBarControlDemo.app */,
 			);
@@ -181,10 +146,8 @@
 		9F54FD731CD5E9F200DA73C1 /* KPCJumpBarControlTests */ = {
 			isa = PBXGroup;
 			children = (
-				9F3CCB2E1CE08FF2005669BD /* KPCJumpBarControlTests.swift */,
-				9F3C27261CD72FFD00465AF7 /* KPCIndexPathTests_adding.m */,
 				9F3CCB261CE08ECB005669BD /* IndexPathTests_adding.swift */,
-				9FFBCDD31CDE2BA2005534D7 /* KPCIndexPathTests_sub.m */,
+				9FFEB78D1CE0FA2F00F861D9 /* IndexPathTests_sub.swift */,
 				9FFBCDD21CDE2BA2005534D7 /* KPCIndexPathTests_replacing.m */,
 				9F3CCB301CE08FF2005669BD /* Info.plist */,
 			);
@@ -270,25 +233,6 @@
 			productReference = 9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		9F54FD8A1CD5EFAE00DA73C1 /* KPCJumpBarControlDemoObjC */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9F54FD9C1CD5EFAE00DA73C1 /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemoObjC" */;
-			buildPhases = (
-				9F54FD871CD5EFAE00DA73C1 /* Sources */,
-				9F54FD881CD5EFAE00DA73C1 /* Frameworks */,
-				9F54FD891CD5EFAE00DA73C1 /* Resources */,
-				9F54FDA21CD5F03C00DA73C1 /* Copy Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				9F54FDA01CD5F03100DA73C1 /* PBXTargetDependency */,
-			);
-			name = KPCJumpBarControlDemoObjC;
-			productName = KPCJumpBarControlDemo;
-			productReference = 9F54FD8B1CD5EFAE00DA73C1 /* KPCJumpBarControlDemoObjC.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -308,9 +252,6 @@
 					9F54FD641CD5E9F200DA73C1 = {
 						CreatedOnToolsVersion = 7.3;
 					};
-					9F54FD8A1CD5EFAE00DA73C1 = {
-						CreatedOnToolsVersion = 7.3;
-					};
 				};
 			};
 			buildConfigurationList = 9F54FD5F1CD5E9F200DA73C1 /* Build configuration list for PBXProject "KPCJumpBarControl" */;
@@ -327,7 +268,6 @@
 			projectRoot = "";
 			targets = (
 				9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */,
-				9F54FD8A1CD5EFAE00DA73C1 /* KPCJumpBarControlDemoObjC */,
 				9F3CCB2B1CE08FF2005669BD /* KPCJumpBarControlTests */,
 				9F3CCB3B1CE0944E005669BD /* KPCJumpBarControlDemo */,
 			);
@@ -359,13 +299,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9F54FD891CD5EFAE00DA73C1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -373,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9FFEB78E1CE0FA2F00F861D9 /* IndexPathTests_sub.swift in Sources */,
 				9F3CCB371CE09041005669BD /* IndexPathTests_adding.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,14 +334,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9F54FD871CD5EFAE00DA73C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9F54FD921CD5EFAE00DA73C1 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -420,11 +346,6 @@
 			isa = PBXTargetDependency;
 			target = 9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */;
 			targetProxy = 9F3CCB511CE0BFD2005669BD /* PBXContainerItemProxy */;
-		};
-		9F54FDA01CD5F03100DA73C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */;
-			targetProxy = 9F54FD9F1CD5F03100DA73C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -614,32 +535,6 @@
 			};
 			name = Release;
 		};
-		9F54FD9D1CD5EFAE00DA73C1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = KPCJumpBarControlDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		9F54FD9E1CD5EFAE00DA73C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				COMBINE_HIDPI_IMAGES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				INFOPLIST_FILE = KPCJumpBarControlDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -675,15 +570,6 @@
 			buildConfigurations = (
 				9F54FD7A1CD5E9F200DA73C1 /* Debug */,
 				9F54FD7B1CD5E9F200DA73C1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9F54FD9C1CD5EFAE00DA73C1 /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemoObjC" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9F54FD9D1CD5EFAE00DA73C1 /* Debug */,
-				9F54FD9E1CD5EFAE00DA73C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
