@@ -675,9 +675,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="ZXb-2K-9xW" customClass="JumpBarControl" customModule="KPCJumpBarControl">
-                                <rect key="frame" x="0.0" y="246" width="480" height="24"/>
+                                <rect key="frame" x="0.0" y="242" width="480" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="24" id="ffe-oK-WN5"/>
+                                    <constraint firstAttribute="height" constant="28" id="ffe-oK-WN5"/>
                                 </constraints>
                             </customView>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VZd-no-Dsi">

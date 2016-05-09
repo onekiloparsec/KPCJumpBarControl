@@ -57,7 +57,7 @@ class JumpBarSegmentControl : NSControl {
         style.lineBreakMode = .ByTruncatingTail
         
         let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGrayColor();
-        let font = (self.isSelected) ? NSFont.boldSystemFontOfSize(12.0) : NSFont.systemFontOfSize(12.0);
+        let font = (self.isSelected) ? NSFont.boldSystemFontOfSize(13.0) : NSFont.systemFontOfSize(13.0);
         
         let attributes = [NSForegroundColorAttributeName: color,
                           NSShadowAttributeName : highlightShadow,
@@ -118,8 +118,8 @@ class JumpBarSegmentControl : NSControl {
         }
         
         if let img = self.representedObject!.icon {
-            let side = CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin
-            let r = NSMakeRect(baseLeft, KPCJumpBarItemControlMargin, side, side)
+            let side = min(KPCJumpBarItemIconMaxHeight, CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin)
+            let r = NSMakeRect(baseLeft, CGRectGetHeight(self.frame)/2.0-side/2.0, side, side)
             img.drawInRect(r, fromRect:NSZeroRect, operation: .CompositeSourceOver, fraction:fraction);
             baseLeft += ceil(side) + KPCJumpBarItemControlMargin;
         }
@@ -131,7 +131,7 @@ class JumpBarSegmentControl : NSControl {
             }
         
             if (width > 0) {
-                let r = CGRectMake(baseLeft, 1.0, width, 20.0);
+                let r = CGRectMake(baseLeft-1.0, 3.0, width, 20.0);
                 obj.title.drawInRect(r, withAttributes:attributes);
                 baseLeft += width + KPCJumpBarItemControlMargin;
             }
