@@ -10,8 +10,7 @@ KPCJumpBarControl
 
 A jump bar similar to Xcode's allowing to easily display and navigate across a tree of objects.
 
-![Demo JumpBar Screenshot 1](http://www.onekilopars.ec/s/KPCJumpBarControlScreenshot1.png)
-![Demo JumpBar Screenshot 2](http://www.onekilopars.ec/s/KPCJumpBarControlScreenshot2.png)
+![Demo JumpBar](http://www.onekilopars.ec/s/KPCJumpBarControlDemo.gif) 
 
 
 Installation
