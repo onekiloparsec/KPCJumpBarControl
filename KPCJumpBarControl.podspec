@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KPCJumpBarControl"
-  s.version      = "0.1.1"
+  s.version      = "0.2.0"
   s.summary      = "A jump bar as in Xcode, to easily display and jump into a tree of objects."
   s.homepage     = "https://github.com/onekiloparsec/KPCJumpBarControl.git"
   s.license      = { :type => 'MIT', :file => 'LICENSE' }
