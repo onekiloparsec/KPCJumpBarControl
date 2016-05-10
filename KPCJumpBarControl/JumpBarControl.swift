@@ -8,8 +8,6 @@
 
 import AppKit
 
-let KPCJumpBarControlNormalHeight: CGFloat = 23.0;
-let KPCJumpBarControlNormalImageSize: CGFloat = 16.0;
 let KPCJumpBarControlAccessoryMenuLabelTag: NSInteger = -1;
 let KPCJumpBarControlTag: NSInteger = -9999999;
 
@@ -17,7 +15,6 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     public weak var delegate: JumpBarControlDelegate? = nil
     public private(set) var selectedIndexPath: NSIndexPath? = nil
     
-    private var changeFontAndImageInMenu: Bool = false
     private var hasCompressedSegments: Bool = false
     private var isSelected: Bool = false
     
@@ -60,14 +57,13 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         self.setup()
     }
 
-    override public func menuForEvent(event: NSEvent) -> NSMenu? {
-        return nil;
-    }
-
     private func setup() {
         self.tag = KPCJumpBarControlTag;
         self.enabled = true;
-        self.changeFontAndImageInMenu = true;
+    }
+
+    override public func menuForEvent(event: NSEvent) -> NSMenu? {
+        return nil;
     }
     
     // MARK: - Window
@@ -100,10 +96,6 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         
         if self.menu?.itemArray.count > 0 {
             self.selectedIndexPath = NSIndexPath(index:0);
-        }
-        
-        if self.menu != nil && self.changeFontAndImageInMenu {
-            self.changeFontAndImageInMenu(self.menu!);
         }
         
         self.layoutSegments();
@@ -297,41 +289,6 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         }
         
         return segmentControl
-    }
-    
-    private func changeFontAndImageInMenu(subMenu: NSMenu) {
-//    for (NSMenuItem *item in [subMenu itemArray]) {
-//    NSMutableAttributedString *attributedString = [[item attributedTitle] mutableCopy];
-//    if (attributedString == nil) {
-//    attributedString = [[NSMutableAttributedString alloc] initWithString:item.title];
-//    }
-//    
-//    NSDictionary *attribues = (attributedString.length != 0) ? [attributedString attributesAtIndex:0 effectiveRange:nil] : nil;
-//    NSFont *font = [attribues objectForKey:NSFontAttributeName];
-//    NSString *fontDescrition = [font fontName];
-//    
-//    if (fontDescrition != nil) {
-//    if ([fontDescrition rangeOfString:@"Bold" options:NSCaseInsensitiveSearch].location != NSNotFound) {
-//    font = [NSFont boldSystemFontOfSize:12.0];
-//    }
-//    else {
-//    font = [NSFont systemFontOfSize:12.0];
-//    }
-//    }
-//    else {
-//    font = [NSFont systemFontOfSize:12.0];
-//    }
-//    
-//    [attributedString addAttributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName]
-//    range:NSMakeRange(0, attributedString.length)];
-//    
-//    [item setAttributedTitle:attributedString];
-//    [item.image setSize:NSMakeSize(KPCJumpBarControlNormalImageSize, KPCJumpBarControlNormalImageSize)];
-//    
-//    if ([item hasSubmenu]) {
-//    [self changeFontAndImageInMenu:[item submenu]];
-//    }
-//    }
     }
     
     private func segmentControls() -> Array<JumpBarSegmentControl> {
