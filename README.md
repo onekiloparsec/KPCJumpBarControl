@@ -29,7 +29,17 @@ conforming to `JumpBarItemProtocol`. A helper class `JumpBarItem` is here for th
 Simply place a `NSView` in a storyboard or xib, where you need a jump bar, change its class to `JumpBarControl` and
 that's it. To react when the jumbpar selection change, implement the `JumpBarControlDelegate` methods.
 
-
+For instance:
+```swift 
+    let rootSegment = JumpBarItem.item(withTitle:"level 0", icon:NSImage(named:"Oval"))
+    let segment1Item0 = JumpBarItem.item(withTitle:"level 1.0", icon:NSImage(named:"Polygon"))
+    let segment1Item1 = JumpBarItem.item(withTitle:"level 1.1", icon:NSImage(named:"Rectangle"))
+ 
+    rootSegment.children = [segment1Item0, segment1Item1]
+  
+    self.jumpBar?.useItemsTree([rootSegment])
+    self.jumpBar?.delegate = self
+```
 
 Highlighting
 ------------
