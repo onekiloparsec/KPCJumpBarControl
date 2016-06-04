@@ -18,7 +18,7 @@ protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
 
 class JumpBarSegmentControl : NSControl {
     var isLastSegment: Bool = false
-    var indexInLevel: Int = 0
+    var indexInPath: Int = 0
     var isSelected: Bool = false
 
     var representedObject: JumpBarItemProtocol? = nil
@@ -55,7 +55,7 @@ class JumpBarSegmentControl : NSControl {
         highlightShadow.shadowBlurRadius = 0.0;
         
         let style = NSMutableParagraphStyle()
-        style.lineBreakMode = .ByTruncatingTail
+        style.lineBreakMode = .ByTruncatingMiddle
         
         let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGrayColor();
         let font = (self.isSelected) ? NSFont.boldSystemFontOfSize(13.0) : NSFont.systemFontOfSize(13.0);

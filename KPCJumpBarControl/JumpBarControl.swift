@@ -8,6 +8,11 @@
 
 import AppKit
 
+enum IndexPathError: ErrorType {
+    case Empty(String)
+    case Invalid(String)
+}
+
 let KPCJumpBarControlAccessoryMenuLabelTag: NSInteger = -1;
 let KPCJumpBarControlTag: NSInteger = -9999999;
 
@@ -161,86 +166,69 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     private func layoutSegmentsIfNeeded(withNewSize size:CGSize) {
 
         if (self.hasCompressedSegments)  {
-            self.layoutSegments();
+            self.layoutSegments(); // always layout segments when compressed.
         }
         else {
-            let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.length)!
-            let endFloat = lastSegmentControl.frame.size.width + lastSegmentControl.frame.origin.x
-    
-            if (size.width < endFloat) {
-                self.layoutSegments()
+            if let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.length-1, createIfNecessary: false) {
+                let maxNewControlWidth = size.width
+                let currentControlWidth = CGRectGetMaxX(lastSegmentControl.frame)
+                if (currentControlWidth > maxNewControlWidth) {
+                    self.layoutSegments()
+                }
             }
         }
     }
     
     private func layoutSegments() {
-        guard self.selectedIndexPath?.length > 0 else {
+        let totalWidth = self.prepareSegmentsLayout()
+        if totalWidth <= 0 {
             return
         }
         
-        self.hasCompressedSegments = false
-        var lastSegmentControl: JumpBarSegmentControl? = nil
-        var currentMenu = self.menu
-        var baseX: CGFloat = 0
-    
+        self.hasCompressedSegments = CGRectGetWidth(self.frame) < totalWidth
+        
+        var originX = CGFloat(0);
+        var widthReduction = CGFloat(0)
+        
+        if self.hasCompressedSegments {
+            widthReduction = (totalWidth - CGRectGetWidth(self.frame))/CGFloat(self.selectedIndexPath!.length)
+        }
+        
         for position in 0..<self.selectedIndexPath!.length {
-            let selectedIndex = self.selectedIndexPath!.indexAtPosition(position)
+            let segmentControl = self.segmentControlAtLevel(position)!
+            var frame = segmentControl.frame
+            frame.origin.x = originX
+            frame.size.width -= widthReduction
+            originX += frame.size.width
+            segmentControl.frame = frame
+        }        
+    }
     
-            lastSegmentControl = self.segmentControlAtLevel(position)
-            lastSegmentControl!.isLastSegment = (position == self.selectedIndexPath!.length-1)
-            lastSegmentControl!.indexInLevel = selectedIndex
-            lastSegmentControl!.select()
-    
-            let item = currentMenu!.itemAtIndex(selectedIndex)
-            lastSegmentControl!.representedObject = item!.representedObject as? JumpBarItemProtocol;
-    
-            lastSegmentControl!.sizeToFit()
-            var frame = lastSegmentControl!.frame
-            frame.origin.x = baseX
-            baseX += frame.size.width
-            lastSegmentControl!.frame = frame
-    
-            currentMenu = item!.submenu
+    private func prepareSegmentsLayout() -> CGFloat {
+        guard self.selectedIndexPath?.length > 0 else {
+            return CGFloat(0)
         }
-    
-        let endX = CGRectGetMaxX(lastSegmentControl!.frame)
-    
-        if self.frame.size.width < endX {
-            self.hasCompressedSegments = true;
-    
-            var overMargin: CGFloat = CGFloat(endX - self.frame.size.width)
+        
+        var currentMenu = self.menu
+        var totalWidth = CGFloat(0)
+        
+        for position in 0..<self.selectedIndexPath!.length {
+            let index = self.selectedIndexPath!.indexAtPosition(position)
             
-            for position in 0..<self.selectedIndexPath!.length {
-                var pos = position
-                if position == self.selectedIndexPath!.length {
-                    pos = KPCJumpBarControlAccessoryMenuLabelTag - 1
-                }
-    
-                let segmentControl = self.segmentControlAtLevel(pos)!
-    
-                if ((overMargin + segmentControl.minimumWidth() - segmentControl.frame.size.width) < 0) {
-                    var frame = segmentControl.frame
-                    frame.size.width -= overMargin
-                    segmentControl.frame = frame
-                    break;
-                }
-                else {
-                    overMargin -= (segmentControl.frame.size.width - segmentControl.minimumWidth())
-                    var frame = segmentControl.frame
-                    frame.size.width = segmentControl.minimumWidth()
-                    segmentControl.frame = frame;
-                }
-            }
-    
-            var baseX: CGFloat = CGFloat(0);
-            for position in 0..<self.selectedIndexPath!.length {
-                let segmentControl = self.segmentControlAtLevel(position)!
-                var frame = segmentControl.frame
-                frame.origin.x = baseX
-                baseX += frame.size.width
-                segmentControl.frame = frame
-            }
+            let segment = self.segmentControlAtLevel(position)!
+            segment.isLastSegment = (position == self.selectedIndexPath!.length-1)
+            segment.indexInPath = index
+            segment.select()
+            
+            let item = currentMenu!.itemAtIndex(index)
+            segment.representedObject = item!.representedObject as? JumpBarItemProtocol;
+            currentMenu = item!.submenu
+            
+            segment.sizeToFit()
+            totalWidth += CGRectGetWidth(segment.frame)
         }
+        
+        return totalWidth
     }
     
     // MARK: - Drawing
@@ -315,7 +303,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
         let xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) ? CGFloat(-9) : CGFloat(-16);
         
-        clickedMenu!.popUpMenuPositioningItem(clickedMenu?.itemAtIndex(segmentControl.indexInLevel),
+        clickedMenu!.popUpMenuPositioningItem(clickedMenu?.itemAtIndex(segmentControl.indexInPath),
                                               atLocation:NSMakePoint(xPoint , segmentControl.frame.size.height - 4),
                                               inView:segmentControl)
 
