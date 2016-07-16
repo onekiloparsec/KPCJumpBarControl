@@ -35,9 +35,10 @@ class ViewController: NSViewController, JumpBarControlDelegate {
             
             let segment1Item0 = JumpBarItem.item(withTitle:"path 0.0", icon:NSImage(named:"Polygon"))
             let segment1Item1 = JumpBarItem.item(withTitle:"path 0.1", icon:NSImage(named:"Rectangle"))
-            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.2 - toggle items tree", icon:NSImage(named:"Triangle"))
+            let separatorItem = JumpBarItem.separatorItem()
+            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.3 - toggle items tree", icon:NSImage(named:"Triangle"))
             
-            rootSegment.children = [segment1Item0, segment1Item1, segment1Item2]
+            rootSegment.children = [segment1Item0, segment1Item1, separatorItem, segment1Item2]
             
             let segment2Item0 = JumpBarItem.item(withTitle:"path 0.1.0", icon:NSImage(named:"Star"))
             let segment2Item1 = JumpBarItem.item(withTitle:"path 0.1.1", icon:NSImage(named:"Spiral"))
@@ -84,7 +85,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
         self.selectedItemTitle?.stringValue = item.title
         self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
         
-        if indexPath == NSIndexPath(indexes: [0, 2], length: 2) || indexPath == NSIndexPath(indexes: [1, 0, 0, 0], length: 4) {
+        if indexPath == NSIndexPath(indexes: [0, 3], length: 2) || indexPath == NSIndexPath(indexes: [1, 0, 0, 0], length: 4) {
             swap = !swap
             self.swapItemsTree()
         }

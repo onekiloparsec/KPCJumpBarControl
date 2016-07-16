@@ -64,18 +64,25 @@ extension NSMenu {
                 menu.title = segment.title
             }
         
-            let item = MenuItem()            
-            item.enabled = true
-            item.representedObject = segment
-            item.target = target
-            item.action = action
-            item.keyEquivalent = ""
+            if segment.isSeparator {
+                let item = NSMenuItem.separatorItem()
+                item.representedObject = segment
+                menu.addItem(item)
+            }
+            else {
+                let item = MenuItem()
+                item.enabled = true
+                item.representedObject = segment
+                item.target = target
+                item.action = action
+                item.keyEquivalent = ""
+                
+                menu.addItem(item)
             
-            menu.addItem(item)
-            
-            if segment.children?.count > 0 {
-                let submenu = NSMenu.menuWithSegmentsTree(segment.children!, target:target, action:action)
-                menu.setSubmenu(submenu, forItem: item)
+                if segment.children?.count > 0 {
+                    let submenu = NSMenu.menuWithSegmentsTree(segment.children!, target:target, action:action)
+                    menu.setSubmenu(submenu, forItem: item)
+                }
             }
         }
         
