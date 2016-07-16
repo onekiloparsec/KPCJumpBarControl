@@ -32,7 +32,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     override public var enabled: Bool {
         didSet {
             for segmentControl in self.segmentControls() {
-                segmentControl.enabled = super.enabled
+                segmentControl.enabled = self.enabled
             }
             self.setNeedsDisplay()
         }
@@ -97,13 +97,16 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     // MARK: - Public Methods
     
     public func useItemsTree(itemsTree: Array<JumpBarItemProtocol>) {
+        self.segmentControls().forEach { $0.removeFromSuperview() }
+        self.selectedIndexPath = nil
+        
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree, target:self, action:#selector(JumpBarControl.selectJumpBarControlItem(_:)))
         
-        if self.menu?.itemArray.count > 0 {
-            self.selectedIndexPath = NSIndexPath(index:0);
-        }
-        
         self.layoutSegments();
+        
+        if self.menu?.itemArray.count > 0 {
+            self.selectJumpBarControlItem(self.menu!.itemArray.first!)
+        }
     }
     
     @objc private func selectJumpBarControlItem(sender: NSMenuItem) {
@@ -113,7 +116,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
         self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
         
-        self.removeSegmentsFromLevel(nextSelectedIndexPath.length)
+        self.removeSegments(fromLevel: nextSelectedIndexPath.length)
         self.selectedIndexPath = nextSelectedIndexPath
         self.layoutSegments()
     
@@ -153,7 +156,7 @@ public class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
     // MARK: - Layout
     
-    private func removeSegmentsFromLevel(level: Int) {
+    private func removeSegments(fromLevel level: Int) {
         if level < self.selectedIndexPath?.length {
             for l in level..<self.selectedIndexPath!.length {
                 if let superfluousSegmentControl = self.segmentControlAtLevel(l, createIfNecessary: false) {
