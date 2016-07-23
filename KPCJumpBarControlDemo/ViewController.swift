@@ -36,7 +36,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
             let segment1Item0 = JumpBarItem.item(withTitle:"path 0.0", icon:NSImage(named:"Polygon"))
             let segment1Item1 = JumpBarItem.item(withTitle:"path 0.1", icon:NSImage(named:"Rectangle"))
             let separatorItem = JumpBarItem.separatorItem()
-            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.3 - toggle items tree", icon:NSImage(named:"Triangle"))
+            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.3 - switch to another trees", icon:NSImage(named:"Triangle"))
             
             rootSegment.children = [segment1Item0, segment1Item1, separatorItem, segment1Item2]
             
@@ -57,7 +57,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
             let segment2Item0 = JumpBarItem.item(withTitle:"path 1.0.0", icon:NSImage(named:"Spiral"))
             segment1Item0.children = [segment2Item0]
             
-            let segment3Item0 = JumpBarItem.item(withTitle:"path 1.0.0.0 - toggle items tree", icon:NSImage(named:"Triangle"))
+            let segment3Item0 = JumpBarItem.item(withTitle:"path 1.0.0.0 - switch to another trees", icon:NSImage(named:"Triangle"))
             segment2Item0.children = [segment3Item0]
             
             self.jumpBar?.useItemsTree([rootSegment0, rootSegment1])
