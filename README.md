@@ -1,12 +1,24 @@
+<h3 align="center">
+    <img src="http://onekilopars.ec/s/OnekiloparsecProComponents.png" width="90%" />
+</h3>
+<p align="center">
+  <a href="https://github.com/onekiloparsec/KPCTabsControl">KPCTabsControl</a> &bull;
+  <b>KPCJumpBarControl</b> &bull;
+  <a href="https://github.com/onekiloparsec/KPCSplitPanes">KPCSplitPanes</a>
+</p>
+
+-------
+
+KPCJumpBarControl
+==============
+
+
 [![Build Status](http://img.shields.io/travis/onekiloparsec/KPCJumpBarControl.svg?style=flat)](https://travis-ci.org/onekiloparsec/KPCJumpBarControl)
 ![Version](https://img.shields.io/cocoapods/v/KPCJumpBarControl.svg?style=flat)
 ![License](https://img.shields.io/cocoapods/l/KPCJumpBarControl.svg?style=flat)
 ![Platform](https://img.shields.io/cocoapods/p/KPCJumpBarControl.svg?style=flat)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-
-KPCJumpBarControl
-==============
 
 A jump bar similar to Xcode's allowing to easily display and navigate across a tree of objects.
 
