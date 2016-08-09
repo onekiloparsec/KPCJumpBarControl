@@ -59,8 +59,7 @@ Highlighting
 ------------
 
 The jump bar control support the possibility to be highlighted. This is useful when you have multiple subviews, each with
-jump bars, and you need to indicate to the user which subview is actually 'active'. (In the screenshot above, the upper
-bar has a darker background than the lower ones).
+jump bars, and you need to indicate to the user which subview is actually 'active'. 
 
 
 Author
