@@ -1,5 +1,5 @@
 <h3 align="center">
-    <img src="http://onekilopars.ec/s/OnekiloparsecProComponents.png" width="90%" />
+    <img src="http://onekilopars.ec/s/1kpcProComponents.png" width="100%" />
 </h3>
 <p align="center">
   <a href="https://github.com/onekiloparsec/KPCTabsControl">KPCTabsControl</a> &bull;
