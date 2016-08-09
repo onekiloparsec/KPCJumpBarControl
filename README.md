@@ -58,8 +58,7 @@ For instance:
 Highlighting
 ------------
 
-The jump bar control support the possibility to be highlighted. This is useful when you have multiple subviews, each with
-jump bars, and you need to indicate to the user which subview is actually 'active'. 
+The jump bar control support the possibility to be highlighted. This is useful when you have multiple subviews, for instance using <a href="https://github.com/onekiloparsec/KPCSplitPanes">KPCSplitPanes</a>, each with jump bars, and you need to indicate to the user which subview is actually 'active'. 
 
 
 Author
