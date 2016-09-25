@@ -9,6 +9,5 @@ Pod::Spec.new do |s|
   s.source_files = 'KPCJumpBarControl/*.{swift,h}'
   s.platform     = :osx, '10.11'
   s.framework    = 'QuartzCore', 'AppKit'
-  s.requires_arc = true
   s.resources    = 'Resources/*.pdf'
 end
