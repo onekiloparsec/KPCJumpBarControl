@@ -15,7 +15,7 @@
 KPCJumpBarControl
 ==============
 
-
+![](https://img.shields.io/badge/Swift-3.0-blue.svg?style=flat)
 [![Build Status](http://img.shields.io/travis/onekiloparsec/KPCJumpBarControl.svg?style=flat)](https://travis-ci.org/onekiloparsec/KPCJumpBarControl)
 ![Version](https://img.shields.io/cocoapods/v/KPCJumpBarControl.svg?style=flat)
 ![License](https://img.shields.io/cocoapods/l/KPCJumpBarControl.svg?style=flat)
