@@ -8,15 +8,14 @@
 
 import AppKit
 
-enum IndexPathError: Error {
+public enum IndexPathError: Error {
     case empty(String)
     case invalid(String)
 }
 
-let KPCJumpBarControlAccessoryMenuLabelTag: NSInteger = -1;
-let KPCJumpBarControlTag: NSInteger = -9999999;
-
 open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
+    let KPCJumpBarControlTag: NSInteger = -9999999;
+
     open weak var delegate: JumpBarControlDelegate? = nil
     open fileprivate(set) var selectedIndexPath: IndexPath? = nil
     
