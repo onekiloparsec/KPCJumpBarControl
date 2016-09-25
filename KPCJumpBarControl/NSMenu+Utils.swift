@@ -36,19 +36,19 @@ extension NSImage {
         
         if (self.isValid) {
             if self.size.width == newSize.width && self.size.height == newSize.height {
-                return self;
+                return self
             }
         }
         
-        let oldRect = NSMakeRect(0.0, 0.0, self.size.width, self.size.height);
-        let newRect = NSMakeRect(0,0,newSize.width,newSize.height);
+        let oldRect = NSMakeRect(0.0, 0.0, self.size.width, self.size.height)
+        let newRect = NSMakeRect(0,0,newSize.width,newSize.height)
             
-        let newImage = NSImage(size: newSize);
+        let newImage = NSImage(size: newSize)
         newImage.lockFocus()
-        self.draw(in: newRect, from:oldRect, operation:.copy, fraction:1.0);
-        newImage.unlockFocus();
+        self.draw(in: newRect, from:oldRect, operation:.copy, fraction:1.0)
+        newImage.unlockFocus()
         
-        return newImage;
+        return newImage
     }
 }
 
@@ -86,7 +86,7 @@ extension NSMenu {
             }
         }
         
-        return menu;
+        return menu
     }
     
     func menuItemAtIndexPath(_ indexPath: IndexPath?) -> NSMenuItem? {
@@ -94,29 +94,29 @@ extension NSMenu {
             return nil
         }
         
-        var currentMenu: NSMenu? = self;
-        let lastPosition = ip.count - 1;
+        var currentMenu: NSMenu? = self
+        let lastPosition = ip.count - 1
         
         // Do not take last position.
         for position in 0..<lastPosition {
             var index = ip.index(position, offsetBy: 0)
             if index >= currentMenu?.numberOfItems {
-                index = 0;
+                index = 0
             }
-            let item = currentMenu?.item(at: index);
-            currentMenu = item?.submenu;
+            let item = currentMenu?.item(at: index)
+            currentMenu = item?.submenu
         }
         
         var lastIndex = ip.index(lastPosition, offsetBy: 0)
         if lastIndex >= currentMenu?.numberOfItems {
-            lastIndex = 0;
+            lastIndex = 0
         }
         
         if lastIndex >= currentMenu?.numberOfItems {
-            print("Last menu index %ld is out of bounds in items array of menu %@", lastIndex, currentMenu);
-            return nil;
+            print("Last menu index %ld is out of bounds in items array of menu %@", lastIndex, currentMenu)
+            return nil
         }
         
-        return currentMenu?.item(at: lastIndex);
+        return currentMenu?.item(at: lastIndex)
     }
 }

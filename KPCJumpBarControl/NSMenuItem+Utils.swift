@@ -28,6 +28,6 @@ extension NSMenuItem {
             }
         }
         
-        return indexPath;
+        return indexPath
     }
 }

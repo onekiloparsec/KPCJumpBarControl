@@ -9,8 +9,8 @@
 import AppKit
 
 let KPCJumpBarItemControlAccessoryMenuLabelTag: NSInteger = -1
-let KPCJumpBarItemControlMargin: CGFloat = 4.0;
-let KPCJumpBarItemIconMaxHeight: CGFloat = 16.0;
+let KPCJumpBarItemControlMargin: CGFloat = 4.0
+let KPCJumpBarItemIconMaxHeight: CGFloat = 16.0
 
 protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
     func jumpBarSegmentControlDidReceiveMouseDown(_ segmentControl: JumpBarSegmentControl)
@@ -27,22 +27,22 @@ class JumpBarSegmentControl : NSControl {
     override func sizeToFit() {
         super.sizeToFit()
 
-        var width: CGFloat = (2 + (self.representedObject?.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin;
+        var width: CGFloat = (2 + (self.representedObject?.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin
 
         if self.representedObject?.title.characters.count > 0 {
             let textSize = self.representedObject?.title.size(withAttributes: self.attributes())
-            width += ceil(textSize!.width);
+            width += ceil(textSize!.width)
         }
         if self.representedObject?.icon != nil {
-            width += ceil(KPCJumpBarItemIconMaxHeight);
+            width += ceil(KPCJumpBarItemIconMaxHeight)
         }
         if (!self.isLastSegment) {
-            width += 7; //Separator image
+            width += 7 //Separator image
         }
         
-        var frame = self.frame;
-        frame.size.width = width;
-        self.frame = frame;
+        var frame = self.frame
+        frame.size.width = width
+        self.frame = frame
         
         self.setNeedsDisplay()
     }
@@ -52,13 +52,13 @@ class JumpBarSegmentControl : NSControl {
         let highlightShadow: NSShadow = NSShadow()
         highlightShadow.shadowOffset = CGSize(width: 0, height: -1.0)
         highlightShadow.shadowColor = NSColor(calibratedWhite: 1.0, alpha: 0.5)
-        highlightShadow.shadowBlurRadius = 0.0;
+        highlightShadow.shadowBlurRadius = 0.0
         
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = .byTruncatingMiddle
         
-        let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray;
-        let font = (self.isSelected) ? NSFont.boldSystemFont(ofSize: 13.0) : NSFont.systemFont(ofSize: 13.0);
+        let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray
+        let font = (self.isSelected) ? NSFont.boldSystemFont(ofSize: 13.0) : NSFont.systemFont(ofSize: 13.0)
         
         let attributes = [NSForegroundColorAttributeName: color,
                           NSShadowAttributeName : highlightShadow,
@@ -71,20 +71,20 @@ class JumpBarSegmentControl : NSControl {
     // MARK: Getter/Setters
     
     func minimumWidth() -> CGFloat {
-        var w = KPCJumpBarItemControlMargin + (self.isLastSegment == false ? 1 : 0) * 7;
+        var w = KPCJumpBarItemControlMargin + (self.isLastSegment == false ? 1 : 0) * 7
         if let img = self.representedObject?.icon {
-            w += img.size.width + KPCJumpBarItemControlMargin;
+            w += img.size.width + KPCJumpBarItemControlMargin
         }
         return w
     }
     
     func select() {
-        self.isSelected = true;
+        self.isSelected = true
         self.setNeedsDisplay()
     }
     
     func deselect() {
-        self.isSelected = false;
+        self.isSelected = false
         self.setNeedsDisplay()
     }
     
@@ -102,49 +102,49 @@ class JumpBarSegmentControl : NSControl {
     // MARK: Drawing
     
     override func draw(_ dirtyRect: NSRect) {
-        var baseLeft: CGFloat = 0;
-        let fraction: CGFloat = (self.isSelected) ? 1.0 : 0.9;
-        let attributes = self.attributes();
-        let bundle = Bundle(for: type(of: self));
+        var baseLeft: CGFloat = 0
+        let fraction: CGFloat = (self.isSelected) ? 1.0 : 0.9
+        let attributes = self.attributes()
+        let bundle = Bundle(for: type(of: self))
         
         if (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) {
             if let separatorImage = bundle.image(forResource: "KPCJumpBarAccessorySeparator") {
                 let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
                 let p: NSPoint = NSMakePoint(baseLeft + 1, self.frame.height/2.0-height/2.0)
                 separatorImage.draw(at: p, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
-                baseLeft += separatorImage.size.width + KPCJumpBarItemControlMargin;
+                baseLeft += separatorImage.size.width + KPCJumpBarItemControlMargin
             }
         }
         else {
-            baseLeft = KPCJumpBarItemControlMargin;
+            baseLeft = KPCJumpBarItemControlMargin
         }
         
         if let img = self.representedObject!.icon {
             let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
             let r = NSMakeRect(baseLeft, self.frame.height/2.0-height/2.0, height, height)
-            img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction);
-            baseLeft += ceil(height) + KPCJumpBarItemControlMargin;
+            img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction)
+            baseLeft += ceil(height) + KPCJumpBarItemControlMargin
         }
         
         if let obj = self.representedObject {
-            var width = self.frame.size.width - baseLeft - KPCJumpBarItemControlMargin;
+            var width = self.frame.size.width - baseLeft - KPCJumpBarItemControlMargin
             if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
-                width -= 7.0;
+                width -= 7.0
             }
         
             if (width > 0) {
-                let r = CGRect(x: baseLeft-1.0, y: 3.0, width: width, height: 20.0);
-                obj.title.draw(in: r, withAttributes:attributes);
-                baseLeft += width + KPCJumpBarItemControlMargin;
+                let r = CGRect(x: baseLeft-1.0, y: 3.0, width: width, height: 20.0)
+                obj.title.draw(in: r, withAttributes:attributes)
+                baseLeft += width + KPCJumpBarItemControlMargin
             }
         }
         
         if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
             if let separatorImage = bundle.image(forResource: "KPCJumpBarSeparator") {
-                let height = CGFloat(16.0);
-                let o = NSMakePoint(baseLeft-3, self.frame.height/2.0-height/2.0);
-                let r = NSMakeRect(o.x, o.y, 10.0, 16.0);
-                separatorImage.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction);
+                let height = CGFloat(16.0)
+                let o = NSMakePoint(baseLeft-3, self.frame.height/2.0-height/2.0)
+                let r = NSMakeRect(o.x, o.y, 10.0, 16.0)
+                separatorImage.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction)
             }
         }
     }

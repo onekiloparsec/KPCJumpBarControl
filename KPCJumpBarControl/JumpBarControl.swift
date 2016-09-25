@@ -13,8 +13,8 @@ public enum IndexPathError: Error {
     case invalid(String)
 }
 
-open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
-    let KPCJumpBarControlTag: NSInteger = -9999999;
+open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
+    let KPCJumpBarControlTag: NSInteger = -9999999
 
     open weak var delegate: JumpBarControlDelegate? = nil
     open fileprivate(set) var selectedIndexPath: IndexPath? = nil
@@ -62,12 +62,12 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     }
 
     fileprivate func setup() {
-        self.tag = KPCJumpBarControlTag;
-        self.isEnabled = true;
+        self.tag = KPCJumpBarControlTag
+        self.isEnabled = true
     }
 
     override open func menu(for event: NSEvent) -> NSMenu? {
-        return nil;
+        return nil
     }
     
     // MARK: - Window
@@ -105,7 +105,7 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree, target:self, action:#selector(JumpBarControl.selectJumpBarControlItem(_:)))
         
-        self.layoutSegments();
+        self.layoutSegments()
         
         if self.menu?.items.count > 0 {
             self.selectJumpBarControlItem(self.menu!.items.first!)
@@ -172,7 +172,7 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     fileprivate func layoutSegmentsIfNeeded(withNewSize size:CGSize) {
 
         if (self.hasCompressedSegments)  {
-            self.layoutSegments(); // always layout segments when compressed.
+            self.layoutSegments() // always layout segments when compressed.
         }
         else {
             if let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.count-1, createIfNecessary: false) {
@@ -193,7 +193,7 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         
         self.hasCompressedSegments = self.frame.width < totalWidth
         
-        var originX = CGFloat(0);
+        var originX = CGFloat(0)
         var widthReduction = CGFloat(0)
         
         if self.hasCompressedSegments {
@@ -226,7 +226,7 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
             segment.select()
             
             let item = currentMenu!.item(at: index)
-            segment.representedObject = item!.representedObject as? JumpBarItemProtocol;
+            segment.representedObject = item!.representedObject as? JumpBarItemProtocol
             currentMenu = item!.submenu
             
             segment.sizeToFit()
@@ -241,28 +241,28 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     override open func draw(_ dirtyRect: NSRect) {
     
         var newRect = dirtyRect
-        newRect.size.height = self.bounds.size.height;
-        newRect.origin.y = 0;
+        newRect.size.height = self.bounds.size.height
+        newRect.origin.y = 0
     
-        var mainGradient: NSGradient? = nil;
+        var mainGradient: NSGradient? = nil
         if (!self.isSelected || !self.isEnabled || !(self.window?.isKeyWindow)!) {
             mainGradient = NSGradient(starting:NSColor(calibratedWhite:0.96, alpha:1.0),
-                                      ending:NSColor(calibratedWhite:0.94, alpha:1.0));                
+                                      ending:NSColor(calibratedWhite:0.94, alpha:1.0))                
         }
         else {
             mainGradient = NSGradient(starting:NSColor(calibratedWhite:0.85, alpha:1.0),
-                                      ending:NSColor(calibratedWhite:0.83, alpha:1.0));
+                                      ending:NSColor(calibratedWhite:0.83, alpha:1.0))
         }
     
-        mainGradient!.draw(in: newRect, angle:-90);
+        mainGradient!.draw(in: newRect, angle:-90)
     
         NSColor(calibratedWhite:0.7, alpha:1.0).set()
         // bottom line
-        newRect.size.height = 1;
-        NSRectFill(newRect);
+        newRect.size.height = 1
+        NSRectFill(newRect)
         // top line
-        newRect.origin.y = self.frame.size.height - 1;
-        NSRectFill(newRect);
+        newRect.origin.y = self.frame.size.height - 1
+        NSRectFill(newRect)
     }
     
     
@@ -270,14 +270,14 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
     fileprivate func segmentControlAtLevel(_ level: Int, createIfNecessary: Bool = true) -> JumpBarSegmentControl? {
         
-        var segmentControl: JumpBarSegmentControl? = self.viewWithTag(level) as! JumpBarSegmentControl?;
+        var segmentControl: JumpBarSegmentControl? = self.viewWithTag(level) as! JumpBarSegmentControl?
         
         if (segmentControl == nil || segmentControl == self) && createIfNecessary == true { // Check for == self is when at root.
             segmentControl = JumpBarSegmentControl()
-            segmentControl!.tag = level;
-            segmentControl!.frame = NSMakeRect(0, 0, 0, self.frame.size.height);
-            segmentControl!.delegate = self;
-            segmentControl!.isEnabled = self.isEnabled;
+            segmentControl!.tag = level
+            segmentControl!.frame = NSMakeRect(0, 0, 0, self.frame.size.height)
+            segmentControl!.delegate = self
+            segmentControl!.isEnabled = self.isEnabled
             self.addSubview(segmentControl!)
         }
         
@@ -292,8 +292,8 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
     
     func jumpBarSegmentControlDidReceiveMouseDown(_ segmentControl: JumpBarSegmentControl) {
         
-        let subIndexPath = self.selectedIndexPath!.prefix(through: segmentControl.tag); // To be inclusive, we use 'through' rather than 'upTo'
-        let clickedMenu = self.menu!.menuItemAtIndexPath(subIndexPath)!.menu;
+        let subIndexPath = self.selectedIndexPath!.prefix(through: segmentControl.tag) // To be inclusive, we use 'through' rather than 'upTo'
+        let clickedMenu = self.menu!.menuItemAtIndexPath(subIndexPath)!.menu
 
         var items = [JumpBarItemProtocol]()
         for menuItem in clickedMenu!.items {
@@ -303,16 +303,16 @@ open class JumpBarControl : NSControl, JumpBarSegmentControlDelegate {
         self.delegate?.jumpBarControl(self, willOpenMenuAtIndexPath:subIndexPath, withItems:items)
         
         // Avoid to call menuWillOpen: as it will duplicate with popUpMenuPositioningItem:...
-        let menuDelegate = clickedMenu!.delegate;
-        clickedMenu!.delegate = nil;
+        let menuDelegate = clickedMenu!.delegate
+        clickedMenu!.delegate = nil
     
-        let xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) ? CGFloat(-9) : CGFloat(-16);
+        let xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) ? CGFloat(-9) : CGFloat(-16)
         
         clickedMenu!.popUp(positioning: clickedMenu?.item(at: segmentControl.indexInPath),
                            at:NSMakePoint(xPoint, segmentControl.frame.size.height - 4),
                            in:segmentControl)
 
-        clickedMenu!.delegate = menuDelegate;
+        clickedMenu!.delegate = menuDelegate
 
         items = [JumpBarItemProtocol]()
         for menuItem in clickedMenu!.items {
