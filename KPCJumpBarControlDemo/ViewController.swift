@@ -36,7 +36,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
             let segment1Item0 = JumpBarItem.item(withTitle:"path 0.0", icon:NSImage(named:"Polygon"))
             let segment1Item1 = JumpBarItem.item(withTitle:"path 0.1", icon:NSImage(named:"Rectangle"))
             let separatorItem = JumpBarItem.separatorItem()
-            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.3 - switch to another trees", icon:NSImage(named:"Triangle"))
+            let segment1Item2 = JumpBarItem.item(withTitle:"path 0.3 - switch to another tree", icon:NSImage(named:"Triangle"))
             
             rootSegment.children = [segment1Item0, segment1Item1, separatorItem, segment1Item2]
             
@@ -57,7 +57,7 @@ class ViewController: NSViewController, JumpBarControlDelegate {
             let segment2Item0 = JumpBarItem.item(withTitle:"path 1.0.0", icon:NSImage(named:"Spiral"))
             segment1Item0.children = [segment2Item0]
             
-            let segment3Item0 = JumpBarItem.item(withTitle:"path 1.0.0.0 - switch to another trees", icon:NSImage(named:"Triangle"))
+            let segment3Item0 = JumpBarItem.item(withTitle:"path 1.0.0.0 - switch to another tree", icon:NSImage(named:"Triangle"))
             segment2Item0.children = [segment3Item0]
             
             self.jumpBar?.useItemsTree([rootSegment0, rootSegment1])
@@ -66,26 +66,26 @@ class ViewController: NSViewController, JumpBarControlDelegate {
 
     // MARK: - JumpBarControlDelegate
 
-     func jumpBarControl(jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath: NSIndexPath, withItems items: Array<JumpBarItemProtocol>) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath: IndexPath, withItems items: Array<JumpBarItemProtocol>) {
         print(#function)
     }
 
-     func jumpBarControl(jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath: NSIndexPath, withItems items: Array<JumpBarItemProtocol>) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath: IndexPath, withItems items: Array<JumpBarItemProtocol>) {
         print(#function)
     }
 
-     func jumpBarControl(jumpBar: JumpBarControl, willSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: NSIndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: IndexPath) {
         print(#function)
     }
 
-     func jumpBarControl(jumpBar: JumpBarControl, didSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: NSIndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: IndexPath) {
         print(#function)
         
         self.selectedItemIcon?.image = item.icon
         self.selectedItemTitle?.stringValue = item.title
         self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
         
-        if indexPath == NSIndexPath(indexes: [0, 3], length: 2) || indexPath == NSIndexPath(indexes: [1, 0, 0, 0], length: 4) {
+        if indexPath == IndexPath(indexes: [0, 3]) || indexPath == IndexPath(indexes: [1, 0, 0, 0]) {
             swap = !swap
             self.swapItemsTree()
         }

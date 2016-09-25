@@ -17,11 +17,11 @@ public protocol JumpBarItemProtocol: NSObjectProtocol {
     var isSeparator: Bool { get }
 }
 
-public class JumpBarItem: NSObject, JumpBarItemProtocol {
-    public var title: String = ""
-    public var icon: NSImage? = nil
-    public var children: Array<JumpBarItemProtocol>? = nil
-    public private(set) var isSeparator: Bool = false
+open class JumpBarItem: NSObject, JumpBarItemProtocol {
+    open var title: String = ""
+    open var icon: NSImage? = nil
+    open var children: Array<JumpBarItemProtocol>? = nil
+    open fileprivate(set) var isSeparator: Bool = false
     
     init(withTitle title: String, icon: NSImage?) {
         self.title = title
@@ -29,11 +29,11 @@ public class JumpBarItem: NSObject, JumpBarItemProtocol {
         self.children = []
     }
     
-    static public func item(withTitle title: String, icon: NSImage?) -> JumpBarItem {
+    static open func item(withTitle title: String, icon: NSImage?) -> JumpBarItem {
         return JumpBarItem(withTitle: title, icon: icon)
     }
     
-    static public func separatorItem() -> JumpBarItem {
+    static open func separatorItem() -> JumpBarItem {
         let item = JumpBarItem(withTitle: "", icon: nil)
         item.isSeparator = true
         item.children = nil

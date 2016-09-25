@@ -32,9 +32,9 @@ class MenuItem: NSMenuItem {
 
 extension NSImage {
     
-    func scaleToSize(newSize: NSSize) -> NSImage {
+    func scaleToSize(_ newSize: NSSize) -> NSImage {
         
-        if (self.valid) {
+        if (self.isValid) {
             if self.size.width == newSize.width && self.size.height == newSize.height {
                 return self;
             }
@@ -45,7 +45,7 @@ extension NSImage {
             
         let newImage = NSImage(size: newSize);
         newImage.lockFocus()
-        self.drawInRect(newRect, fromRect:oldRect, operation:.CompositeCopy, fraction:1.0);
+        self.draw(in: newRect, from:oldRect, operation:.copy, fraction:1.0);
         newImage.unlockFocus();
         
         return newImage;
@@ -54,24 +54,24 @@ extension NSImage {
 
 extension NSMenu {
     
-    static func menuWithSegmentsTree(segmentsTree: Array<JumpBarItemProtocol>, target: AnyObject, action: Selector) -> NSMenu {
+    static func menuWithSegmentsTree(_ segmentsTree: Array<JumpBarItemProtocol>, target: AnyObject, action: Selector) -> NSMenu {
         let menu = NSMenu()
         menu.autoenablesItems = true
         
-        for (idx, segment) in segmentsTree.enumerate() {
+        for (idx, segment) in segmentsTree.enumerated() {
             
             if idx == 0 {
                 menu.title = segment.title
             }
         
             if segment.isSeparator {
-                let item = NSMenuItem.separatorItem()
+                let item = NSMenuItem.separator()
                 item.representedObject = segment
                 menu.addItem(item)
             }
             else {
                 let item = MenuItem()
-                item.enabled = true
+                item.isEnabled = true
                 item.representedObject = segment
                 item.target = target
                 item.action = action
@@ -81,7 +81,7 @@ extension NSMenu {
             
                 if segment.children?.count > 0 {
                     let submenu = NSMenu.menuWithSegmentsTree(segment.children!, target:target, action:action)
-                    menu.setSubmenu(submenu, forItem: item)
+                    menu.setSubmenu(submenu, for: item)
                 }
             }
         }
@@ -89,25 +89,25 @@ extension NSMenu {
         return menu;
     }
     
-    func menuItemAtIndexPath(indexPath: NSIndexPath?) -> NSMenuItem? {
+    func menuItemAtIndexPath(_ indexPath: IndexPath?) -> NSMenuItem? {
         guard let ip = indexPath else {
             return nil
         }
         
         var currentMenu: NSMenu? = self;
-        let lastPosition = ip.length - 1;
+        let lastPosition = ip.count - 1;
         
         // Do not take last position.
         for position in 0..<lastPosition {
-            var index = ip.indexAtPosition(position);
+            var index = ip.index(position, offsetBy: 0)
             if index >= currentMenu?.numberOfItems {
                 index = 0;
             }
-            let item = currentMenu?.itemAtIndex(index);
+            let item = currentMenu?.item(at: index);
             currentMenu = item?.submenu;
         }
         
-        var lastIndex = ip.indexAtPosition(lastPosition);
+        var lastIndex = ip.index(lastPosition, offsetBy: 0)
         if lastIndex >= currentMenu?.numberOfItems {
             lastIndex = 0;
         }
@@ -117,6 +117,6 @@ extension NSMenu {
             return nil;
         }
         
-        return currentMenu?.itemAtIndex(lastIndex);
+        return currentMenu?.item(at: lastIndex);
     }
 }

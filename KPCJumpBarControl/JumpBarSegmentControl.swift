@@ -13,7 +13,7 @@ let KPCJumpBarItemControlMargin: CGFloat = 4.0;
 let KPCJumpBarItemIconMaxHeight: CGFloat = 16.0;
 
 protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
-    func jumpBarSegmentControlDidReceiveMouseDown(segmentControl: JumpBarSegmentControl)
+    func jumpBarSegmentControlDidReceiveMouseDown(_ segmentControl: JumpBarSegmentControl)
 }
 
 class JumpBarSegmentControl : NSControl {
@@ -30,7 +30,7 @@ class JumpBarSegmentControl : NSControl {
         var width: CGFloat = (2 + (self.representedObject?.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin;
 
         if self.representedObject?.title.characters.count > 0 {
-            let textSize = self.representedObject?.title.sizeWithAttributes(self.attributes())
+            let textSize = self.representedObject?.title.size(withAttributes: self.attributes())
             width += ceil(textSize!.width);
         }
         if self.representedObject?.icon != nil {
@@ -47,18 +47,18 @@ class JumpBarSegmentControl : NSControl {
         self.setNeedsDisplay()
     }
     
-    private func attributes() -> [String: AnyObject] {
+    fileprivate func attributes() -> [String: AnyObject] {
         
         let highlightShadow: NSShadow = NSShadow()
-        highlightShadow.shadowOffset = CGSizeMake(0, -1.0)
+        highlightShadow.shadowOffset = CGSize(width: 0, height: -1.0)
         highlightShadow.shadowColor = NSColor(calibratedWhite: 1.0, alpha: 0.5)
         highlightShadow.shadowBlurRadius = 0.0;
         
         let style = NSMutableParagraphStyle()
-        style.lineBreakMode = .ByTruncatingMiddle
+        style.lineBreakMode = .byTruncatingMiddle
         
-        let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGrayColor();
-        let font = (self.isSelected) ? NSFont.boldSystemFontOfSize(13.0) : NSFont.systemFontOfSize(13.0);
+        let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray;
+        let font = (self.isSelected) ? NSFont.boldSystemFont(ofSize: 13.0) : NSFont.systemFont(ofSize: 13.0);
         
         let attributes = [NSForegroundColorAttributeName: color,
                           NSShadowAttributeName : highlightShadow,
@@ -90,10 +90,10 @@ class JumpBarSegmentControl : NSControl {
     
     // MARK: Delegate
     
-    override func mouseDown(theEvent: NSEvent) {
-        super.mouseDown(theEvent)
+    override func mouseDown(with theEvent: NSEvent) {
+        super.mouseDown(with: theEvent)
     
-        if (self.enabled) {
+        if (self.isEnabled) {
             self.delegate?.jumpBarSegmentControlDidReceiveMouseDown(self)
         }
     }
@@ -101,17 +101,17 @@ class JumpBarSegmentControl : NSControl {
     
     // MARK: Drawing
     
-    override func drawRect(dirtyRect: NSRect) {
+    override func draw(_ dirtyRect: NSRect) {
         var baseLeft: CGFloat = 0;
         let fraction: CGFloat = (self.isSelected) ? 1.0 : 0.9;
         let attributes = self.attributes();
-        let bundle = NSBundle(forClass: self.dynamicType);
+        let bundle = Bundle(for: type(of: self));
         
         if (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.imageForResource("KPCJumpBarAccessorySeparator") {
-                let height = min(KPCJumpBarItemIconMaxHeight, CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin)
-                let p: NSPoint = NSMakePoint(baseLeft + 1, CGRectGetHeight(self.frame)/2.0-height/2.0)
-                separatorImage.drawAtPoint(p, fromRect: NSZeroRect, operation: .CompositeSourceOver, fraction: fraction)
+            if let separatorImage = bundle.image(forResource: "KPCJumpBarAccessorySeparator") {
+                let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
+                let p: NSPoint = NSMakePoint(baseLeft + 1, self.frame.height/2.0-height/2.0)
+                separatorImage.draw(at: p, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
                 baseLeft += separatorImage.size.width + KPCJumpBarItemControlMargin;
             }
         }
@@ -120,9 +120,9 @@ class JumpBarSegmentControl : NSControl {
         }
         
         if let img = self.representedObject!.icon {
-            let height = min(KPCJumpBarItemIconMaxHeight, CGRectGetHeight(self.frame) - 2*KPCJumpBarItemControlMargin)
-            let r = NSMakeRect(baseLeft, CGRectGetHeight(self.frame)/2.0-height/2.0, height, height)
-            img.drawInRect(r, fromRect:NSZeroRect, operation: .CompositeSourceOver, fraction:fraction);
+            let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
+            let r = NSMakeRect(baseLeft, self.frame.height/2.0-height/2.0, height, height)
+            img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction);
             baseLeft += ceil(height) + KPCJumpBarItemControlMargin;
         }
         
@@ -133,18 +133,18 @@ class JumpBarSegmentControl : NSControl {
             }
         
             if (width > 0) {
-                let r = CGRectMake(baseLeft-1.0, 3.0, width, 20.0);
-                obj.title.drawInRect(r, withAttributes:attributes);
+                let r = CGRect(x: baseLeft-1.0, y: 3.0, width: width, height: 20.0);
+                obj.title.draw(in: r, withAttributes:attributes);
                 baseLeft += width + KPCJumpBarItemControlMargin;
             }
         }
         
         if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.imageForResource("KPCJumpBarSeparator") {
+            if let separatorImage = bundle.image(forResource: "KPCJumpBarSeparator") {
                 let height = CGFloat(16.0);
-                let o = NSMakePoint(baseLeft-3, CGRectGetHeight(self.frame)/2.0-height/2.0);
+                let o = NSMakePoint(baseLeft-3, self.frame.height/2.0-height/2.0);
                 let r = NSMakeRect(o.x, o.y, 10.0, 16.0);
-                separatorImage.drawInRect(r, fromRect:NSZeroRect, operation: .CompositeSourceOver, fraction:fraction);
+                separatorImage.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction);
             }
         }
     }
