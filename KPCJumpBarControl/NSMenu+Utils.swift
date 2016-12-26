@@ -113,7 +113,7 @@ extension NSMenu {
         }
         
         if lastIndex >= currentMenu?.numberOfItems {
-            print("Last menu index %ld is out of bounds in items array of menu %@", lastIndex, currentMenu)
+            Swift.print("Last menu index \(lastIndex) is out of bounds in items array of menu \(currentMenu)")
             return nil
         }
         
