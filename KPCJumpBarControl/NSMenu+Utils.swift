@@ -90,33 +90,15 @@ extension NSMenu {
     }
     
     func menuItemAtIndexPath(_ indexPath: IndexPath?) -> NSMenuItem? {
-        guard let ip = indexPath else {
+        guard var ip = indexPath, ip.count > 0 else {
             return nil
         }
         
-        var currentMenu: NSMenu? = self
-        let lastPosition = ip.count - 1
-        
-        // Do not take last position.
-        for position in 0..<lastPosition {
-            var index = ip.index(position, offsetBy: 0)
-            if index >= currentMenu?.numberOfItems {
-                index = 0
-            }
-            let item = currentMenu?.item(at: index)
-            currentMenu = item?.submenu
+        let currentItem: NSMenuItem? = self.item(at: ip.popFirst()!)
+        let menuItem: NSMenuItem? = ip.reduce(currentItem) { (result, index) -> NSMenuItem? in
+            return result?.submenu?.item(at: index)
         }
         
-        var lastIndex = ip.index(lastPosition, offsetBy: 0)
-        if lastIndex >= currentMenu?.numberOfItems {
-            lastIndex = 0
-        }
-        
-        if lastIndex >= currentMenu?.numberOfItems {
-            Swift.print("Last menu index \(lastIndex) is out of bounds in items array of menu \(currentMenu)")
-            return nil
-        }
-        
-        return currentMenu?.item(at: lastIndex)
+        return menuItem        
     }
 }
