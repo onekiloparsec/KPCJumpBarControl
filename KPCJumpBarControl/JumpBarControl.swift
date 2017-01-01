@@ -175,7 +175,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             self.layoutSegments() // always layout segments when compressed.
         }
         else {
-            if let lastSegmentControl = self.segmentControlAtLevel(self.selectedIndexPath!.count-1, createIfNecessary: false) {
+            if let indexPath = self.selectedIndexPath,
+                let lastSegmentControl = self.segmentControlAtLevel(indexPath.count-1, createIfNecessary: false)
+            {
                 let maxNewControlWidth = size.width
                 let currentControlWidth = lastSegmentControl.frame.maxX
                 if (currentControlWidth > maxNewControlWidth) {
@@ -186,6 +188,10 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     }
     
     fileprivate func layoutSegments() {
+        guard self.selectedIndexPath?.count > 0 else {
+            return
+        }
+        
         let totalWidth = self.prepareSegmentsLayout()
         if totalWidth <= 0 {
             return
@@ -269,6 +275,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     // MARK: - Helpers
     
     fileprivate func segmentControlAtLevel(_ level: Int, createIfNecessary: Bool = true) -> JumpBarSegmentControl? {
+        guard level >= 0 else {
+            return nil
+        }
         
         var segmentControl: JumpBarSegmentControl? = self.viewWithTag(level) as! JumpBarSegmentControl?
         
