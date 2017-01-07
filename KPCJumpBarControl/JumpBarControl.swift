@@ -262,13 +262,13 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     
         mainGradient!.draw(in: newRect, angle:-90)
     
-        NSColor(calibratedWhite:0.7, alpha:1.0).set()
-        // bottom line
-        newRect.size.height = 1
-        NSRectFill(newRect)
-        // top line
-        newRect.origin.y = self.frame.size.height - 1
-        NSRectFill(newRect)
+//        NSColor(calibratedWhite:0.7, alpha:1.0).set()
+//        // bottom line
+//        newRect.size.height = 1
+//        NSRectFill(newRect)
+//        // top line
+//        newRect.origin.y = self.frame.size.height - 1
+//        NSRectFill(newRect)
     }
     
     
@@ -318,7 +318,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         let xPoint = (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) ? CGFloat(-9) : CGFloat(-16)
         
         clickedMenu!.popUp(positioning: clickedMenu?.item(at: segmentControl.indexInPath),
-                           at:NSMakePoint(xPoint, segmentControl.frame.size.height - 4),
+                           at:NSMakePoint(xPoint, segmentControl.frame.size.height - 2),
                            in:segmentControl)
 
         clickedMenu!.delegate = menuDelegate

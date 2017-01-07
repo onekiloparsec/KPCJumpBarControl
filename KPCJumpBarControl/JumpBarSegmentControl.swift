@@ -133,7 +133,8 @@ class JumpBarSegmentControl : NSControl {
             }
         
             if (width > 0) {
-                let r = CGRect(x: baseLeft-1.0, y: 3.0, width: width, height: 20.0)
+                let height = CGFloat(20.0)
+                let r = CGRect(x: baseLeft-1.0, y: (self.bounds.height-height)/2.0-1, width: width, height: height)
                 obj.title.draw(in: r, withAttributes:attributes)
                 baseLeft += width + KPCJumpBarItemControlMargin
             }
