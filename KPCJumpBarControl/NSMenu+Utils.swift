@@ -11,8 +11,8 @@ import AppKit
 class MenuItem: NSMenuItem {
     override internal var image: NSImage? {
         get {
-            if let obj: JumpBarItemProtocol = self.representedObject as? JumpBarItemProtocol {
-                return obj.icon?.scaleToSize(NSMakeSize(KPCJumpBarItemIconMaxHeight, KPCJumpBarItemIconMaxHeight))
+            if let obj: JumpBarSegmenting = self.representedObject as? JumpBarSegmenting {
+                return obj.segmentIcon?.scaleToSize(NSMakeSize(KPCJumpBarItemIconMaxHeight, KPCJumpBarItemIconMaxHeight))
             }
             return nil
         }
@@ -21,8 +21,8 @@ class MenuItem: NSMenuItem {
 
     override internal var title: String {
         get {
-            if let obj: JumpBarItemProtocol = self.representedObject as? JumpBarItemProtocol {
-                return obj.title
+            if let obj: JumpBarSegmenting = self.representedObject as? JumpBarSegmenting {
+                return obj.segmentTitle
             }
             return ""
         }
@@ -54,18 +54,18 @@ extension NSImage {
 
 extension NSMenu {
     
-    static func menuWithSegmentsTree(_ segmentsTree: Array<JumpBarItemProtocol>, target: AnyObject, action: Selector) -> NSMenu {
+    static func menuWithSegmentsTree(_ segmentsTree: [JumpBarSegmenting], target: AnyObject, action: Selector) -> NSMenu {
         let menu = NSMenu()
         menu.autoenablesItems = true
         
         for (idx, segment) in segmentsTree.enumerated() {
             
             if idx == 0 {
-                menu.title = segment.title
+                menu.title = segment.segmentTitle
             }
         
-            if segment.isSeparator {
-                let item = NSMenuItem.separator()
+            if segment.isSegmentSeparator {
+                let item = MenuItem.separator()
                 item.representedObject = segment
                 menu.addItem(item)
             }
@@ -79,8 +79,8 @@ extension NSMenu {
                 
                 menu.addItem(item)
             
-                if segment.children?.count > 0 {
-                    let submenu = NSMenu.menuWithSegmentsTree(segment.children!, target:target, action:action)
+                if segment.segmentChildren?.count > 0 {
+                    let submenu = NSMenu.menuWithSegmentsTree(segment.segmentChildren!, target:target, action:action)
                     menu.setSubmenu(submenu, for: item)
                 }
             }

@@ -40,15 +40,15 @@ Usage
 -----
 
 KPCJumpBarControl is designed for you to use only the `JumpBarControl` class, and fill it with a tree of object
-conforming to `JumpBarItemProtocol`. A helper class `JumpBarItem` is here for that, if you need one. 
+conforming to `JumpBarSegmenting`. A helper class `JumpBarSegment` is here for that, if you need one. 
 Simply place a `NSView` in a storyboard or xib, where you need a jump bar, change its class to `JumpBarControl` and
 that's it. To react when the jumbpar selection change, implement the `JumpBarControlDelegate` methods.
 
 For instance:
 ```swift 
-    let rootSegment = JumpBarItem.item(withTitle:"level 0", icon:NSImage(named:"Oval"))
-    let segment1Item0 = JumpBarItem.item(withTitle:"level 1.0", icon:NSImage(named:"Polygon"))
-    let segment1Item1 = JumpBarItem.item(withTitle:"level 1.1", icon:NSImage(named:"Rectangle"))
+    let rootSegment = JumpBarSegment(withTitle:"level 0", icon:NSImage(named:"Oval"))
+    let segment1Item0 = JumpBarSegment(withTitle:"level 1.0", icon:NSImage(named:"Polygon"))
+    let segment1Item1 = JumpBarSegment(withTitle:"level 1.1", icon:NSImage(named:"Rectangle"))
  
     rootSegment.children = [segment1Item0, segment1Item1]
   
