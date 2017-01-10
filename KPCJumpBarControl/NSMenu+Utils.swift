@@ -54,12 +54,14 @@ extension NSImage {
 
 extension NSMenu {
     
-    static func menuWithSegmentsTree(_ segmentsTree: [JumpBarSegmenting], target: AnyObject, action: Selector) -> NSMenu {
+    static func menuWithSegmentsTree(_ segmentsTree: [JumpBarSegmenting],
+                                     target: AnyObject,
+                                     action: Selector) -> NSMenu {
         let menu = NSMenu()
         menu.autoenablesItems = true
         
         for (idx, segment) in segmentsTree.enumerated() {
-            
+                        
             if idx == 0 {
                 menu.title = segment.segmentTitle
             }
@@ -80,7 +82,9 @@ extension NSMenu {
                 menu.addItem(item)
             
                 if segment.segmentChildren?.count > 0 {
-                    let submenu = NSMenu.menuWithSegmentsTree(segment.segmentChildren!, target:target, action:action)
+                    let submenu = NSMenu.menuWithSegmentsTree(segment.segmentChildren!,
+                                                              target:target,
+                                                              action:action)
                     menu.setSubmenu(submenu, for: item)
                 }
             }
