@@ -29,12 +29,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     let KPCJumpBarControlTag: NSInteger = -9999999
 
     open weak var delegate: JumpBarControlDelegate? = nil
-    
-    fileprivate var _selectedIndexPath: IndexPath? = nil
-    public fileprivate(set) var selectedIndexPath: IndexPath? {
-        get { return (self.binding == nil) ? self._selectedIndexPath : self.binding!.selectedIndexPath }
-        set { if (self.binding == nil) { self._selectedIndexPath = newValue } else {} }
-    }
+    public fileprivate(set) var selectedIndexPath: IndexPath?
     
     fileprivate var hasCompressedSegments: Bool = false
     fileprivate var isSelected: Bool = false
@@ -193,7 +188,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     }
     
     open func select(segmentItemAtIndexPath nextSelectedIndexPath: IndexPath) {
-        guard nextSelectedIndexPath == self.selectedIndexPath else {
+        guard nextSelectedIndexPath != self.selectedIndexPath else {
             return
         }
         if let nextSelectedItem = self.segmentItem(atIndexPath: nextSelectedIndexPath) {
