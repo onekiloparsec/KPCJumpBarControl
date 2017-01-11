@@ -21,19 +21,19 @@ class JumpBarSegmentControl : NSControl {
     var indexInPath: Int = 0
     var isSelected: Bool = false
 
-    var representedObject: JumpBarSegmenting? = nil
+    var representedObject: JumpBarItem? = nil
     var delegate: JumpBarSegmentControlDelegate? = nil
     
     override func sizeToFit() {
         super.sizeToFit()
 
-        var width: CGFloat = (2 + (self.representedObject?.segmentIcon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin
+        var width: CGFloat = (2 + (self.representedObject?.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin
 
-        if self.representedObject?.segmentTitle.characters.count > 0 {
-            let textSize = self.representedObject?.segmentTitle.size(withAttributes: self.attributes())
+        if self.representedObject?.title.characters.count > 0 {
+            let textSize = self.representedObject?.title.size(withAttributes: self.attributes())
             width += ceil(textSize!.width)
         }
-        if self.representedObject?.segmentIcon != nil {
+        if self.representedObject?.icon != nil {
             width += ceil(KPCJumpBarItemIconMaxHeight)
         }
         if (!self.isLastSegment) {
@@ -72,7 +72,7 @@ class JumpBarSegmentControl : NSControl {
     
     func minimumWidth() -> CGFloat {
         var w = KPCJumpBarItemControlMargin + (self.isLastSegment == false ? 1 : 0) * 7
-        if let img = self.representedObject?.segmentIcon {
+        if let img = self.representedObject?.icon {
             w += img.size.width + KPCJumpBarItemControlMargin
         }
         return w
@@ -119,7 +119,7 @@ class JumpBarSegmentControl : NSControl {
             baseLeft = KPCJumpBarItemControlMargin
         }
         
-        if let img = self.representedObject!.segmentIcon {
+        if let img = self.representedObject!.icon {
             let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
             let r = NSMakeRect(baseLeft, self.frame.height/2.0-height/2.0, height, height)
             img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction)
@@ -135,7 +135,7 @@ class JumpBarSegmentControl : NSControl {
             if (width > 0) {
                 let height = CGFloat(20.0)
                 let r = CGRect(x: baseLeft-1.0, y: (self.bounds.height-height)/2.0-1, width: width, height: height)
-                obj.segmentTitle.draw(in: r, withAttributes:attributes)
+                obj.title.draw(in: r, withAttributes:attributes)
                 baseLeft += width + KPCJumpBarItemControlMargin
             }
         }

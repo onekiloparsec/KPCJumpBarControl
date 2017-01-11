@@ -40,7 +40,7 @@ Usage
 -----
 
 KPCJumpBarControl is designed for you to use only the `JumpBarControl` class, and fill it with a tree of object
-conforming to `JumpBarSegmenting`. A helper class `JumpBarSegment` is here for that, if you need one. 
+conforming to `JumpBarItem`. A helper class `JumpBarSegment` is here for that, if you need one. 
 Simply place a `NSView` in a storyboard or xib, where you need a jump bar, change its class to `JumpBarControl` and
 that's it. To react when the jumbpar selection change, implement the `JumpBarControlDelegate` methods.
 

@@ -8,11 +8,6 @@
 
 import AppKit
 
-public enum IndexPathError: Error {
-    case empty(String)
-    case invalid(String)
-}
-
 public enum JumpBarControlError: Error {
     case alreadyBound(String)
 }
@@ -24,32 +19,25 @@ fileprivate struct JumpBarControlBinding {
     fileprivate weak var selectionController: NSObject?
     fileprivate var treeKeyPath: String
     fileprivate var selectionKeyPath: String
+    
+    var selectedIndexPath: IndexPath? {
+        get { return self.selectionController?.value(forKey: self.selectionKeyPath) as! IndexPath? }
+    }
 }
-
-extension NSTreeController {
-    func arrangedRootObjects() -> [JumpBarSegmenting] {
-        guard let rootTreeNode = self.arrangedObjects as AnyObject? else {
-            return []
-        }
-
-        guard let proxyChildren = rootTreeNode.children as [NSTreeNode]? else {
-            return []
-        }
-
-        return proxyChildren.map({ $0.representedObject as! JumpBarSegmenting })
-    }    
-}
-
 
 open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     let KPCJumpBarControlTag: NSInteger = -9999999
 
     open weak var delegate: JumpBarControlDelegate? = nil
-    open fileprivate(set) var selectedIndexPath: IndexPath? = nil
+    
+    fileprivate var _selectedIndexPath: IndexPath? = nil
+    public fileprivate(set) var selectedIndexPath: IndexPath? {
+        get { return (self.binding == nil) ? self._selectedIndexPath : self.binding!.selectedIndexPath }
+        set { if (self.binding == nil) { self._selectedIndexPath = newValue } else {} }
+    }
     
     fileprivate var hasCompressedSegments: Bool = false
     fileprivate var isSelected: Bool = false
-
     fileprivate var binding: JumpBarControlBinding?
 
     // MARK: - Overrides
@@ -60,23 +48,17 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     
     override open var isEnabled: Bool {
         didSet {
-            for segmentControl in self.segmentControls() {
-                segmentControl.isEnabled = self.isEnabled
-            }
+            self.segmentControls().forEach({ $0.isEnabled = self.isEnabled})
             self.setNeedsDisplay()
         }
     }
     
     override open var frame: NSRect {
-        didSet {
-            self.layoutSegmentsIfNeeded(withNewSize:super.frame.size)
-        }
+        didSet { self.layoutSegmentsIfNeeded(withNewSize:super.frame.size) }
     }
 
     override open var bounds: NSRect {
-        didSet {
-            self.layoutSegmentsIfNeeded(withNewSize:super.bounds.size)
-        }
+        didSet { self.layoutSegmentsIfNeeded(withNewSize:super.bounds.size) }
     }
     
     // MARK: - Constructors
@@ -127,29 +109,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.setNeedsDisplay()
     }
     
-    open override func observeValue(forKeyPath keyPath: String?,
-                                    of object: Any?,
-                                    change: [NSKeyValueChangeKey : Any]?,
-                                    context: UnsafeMutableRawPointer?)
-    {
-        guard context == &JumpBarControlBinding.treeObserverContext ||
-            context == &JumpBarControlBinding.selectionObserverContext else
-        {
-            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-            return
-        }
-
-        if context == &JumpBarControlBinding.treeObserverContext {
-            self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
-        }
-        else if context == &JumpBarControlBinding.selectionObserverContext {
-            self.selectItem(atIndexPath: self.binding!.selectionController?.value(forKey: self.binding!.selectionKeyPath) as! IndexPath)
-        }
-    }
-
-    // MARK: - Public Methods
+    // MARK: - Content
     
-    open func bind(contentTo treeController: NSTreeController,
+    open func bind(itemsTreeTo treeController: NSTreeController,
                    withKeyPath treeKeyPath: String = "arrangedObjects",
                    andSelectionTo selectionController: NSObject,
                    withKeyPath selectionKeyPath: String = "selectedIndexPath") throws
@@ -176,7 +138,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.useItemsTree(treeController.arrangedRootObjects())
     }
     
-    open func unbindContentAndSelection() {
+    open func unbindItemsTreeAndSelection() {
         guard self.binding != nil else {
             return
         }
@@ -186,70 +148,81 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.binding = nil
     }
     
-    open func useItemsTree(_ itemsTree: [JumpBarSegmenting]) {
+    open override func observeValue(forKeyPath keyPath: String?,
+                                    of object: Any?,
+                                    change: [NSKeyValueChangeKey : Any]?,
+                                    context: UnsafeMutableRawPointer?)
+    {
+        guard context == &JumpBarControlBinding.treeObserverContext ||
+            context == &JumpBarControlBinding.selectionObserverContext else
+        {
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
+            return
+        }
+        
+        if context == &JumpBarControlBinding.treeObserverContext {
+            self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
+        }
+        else if context == &JumpBarControlBinding.selectionObserverContext {
+            if let indexPath = change?[NSKeyValueChangeKey.newKey] as? IndexPath {
+                self.select(segmentItemAtIndexPath: indexPath)
+            }
+        }
+    }
+
+    open func useItemsTree(_ itemsTree: [JumpBarItem]) {
         self.segmentControls().forEach { $0.removeFromSuperview() }
         self.selectedIndexPath = nil
-        
+
+        // At that stage, we do items all in one shot. Might be optimized later.
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree,
                                                 target:self,
-                                                action:#selector(JumpBarControl.selectJumpBarControlItem(_:)))
+                                                action:#selector(JumpBarControl.select(segmentItemFromMenuItem:)))
         
         self.layoutSegments()
         
         if self.menu?.items.count > 0 {
-            self.selectJumpBarControlItem(self.menu!.items.first!)
+            self.select(segmentItemFromMenuItem: self.menu!.items.first!)
         }
     }
     
-    @objc fileprivate func selectJumpBarControlItem(_ sender: NSMenuItem) {
+    // MARK: - Selection
     
-        let nextSelectedIndexPath = sender.indexPath()
-        let nextSelectedItem: JumpBarSegmenting = sender.representedObject as! JumpBarSegmenting
-    
-        self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
-        
-        self.removeSegments(fromLevel: nextSelectedIndexPath.count)
-        self.selectedIndexPath = nextSelectedIndexPath
-        if self.binding != nil {
-            self.binding!.selectionController?.setValue(self.selectedIndexPath, forKey: self.binding!.selectionKeyPath)
-        }
-        self.layoutSegments()
-    
-        self.delegate?.jumpBarControl(self, didSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
+    @objc fileprivate func select(segmentItemFromMenuItem sender: NSMenuItem) {
+        self.select(segmentItemAtIndexPath: sender.indexPath())
     }
     
-    open func item(atIndexPath indexPath: IndexPath) -> JumpBarSegmenting? {
-        guard let item = self.menu?.menuItemAtIndexPath(self.selectedIndexPath) else {
-            return nil
-        }
-        return item.representedObject as? JumpBarSegmenting // Return representedObject as NSMenuItem are kept hidden
-    }
-    
-    open func selectItem(atIndexPath nextSelectedIndexPath: IndexPath) {
-        guard nextSelectedIndexPath != self.selectedIndexPath else {
+    open func select(segmentItemAtIndexPath nextSelectedIndexPath: IndexPath) {
+        guard nextSelectedIndexPath == self.selectedIndexPath else {
             return
         }
-        if let nextSelectedItem = self.item(atIndexPath: nextSelectedIndexPath) {
+        if let nextSelectedItem = self.segmentItem(atIndexPath: nextSelectedIndexPath) {
             self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
             
             self.removeSegments(fromLevel: 0)
             self.selectedIndexPath = nextSelectedIndexPath
-            if self.binding != nil {
-                self.binding!.selectionController?.setValue(self.selectedIndexPath, forKey: self.binding!.selectionKeyPath)
-            }
             self.layoutSegments()
             
             self.delegate?.jumpBarControl(self, didSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
         }
     }
     
-    open func selectedItem() -> JumpBarSegmenting? {
+    open func selectedSegmentItem() -> JumpBarItem? {
         if let ip = self.selectedIndexPath {
-            return self.item(atIndexPath: ip)
+            return self.segmentItem(atIndexPath: ip)
         }
         return nil
     }
     
+    open func segmentItem(atIndexPath indexPath: IndexPath) -> JumpBarItem? {
+        guard let item = self.menu?.menuItemAtIndexPath(indexPath) else {
+            return nil
+        }
+        return item.representedObject as? JumpBarItem // Return representedObject as NSMenuItem are kept hidden
+    }
+
+    // MARK: - Activation
+
     open func select() {
         self.isSelected = true
         for segmentControl in self.segmentControls() {
@@ -342,7 +315,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             segment.select()
             
             let item = currentMenu!.item(at: index)
-            segment.representedObject = item!.representedObject as? JumpBarSegmenting
+            segment.representedObject = item!.representedObject as? JumpBarItem
             currentMenu = item!.submenu
             
             segment.sizeToFit()
@@ -414,9 +387,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         let subIndexPath = self.selectedIndexPath!.prefix(through: segmentControl.tag) // To be inclusive, we use 'through' rather than 'upTo'
         let clickedMenu = self.menu!.menuItemAtIndexPath(subIndexPath)!.menu
 
-        var items = [JumpBarSegmenting]()
+        var items = [JumpBarItem]()
         for menuItem in clickedMenu!.items {
-            items.append(menuItem.representedObject as! JumpBarSegmenting)
+            items.append(menuItem.representedObject as! JumpBarItem)
         }
     
         self.delegate?.jumpBarControl(self, willOpenMenuAtIndexPath:subIndexPath, withItems:items)
@@ -433,9 +406,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
 
         clickedMenu!.delegate = menuDelegate
 
-        items = [JumpBarSegmenting]()
+        items = [JumpBarItem]()
         for menuItem in clickedMenu!.items {
-            items.append(menuItem.representedObject as! JumpBarSegmenting)
+            items.append(menuItem.representedObject as! JumpBarItem)
         }
 
         self.delegate?.jumpBarControl(self, didOpenMenuAtIndexPath:subIndexPath, withItems:items)

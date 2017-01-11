@@ -16,6 +16,7 @@
 		9F3CCB411CE0944E005669BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CCB401CE0944E005669BD /* ViewController.swift */; };
 		9F3CCB501CE09583005669BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F3CCB4E1CE09583005669BD /* Main.storyboard */; };
 		9F3CCB531CE0BFE3005669BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FD961CD5EFAE00DA73C1 /* Assets.xcassets */; };
+		9F4100AA1E25308900B39A07 /* NSTreeController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4100A91E25308900B39A07 /* NSTreeController+Utils.swift */; };
 		9F54FDA61CD5F1E000DA73C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */; };
 		9F6CC8A41CDF25B400072EC6 /* JumpBarSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarSegment.swift */; };
 		9FB5EF201D981D3F00BE42E2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB5EF1F1D981D3F00BE42E2 /* Helpers.swift */; };
@@ -42,6 +43,7 @@
 		9F3CCB401CE0944E005669BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9F3CCB471CE0944E005669BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F3CCB4F1CE09583005669BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9F4100A91E25308900B39A07 /* NSTreeController+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSTreeController+Utils.swift"; sourceTree = "<group>"; };
 		9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KPCJumpBarControl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F54FD6A1CD5E9F200DA73C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = KPCJumpBarControl/Info.plist; sourceTree = "<group>"; };
 		9F54FD911CD5EFAE00DA73C1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				9F3CCB191CDF2B0E005669BD /* JumpBarSegmentControl.swift */,
 				9F3CCB1F1CE06D21005669BD /* NSMenu+Utils.swift */,
 				9F3CCB211CE077F7005669BD /* NSMenuItem+Utils.swift */,
+				9F4100A91E25308900B39A07 /* NSTreeController+Utils.swift */,
 				9FB5EF1F1D981D3F00BE42E2 /* Helpers.swift */,
 			);
 			path = KPCJumpBarControl;
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F4100AA1E25308900B39A07 /* NSTreeController+Utils.swift in Sources */,
 				9F3CCB1E1CDFA458005669BD /* JumpBarControl.swift in Sources */,
 				9FB5EF201D981D3F00BE42E2 /* Helpers.swift in Sources */,
 				9F3CCB221CE077F7005669BD /* NSMenuItem+Utils.swift in Sources */,

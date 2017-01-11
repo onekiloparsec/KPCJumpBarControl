@@ -66,23 +66,23 @@ class ViewController: NSViewController, JumpBarControlDelegate {
 
     // MARK: - JumpBarControlDelegate
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath: IndexPath, withItems items: [JumpBarSegmenting]) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath: IndexPath, withItems items: [JumpBarItem]) {
         print(#function)
     }
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath: IndexPath, withItems items: [JumpBarSegmenting]) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath: IndexPath, withItems items: [JumpBarItem]) {
         print(#function)
     }
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item: JumpBarSegmenting, atIndexPath indexPath: IndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item: JumpBarItem, atIndexPath indexPath: IndexPath) {
         print(#function)
     }
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item: JumpBarSegmenting, atIndexPath indexPath: IndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item: JumpBarItem, atIndexPath indexPath: IndexPath) {
         print(#function)
         
-        self.selectedItemIcon?.image = item.segmentIcon
-        self.selectedItemTitle?.stringValue = item.segmentTitle
+        self.selectedItemIcon?.image = item.icon
+        self.selectedItemTitle?.stringValue = item.title
         self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
         
         if indexPath == IndexPath(indexes: [0, 3]) || indexPath == IndexPath(indexes: [1, 0, 0, 0]) {
