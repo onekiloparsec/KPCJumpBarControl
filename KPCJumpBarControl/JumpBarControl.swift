@@ -32,7 +32,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     public fileprivate(set) var selectedIndexPath: IndexPath?
     
     fileprivate var hasCompressedSegments: Bool = false
-    fileprivate var isSelected: Bool = false
+    fileprivate var isKey: Bool = false
     fileprivate var binding: JumpBarControlBinding?
 
     // MARK: - Overrides
@@ -218,18 +218,18 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
 
     // MARK: - Activation
 
-    open func select() {
-        self.isSelected = true
+    open func makeKey() {
+        self.isKey = true
         for segmentControl in self.segmentControls() {
-            segmentControl.select()
+            segmentControl.makeKey()
         }
         self.setNeedsDisplay()
     }
 
-    open func deselect() {
-        self.isSelected = false
+    open func resignKey() {
+        self.isKey = false
         for segmentControl in self.segmentControls() {
-            segmentControl.deselect()
+            segmentControl.resignKey()
         }
         self.setNeedsDisplay()
     }
@@ -307,7 +307,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             let segment = self.segmentControlAtLevel(position)!
             segment.isLastSegment = (position == self.selectedIndexPath!.count-1)
             segment.indexInPath = index
-            segment.select()
+            segment.makeKey()
             
             let item = currentMenu!.item(at: index)
             segment.representedObject = item!.representedObject as? JumpBarItem
@@ -329,7 +329,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         newRect.origin.y = 0
     
         var mainGradient: NSGradient? = nil
-        if (!self.isSelected || !self.isEnabled || !(self.window?.isKeyWindow)!) {
+        if (!self.isKey || !self.isEnabled || !(self.window?.isKeyWindow)!) {
             mainGradient = NSGradient(starting:NSColor(calibratedWhite:0.96, alpha:1.0),
                                       ending:NSColor(calibratedWhite:0.94, alpha:1.0))                
         }

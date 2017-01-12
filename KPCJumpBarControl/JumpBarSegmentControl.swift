@@ -19,7 +19,7 @@ protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
 class JumpBarSegmentControl : NSControl {
     var isLastSegment: Bool = false
     var indexInPath: Int = 0
-    var isSelected: Bool = false
+    var isKey: Bool = false
 
     var representedObject: JumpBarItem? = nil
     var delegate: JumpBarSegmentControlDelegate? = nil
@@ -57,8 +57,8 @@ class JumpBarSegmentControl : NSControl {
         let style = NSMutableParagraphStyle()
         style.lineBreakMode = .byTruncatingMiddle
         
-        let color = (self.isSelected) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray
-        let font = (self.isSelected) ? NSFont.boldSystemFont(ofSize: 13.0) : NSFont.systemFont(ofSize: 13.0)
+        let color = (self.isKey) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray
+        let font = (self.isKey) ? NSFont.boldSystemFont(ofSize: 12.0) : NSFont.systemFont(ofSize: 12.0)
         
         let attributes = [NSForegroundColorAttributeName: color,
                           NSShadowAttributeName : highlightShadow,
@@ -78,13 +78,13 @@ class JumpBarSegmentControl : NSControl {
         return w
     }
     
-    func select() {
-        self.isSelected = true
+    func makeKey() {
+        self.isKey = true
         self.setNeedsDisplay()
     }
     
-    func deselect() {
-        self.isSelected = false
+    func resignKey() {
+        self.isKey = false
         self.setNeedsDisplay()
     }
     
@@ -103,7 +103,7 @@ class JumpBarSegmentControl : NSControl {
     
     override func draw(_ dirtyRect: NSRect) {
         var baseLeft: CGFloat = 0
-        let fraction: CGFloat = (self.isSelected) ? 1.0 : 0.9
+        let fraction: CGFloat = (self.isKey) ? 1.0 : 0.9
         let attributes = self.attributes()
         let bundle = Bundle(for: type(of: self))
         

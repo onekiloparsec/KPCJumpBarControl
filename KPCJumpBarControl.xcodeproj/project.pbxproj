@@ -18,7 +18,7 @@
 		9F3CCB531CE0BFE3005669BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FD961CD5EFAE00DA73C1 /* Assets.xcassets */; };
 		9F4100AA1E25308900B39A07 /* NSTreeController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4100A91E25308900B39A07 /* NSTreeController+Utils.swift */; };
 		9F54FDA61CD5F1E000DA73C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */; };
-		9F6CC8A41CDF25B400072EC6 /* JumpBarSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarSegment.swift */; };
+		9F6CC8A41CDF25B400072EC6 /* JumpBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */; };
 		9FB5EF201D981D3F00BE42E2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB5EF1F1D981D3F00BE42E2 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +52,7 @@
 		9F54FDB81CD6073C00DA73C1 /* KPCJumpBarControl.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KPCJumpBarControl.podspec; sourceTree = "<group>"; };
 		9F54FDB91CD6073C00DA73C1 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		9F54FDBA1CD6073C00DA73C1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		9F6CC8A31CDF25B400072EC6 /* JumpBarSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarSegment.swift; sourceTree = "<group>"; };
+		9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarItem.swift; sourceTree = "<group>"; };
 		9FB5EF1F1D981D3F00BE42E2 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				9F3CCB1D1CDFA458005669BD /* JumpBarControl.swift */,
-				9F6CC8A31CDF25B400072EC6 /* JumpBarSegment.swift */,
+				9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */,
 				9F3CCB1B1CDFA421005669BD /* JumpBarControlDelegate.swift */,
 				9F3CCB191CDF2B0E005669BD /* JumpBarSegmentControl.swift */,
 				9F3CCB1F1CE06D21005669BD /* NSMenu+Utils.swift */,
@@ -259,7 +259,7 @@
 				9F3CCB1E1CDFA458005669BD /* JumpBarControl.swift in Sources */,
 				9FB5EF201D981D3F00BE42E2 /* Helpers.swift in Sources */,
 				9F3CCB221CE077F7005669BD /* NSMenuItem+Utils.swift in Sources */,
-				9F6CC8A41CDF25B400072EC6 /* JumpBarSegment.swift in Sources */,
+				9F6CC8A41CDF25B400072EC6 /* JumpBarItem.swift in Sources */,
 				9F3CCB1A1CDF2B0E005669BD /* JumpBarSegmentControl.swift in Sources */,
 				9F3CCB1C1CDFA421005669BD /* JumpBarControlDelegate.swift in Sources */,
 				9F3CCB201CE06D21005669BD /* NSMenu+Utils.swift in Sources */,
