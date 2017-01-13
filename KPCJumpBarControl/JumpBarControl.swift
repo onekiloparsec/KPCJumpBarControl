@@ -160,7 +160,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         }
         else if context == &JumpBarControlBinding.selectionObserverContext {
             if let indexPath = change?[NSKeyValueChangeKey.newKey] as? IndexPath {
-                self.select(segmentItemAtIndexPath: indexPath)
+                self.update(withIndexPath: indexPath)
             }
         }
     }
@@ -193,13 +193,15 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         }
         if let nextSelectedItem = self.segmentItem(atIndexPath: nextSelectedIndexPath) {
             self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
-            
-            self.removeSegments(fromLevel: 0)
-            self.selectedIndexPath = nextSelectedIndexPath
-            self.layoutSegments()
-            
+            self.update(withIndexPath: nextSelectedIndexPath)
             self.delegate?.jumpBarControl(self, didSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
         }
+    }
+    
+    private func update(withIndexPath indexPath: IndexPath) {
+        self.removeSegments(fromLevel: 0)
+        self.selectedIndexPath = indexPath
+        self.layoutSegments()
     }
     
     open func selectedSegmentItem() -> JumpBarItem? {
