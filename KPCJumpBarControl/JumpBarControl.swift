@@ -172,22 +172,18 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         // At that stage, we do items all in one shot. Might be optimized later.
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree,
                                                 target:self,
-                                                action:#selector(JumpBarControl.select(segmentItemFromMenuItem:)))
+                                                action:#selector(JumpBarControl.select(itemFromMenuItem:)))
         
-        self.layoutSegments()
-        
-        if self.menu?.items.count > 0 {
-            self.select(segmentItemFromMenuItem: self.menu!.items.first!)
-        }
+        self.layoutSegments()        
     }
     
     // MARK: - Selection
     
-    @objc fileprivate func select(segmentItemFromMenuItem sender: NSMenuItem) {
-        self.select(segmentItemAtIndexPath: sender.indexPath())
+    @objc fileprivate func select(itemFromMenuItem sender: NSMenuItem) {
+        self.select(itemAtIndexPath: sender.indexPath())
     }
     
-    open func select(segmentItemAtIndexPath nextSelectedIndexPath: IndexPath) {
+    open func select(itemAtIndexPath nextSelectedIndexPath: IndexPath) {
         guard nextSelectedIndexPath != self.selectedIndexPath else {
             return
         }
