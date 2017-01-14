@@ -33,7 +33,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     
     fileprivate var hasCompressedSegments: Bool = false
     fileprivate var isKey: Bool = false
+
     fileprivate var binding: JumpBarControlBinding?
+    public var isBound: Bool { get { return self.binding != nil } }
 
     // MARK: - Overrides
     
