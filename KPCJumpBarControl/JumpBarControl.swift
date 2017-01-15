@@ -218,22 +218,11 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
 
     // MARK: - Activation
 
-    open func makeKey() {
-        self.isKey = true
-        for segmentControl in self.segmentControls() {
-            segmentControl.makeKey()
-        }
+    open func makeKey(_ flag: Bool) {
+        self.isKey = flag
+        self.segmentControls().forEach { $0.makeKey(flag) }
         self.setNeedsDisplay()
-    }
-
-    open func resignKey() {
-        self.isKey = false
-        for segmentControl in self.segmentControls() {
-            segmentControl.resignKey()
-        }
-        self.setNeedsDisplay()
-    }
-    
+    }    
     
     // MARK: - Layout
     
@@ -307,7 +296,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             let segment = self.segmentControlAtLevel(position)!
             segment.isLastSegment = (position == self.selectedIndexPath!.count-1)
             segment.indexInPath = index
-            segment.makeKey()
+            segment.makeKey(true)
             
             let item = currentMenu!.item(at: index)
             segment.representedObject = item!.representedObject as? JumpBarItem

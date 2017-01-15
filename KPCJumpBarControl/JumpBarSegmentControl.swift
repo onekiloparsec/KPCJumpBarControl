@@ -78,16 +78,11 @@ class JumpBarSegmentControl : NSControl {
         return w
     }
     
-    func makeKey() {
-        self.isKey = true
+    func makeKey(_ flag: Bool) {
+        self.isKey = flag
         self.setNeedsDisplay()
     }
-    
-    func resignKey() {
-        self.isKey = false
-        self.setNeedsDisplay()
-    }
-    
+        
     // MARK: Delegate
     
     override func mouseDown(with theEvent: NSEvent) {
