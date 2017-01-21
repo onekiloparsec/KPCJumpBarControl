@@ -14,15 +14,8 @@ public enum JumpBarControlError: Error {
 
 fileprivate struct JumpBarControlBinding {
     fileprivate static var treeObserverContext = 1
-    fileprivate static var selectionObserverContext = 3
     fileprivate weak var treeController: NSTreeController?
-    fileprivate weak var selectionController: NSObject?
-    fileprivate var treeKeyPath: String
-    fileprivate var selectionKeyPath: String
-    
-    var selectedIndexPath: IndexPath? {
-        get { return self.selectionController?.value(forKey: self.selectionKeyPath) as! IndexPath? }
-    }
+    fileprivate var treeKeyPath: String    
 }
 
 open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
@@ -109,29 +102,19 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     // MARK: - Content
     
     open func bind(itemsTreeTo treeController: NSTreeController,
-                   withKeyPath treeKeyPath: String = "arrangedObjects",
-                   andSelectionTo selectionController: NSObject,
-                   withKeyPath selectionKeyPath: String = "selectedIndexPath") throws
+                   withKeyPath treeKeyPath: String = "arrangedObjects") throws
     {
         guard self.binding == nil else {
             throw JumpBarControlError.alreadyBound("JumpBarControl \(self) is already bound to tree and selection controllers. Unbind first.")
         }
         
-        self.binding = JumpBarControlBinding(treeController: treeController,
-                                             selectionController: selectionController,
-                                             treeKeyPath: treeKeyPath,
-                                             selectionKeyPath: selectionKeyPath)
+        self.binding = JumpBarControlBinding(treeController: treeController, treeKeyPath: treeKeyPath)
         
         treeController.addObserver(self,
                                    forKeyPath: treeKeyPath,
                                    options: [.new, .old],
                                    context: &JumpBarControlBinding.treeObserverContext)
         
-        selectionController.addObserver(self,
-                                        forKeyPath: selectionKeyPath,
-                                        options: [.new, .old],
-                                        context: &JumpBarControlBinding.selectionObserverContext)
-     
         self.useItemsTree(treeController.arrangedRootObjects())
     }
     
@@ -141,7 +124,6 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         }
         
         self.binding!.treeController?.removeObserver(self, forKeyPath: self.binding!.treeKeyPath)
-        self.binding!.selectionController?.removeObserver(self, forKeyPath: self.binding!.selectionKeyPath)
         self.binding = nil
     }
     
@@ -150,33 +132,23 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
                                     change: [NSKeyValueChangeKey : Any]?,
                                     context: UnsafeMutableRawPointer?)
     {
-        guard context == &JumpBarControlBinding.treeObserverContext ||
-            context == &JumpBarControlBinding.selectionObserverContext else
-        {
+        guard context == &JumpBarControlBinding.treeObserverContext else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
         }
         
-        if context == &JumpBarControlBinding.treeObserverContext {
-            self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
-        }
-        else if context == &JumpBarControlBinding.selectionObserverContext {
-            if let indexPath = change?[NSKeyValueChangeKey.newKey] as? IndexPath {
-                self.update(withIndexPath: indexPath)
-            }
-        }
+        self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
     }
 
     open func useItemsTree(_ itemsTree: [JumpBarItem]) {
         self.segmentControls().forEach { $0.removeFromSuperview() }
-        self.selectedIndexPath = nil
 
         // At that stage, we do items all in one shot. Might be optimized later.
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree,
                                                 target:self,
                                                 action:#selector(JumpBarControl.select(itemFromMenuItem:)))
         
-        self.layoutSegments()        
+        self.layoutSegments()
     }
     
     // MARK: - Selection
