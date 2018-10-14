@@ -46,9 +46,9 @@ that's it. To react when the jumbpar selection change, implement the `JumpBarCon
 
 For instance:
 ```swift 
-    let rootSegment = JumpBarSegment(withTitle:"level 0", icon:NSImage(named:"Oval"))
-    let segment1Item0 = JumpBarSegment(withTitle:"level 1.0", icon:NSImage(named:"Polygon"))
-    let segment1Item1 = JumpBarSegment(withTitle:"level 1.1", icon:NSImage(named:"Rectangle"))
+    let rootSegment = JumpBarItem(withTitle:"level 0", icon:NSImage(named:"Oval"))
+    let segment1Item0 = JumpBarItem(withTitle:"level 1.0", icon:NSImage(named:"Polygon"))
+    let segment1Item1 = JumpBarItem(withTitle:"level 1.1", icon:NSImage(named:"Rectangle"))
  
     rootSegment.children = [segment1Item0, segment1Item1]
   
