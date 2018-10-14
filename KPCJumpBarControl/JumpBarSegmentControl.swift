@@ -16,7 +16,7 @@ protocol JumpBarSegmentControlDelegate : NSObjectProtocol {
     func jumpBarSegmentControlDidReceiveMouseDown(_ segmentControl: JumpBarSegmentControl)
 }
 
-class JumpBarSegmentControl : NSControl {
+open class JumpBarSegmentControl : NSControl {
     var isLastSegment: Bool = false
     var indexInPath: Int = 0
     var isKey: Bool = false
@@ -24,12 +24,12 @@ class JumpBarSegmentControl : NSControl {
     var representedObject: JumpBarItem? = nil
     var delegate: JumpBarSegmentControlDelegate? = nil
     
-    override func sizeToFit() {
+    override open func sizeToFit() {
         super.sizeToFit()
 
         var width: CGFloat = (2 + (self.representedObject?.icon != nil ? 1 : 0)) * KPCJumpBarItemControlMargin
 
-        if self.representedObject?.title.characters.count > 0 {
+        if self.representedObject?.title.count > 0 {
             let textSize = self.representedObject?.title.size(withAttributes: self.attributes())
             width += ceil(textSize!.width)
         }
@@ -47,7 +47,7 @@ class JumpBarSegmentControl : NSControl {
         self.setNeedsDisplay()
     }
     
-    fileprivate func attributes() -> [String: AnyObject] {
+    fileprivate func attributes() -> [NSAttributedStringKey: NSObject] {
         
         let highlightShadow: NSShadow = NSShadow()
         highlightShadow.shadowOffset = CGSize(width: 0, height: -1.0)
@@ -60,10 +60,10 @@ class JumpBarSegmentControl : NSControl {
         let color = (self.isKey) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray
         let font = (self.isKey) ? NSFont.boldSystemFont(ofSize: 12.0) : NSFont.systemFont(ofSize: 12.0)
         
-        let attributes = [NSForegroundColorAttributeName: color,
-                          NSShadowAttributeName : highlightShadow,
-                          NSFontAttributeName: font,
-                          NSParagraphStyleAttributeName: style]
+        let attributes = [NSAttributedStringKey.foregroundColor: color,
+                          NSAttributedStringKey.shadow : highlightShadow,
+                          NSAttributedStringKey.font: font,
+                          NSAttributedStringKey.paragraphStyle: style]
         
         return attributes
     }
@@ -85,7 +85,7 @@ class JumpBarSegmentControl : NSControl {
         
     // MARK: Delegate
     
-    override func mouseDown(with theEvent: NSEvent) {
+    override open func mouseDown(with theEvent: NSEvent) {
         super.mouseDown(with: theEvent)
     
         if (self.isEnabled) {
@@ -96,14 +96,13 @@ class JumpBarSegmentControl : NSControl {
     
     // MARK: Drawing
     
-    override func draw(_ dirtyRect: NSRect) {
+    override open func draw(_ dirtyRect: NSRect) {
         var baseLeft: CGFloat = 0
         let fraction: CGFloat = (self.isKey) ? 1.0 : 0.9
-        let attributes = self.attributes()
         let bundle = Bundle(for: type(of: self))
         
         if (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.image(forResource: "KPCJumpBarAccessorySeparator") {
+            if let separatorImage = bundle.image(forResource: NSImage.Name(rawValue: "KPCJumpBarAccessorySeparator")) {
                 let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
                 let p: NSPoint = NSMakePoint(baseLeft + 1, self.frame.height/2.0-height/2.0)
                 separatorImage.draw(at: p, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
@@ -128,6 +127,7 @@ class JumpBarSegmentControl : NSControl {
             }
         
             if (width > 0) {
+                let attributes = self.attributes()
                 let height = CGFloat(20.0)
                 let r = CGRect(x: baseLeft-1.0, y: (self.bounds.height-height)/2.0-1, width: width, height: height)
                 obj.title.draw(in: r, withAttributes:attributes)
@@ -136,7 +136,7 @@ class JumpBarSegmentControl : NSControl {
         }
         
         if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.image(forResource: "KPCJumpBarSeparator") {
+            if let separatorImage = bundle.image(forResource: NSImage.Name(rawValue: "KPCJumpBarSeparator")) {
                 let height = CGFloat(16.0)
                 let o = NSMakePoint(baseLeft-3, self.frame.height/2.0-height/2.0)
                 let r = NSMakeRect(o.x, o.y, 10.0, 16.0)

@@ -82,7 +82,7 @@ extension NSMenu {
                 menu.addItem(item)
             
                 if segment.children?.count > 0 {
-                    let submenu = NSMenu.menuWithSegmentsTree(segment.children!,
+                    let submenu = NSMenu.menuWithSegmentsTree(segment.children! as! [JumpBarItem],
                                                               target:target,
                                                               action:action)
                     menu.setSubmenu(submenu, for: item)

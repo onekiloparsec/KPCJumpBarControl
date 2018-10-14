@@ -77,8 +77,8 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     override open func viewWillMove(toWindow newWindow: NSWindow?) {
         super.viewWillMove(toWindow: newWindow)
         
-        NotificationCenter.default.removeObserver(self, name:NSNotification.Name.NSWindowDidResignKey, object:self.window)
-        NotificationCenter.default.removeObserver(self, name:NSNotification.Name.NSWindowDidBecomeKey, object:self.window)
+        NotificationCenter.default.removeObserver(self, name:NSWindow.didResignKeyNotification, object:self.window)
+        NotificationCenter.default.removeObserver(self, name:NSWindow.didBecomeKeyNotification, object:self.window)
     }
     
     override open func viewDidMoveToWindow() {
@@ -86,16 +86,16 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         
         NotificationCenter.default.addObserver(self,
                                                selector:#selector(JumpBarControl.setControlNeedsDisplay),
-                                               name:NSNotification.Name.NSWindowDidResignKey,
+                                               name:NSWindow.didResignKeyNotification,
                                                object:self.window)
         
         NotificationCenter.default.addObserver(self,
                                                selector:#selector(JumpBarControl.setControlNeedsDisplay),
-                                               name:NSNotification.Name.NSWindowDidBecomeKey,
+                                               name:NSWindow.didBecomeKeyNotification,
                                                object:self.window)
     }
     
-    open func setControlNeedsDisplay() {
+    @objc open func setControlNeedsDisplay() {
         self.setNeedsDisplay()
     }
     
@@ -147,6 +147,10 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.menu = NSMenu.menuWithSegmentsTree(itemsTree,
                                                 target:self,
                                                 action:#selector(JumpBarControl.select(itemFromMenuItem:)))
+        
+        if itemsTree.count > 0 {
+            self.selectedIndexPath = IndexPath(index: 0)
+        }
         
         self.layoutSegments()
     }
