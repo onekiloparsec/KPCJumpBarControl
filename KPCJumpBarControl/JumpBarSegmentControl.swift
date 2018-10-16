@@ -47,7 +47,7 @@ open class JumpBarSegmentControl : NSControl {
         self.setNeedsDisplay()
     }
     
-    fileprivate func attributes() -> [NSAttributedStringKey: NSObject] {
+    fileprivate func attributes() -> [NSAttributedString.Key: NSObject] {
         
         let highlightShadow: NSShadow = NSShadow()
         highlightShadow.shadowOffset = CGSize(width: 0, height: -1.0)
@@ -60,10 +60,10 @@ open class JumpBarSegmentControl : NSControl {
         let color = (self.isKey) ? NSColor(calibratedWhite:0.21, alpha:1.0) : NSColor.darkGray
         let font = (self.isKey) ? NSFont.boldSystemFont(ofSize: 12.0) : NSFont.systemFont(ofSize: 12.0)
         
-        let attributes = [NSAttributedStringKey.foregroundColor: color,
-                          NSAttributedStringKey.shadow : highlightShadow,
-                          NSAttributedStringKey.font: font,
-                          NSAttributedStringKey.paragraphStyle: style]
+        let attributes = [NSAttributedString.Key.foregroundColor: color,
+                          NSAttributedString.Key.shadow : highlightShadow,
+                          NSAttributedString.Key.font: font,
+                          NSAttributedString.Key.paragraphStyle: style]
         
         return attributes
     }
@@ -102,7 +102,7 @@ open class JumpBarSegmentControl : NSControl {
         let bundle = Bundle(for: type(of: self))
         
         if (self.tag == KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.image(forResource: NSImage.Name(rawValue: "KPCJumpBarAccessorySeparator")) {
+            if let separatorImage = bundle.image(forResource: "KPCJumpBarAccessorySeparator") {
                 let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
                 let p: NSPoint = NSMakePoint(baseLeft + 1, self.frame.height/2.0-height/2.0)
                 separatorImage.draw(at: p, from: NSZeroRect, operation: .sourceOver, fraction: fraction)
@@ -136,7 +136,7 @@ open class JumpBarSegmentControl : NSControl {
         }
         
         if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
-            if let separatorImage = bundle.image(forResource: NSImage.Name(rawValue: "KPCJumpBarSeparator")) {
+            if let separatorImage = bundle.image(forResource: "KPCJumpBarSeparator") {
                 let height = CGFloat(16.0)
                 let o = NSMakePoint(baseLeft-3, self.frame.height/2.0-height/2.0)
                 let r = NSMakeRect(o.x, o.y, 10.0, 16.0)
