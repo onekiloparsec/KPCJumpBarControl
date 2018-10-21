@@ -140,7 +140,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
     }
 
-    open func useItemsTree(_ itemsTree: [JumpBarItem]) {
+    open func useItemsTree(_ itemsTree: [JumpBarItemProtocol]) {
         self.segmentControls().forEach { $0.removeFromSuperview() }
 
         // At that stage, we do items all in one shot. Might be optimized later.

@@ -9,7 +9,7 @@
 import AppKit
 
 extension NSTreeController {
-    func arrangedRootObjects() -> [JumpBarItem] {
+    func arrangedRootObjects() -> [JumpBarItemProtocol] {
         guard let rootTreeNode = self.arrangedObjects as AnyObject? else {
             return []
         }
@@ -18,7 +18,7 @@ extension NSTreeController {
             return []
         }
         
-        return proxyChildren.map({ $0.representedObject as! JumpBarItem })
+        return proxyChildren.map({ $0.representedObject as! JumpBarItemProtocol })
     }    
 }
 

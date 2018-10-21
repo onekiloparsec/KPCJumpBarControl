@@ -54,7 +54,7 @@ extension NSImage {
 
 extension NSMenu {
     
-    static func menuWithSegmentsTree(_ segmentsTree: [JumpBarItem],
+    static func menuWithSegmentsTree(_ segmentsTree: [JumpBarItemProtocol],
                                      target: AnyObject,
                                      action: Selector) -> NSMenu {
         let menu = NSMenu()
