@@ -113,14 +113,14 @@ open class JumpBarSegmentControl : NSControl {
             baseLeft = KPCJumpBarItemControlMargin
         }
         
-        if let img = self.representedObject!.icon {
-            let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
-            let r = NSMakeRect(baseLeft, self.frame.height/2.0-height/2.0, height, height)
-            img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction)
-            baseLeft += ceil(height) + KPCJumpBarItemControlMargin
-        }
-        
         if let obj = self.representedObject {
+            if let img = obj.icon {
+                let height = min(KPCJumpBarItemIconMaxHeight, self.frame.height - 2*KPCJumpBarItemControlMargin)
+                let r = NSMakeRect(baseLeft, self.frame.height/2.0-height/2.0, height, height)
+                img.draw(in: r, from:NSZeroRect, operation: .sourceOver, fraction:fraction)
+                baseLeft += ceil(height) + KPCJumpBarItemControlMargin
+            }
+
             var width = self.frame.size.width - baseLeft - KPCJumpBarItemControlMargin
             if (!self.isLastSegment && self.tag != KPCJumpBarItemControlAccessoryMenuLabelTag) {
                 width -= 7.0
