@@ -10,9 +10,9 @@ import AppKit
 
 public protocol JumpBarControlDelegate : NSControlTextEditingDelegate {
     
-    func jumpBarControl(_ jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath:IndexPath, withItems items:[JumpBarItem])
-    func jumpBarControl(_ jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath:IndexPath, withItems items:[JumpBarItem])
+    func jumpBarControl(_ jumpBar: JumpBarControl, willOpenMenuAtIndexPath indexPath:IndexPath, withItems items:[JumpBarItemProtocol])
+    func jumpBarControl(_ jumpBar: JumpBarControl, didOpenMenuAtIndexPath indexPath:IndexPath, withItems items:[JumpBarItemProtocol])
     
-    func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item:JumpBarItem, atIndexPath indexPath:IndexPath)
-    func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item:JumpBarItem, atIndexPath indexPath:IndexPath)
+    func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item:JumpBarItemProtocol, atIndexPath indexPath:IndexPath)
+    func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item:JumpBarItemProtocol, atIndexPath indexPath:IndexPath)
 }

@@ -275,7 +275,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             segment.makeKey(true)
             
             let item = currentMenu!.item(at: index)
-            segment.representedObject = item!.representedObject as? JumpBarItem
+            segment.representedObject = item!.representedObject as? JumpBarItemProtocol
             currentMenu = item!.submenu
             
             segment.sizeToFit()
@@ -347,9 +347,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         let subIndexPath = self.selectedIndexPath!.prefix(through: segmentControl.tag) // To be inclusive, we use 'through' rather than 'upTo'
         let clickedMenu = self.menu!.menuItemAtIndexPath(subIndexPath)!.menu
 
-        var items = [JumpBarItem]()
+        var items = [JumpBarItemProtocol]()
         for menuItem in clickedMenu!.items {
-            items.append(menuItem.representedObject as! JumpBarItem)
+            items.append(menuItem.representedObject as! JumpBarItemProtocol)
         }
     
         self.delegate?.jumpBarControl(self, willOpenMenuAtIndexPath:subIndexPath, withItems:items)
@@ -366,9 +366,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
 
         clickedMenu!.delegate = menuDelegate
 
-        items = [JumpBarItem]()
+        items = [JumpBarItemProtocol]()
         for menuItem in clickedMenu!.items {
-            items.append(menuItem.representedObject as! JumpBarItem)
+            items.append(menuItem.representedObject as! JumpBarItemProtocol)
         }
 
         self.delegate?.jumpBarControl(self, didOpenMenuAtIndexPath:subIndexPath, withItems:items)

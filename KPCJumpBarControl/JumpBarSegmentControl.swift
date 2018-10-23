@@ -21,7 +21,7 @@ open class JumpBarSegmentControl : NSControl {
     var indexInPath: Int = 0
     var isKey: Bool = false
 
-    var representedObject: JumpBarItem? = nil
+    var representedObject: JumpBarItemProtocol? = nil
     var delegate: JumpBarSegmentControlDelegate? = nil
     
     override open func sizeToFit() {
