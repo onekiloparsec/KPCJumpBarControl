@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F25F6B3217F02190031B11B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F25F6AE217F02190031B11B /* Assets.xcassets */; };
+		9F25F6B4217F02190031B11B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6AF217F02190031B11B /* AppDelegate.swift */; };
+		9F25F6C4217F04380031B11B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F25F6C1217F03CA0031B11B /* Main.storyboard */; };
+		9F25F6C7217FAC850031B11B /* ItemOutlineViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6C5217FAC850031B11B /* ItemOutlineViewDelegate.swift */; };
+		9F25F6C8217FAC850031B11B /* ItemOutlineViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6C6217FAC850031B11B /* ItemOutlineViewDataSource.swift */; };
+		9F25F6CB217FACB40031B11B /* OutlineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6C9217FACB40031B11B /* OutlineNode.swift */; };
+		9F25F6CC217FACB40031B11B /* OutlineNode+JumpBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6CA217FACB40031B11B /* OutlineNode+JumpBarControl.swift */; };
 		9F3CCB1A1CDF2B0E005669BD /* JumpBarSegmentControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CCB191CDF2B0E005669BD /* JumpBarSegmentControl.swift */; };
 		9F3CCB1C1CDFA421005669BD /* JumpBarControlDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CCB1B1CDFA421005669BD /* JumpBarControlDelegate.swift */; };
 		9F3CCB1E1CDFA458005669BD /* JumpBarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3CCB1D1CDFA458005669BD /* JumpBarControl.swift */; };
@@ -19,10 +26,18 @@
 		9F4100AA1E25308900B39A07 /* NSTreeController+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4100A91E25308900B39A07 /* NSTreeController+Utils.swift */; };
 		9F54FDA61CD5F1E000DA73C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F54FDA51CD5F1E000DA73C1 /* Images.xcassets */; };
 		9F6CC8A41CDF25B400072EC6 /* JumpBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6CC8A31CDF25B400072EC6 /* JumpBarItem.swift */; };
+		9FAC586F217FB0BB000BA84C /* ViewControllerWithTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F25F6AC217F02180031B11B /* ViewControllerWithTree.swift */; };
 		9FB5EF201D981D3F00BE42E2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB5EF1F1D981D3F00BE42E2 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9F25F69A217F015A0031B11B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9F54FD5C1CD5E9F200DA73C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9F54FD641CD5E9F200DA73C1;
+			remoteInfo = KPCJumpBarControl;
+		};
 		9F3CCB511CE0BFD2005669BD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9F54FD5C1CD5E9F200DA73C1 /* Project object */;
@@ -33,6 +48,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9F25F6A5217F015A0031B11B /* KPCJumpBarControlDemoTreeController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KPCJumpBarControlDemoTreeController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F25F6A6217F015A0031B11B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = /Users/onekiloparsec/code/KPCJumpBarControl/KPCJumpBarControlDemoTreeController/Info.plist; sourceTree = "<absolute>"; };
+		9F25F6AC217F02180031B11B /* ViewControllerWithTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithTree.swift; sourceTree = "<group>"; };
+		9F25F6AD217F02180031B11B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9F25F6AE217F02190031B11B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9F25F6AF217F02190031B11B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9F25F6C2217F03CA0031B11B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9F25F6C5217FAC850031B11B /* ItemOutlineViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemOutlineViewDelegate.swift; sourceTree = "<group>"; };
+		9F25F6C6217FAC850031B11B /* ItemOutlineViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemOutlineViewDataSource.swift; sourceTree = "<group>"; };
+		9F25F6C9217FACB40031B11B /* OutlineNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutlineNode.swift; sourceTree = "<group>"; };
+		9F25F6CA217FACB40031B11B /* OutlineNode+JumpBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OutlineNode+JumpBarControl.swift"; sourceTree = "<group>"; };
 		9F3CCB191CDF2B0E005669BD /* JumpBarSegmentControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarSegmentControl.swift; sourceTree = "<group>"; };
 		9F3CCB1B1CDFA421005669BD /* JumpBarControlDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarControlDelegate.swift; sourceTree = "<group>"; };
 		9F3CCB1D1CDFA458005669BD /* JumpBarControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JumpBarControl.swift; sourceTree = "<group>"; };
@@ -57,6 +83,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		9F25F69E217F015A0031B11B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F3CCB391CE0944E005669BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,6 +107,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F25F6A7217F019F0031B11B /* KPCJumpBarControlDemoTreeController */ = {
+			isa = PBXGroup;
+			children = (
+				9F25F6AF217F02190031B11B /* AppDelegate.swift */,
+				9F25F6AC217F02180031B11B /* ViewControllerWithTree.swift */,
+				9F25F6C6217FAC850031B11B /* ItemOutlineViewDataSource.swift */,
+				9F25F6C5217FAC850031B11B /* ItemOutlineViewDelegate.swift */,
+				9F25F6C9217FACB40031B11B /* OutlineNode.swift */,
+				9F25F6CA217FACB40031B11B /* OutlineNode+JumpBarControl.swift */,
+				9F25F6AE217F02190031B11B /* Assets.xcassets */,
+				9F25F6C1217F03CA0031B11B /* Main.storyboard */,
+				9F25F6A6217F015A0031B11B /* Info.plist */,
+				9F25F6AD217F02180031B11B /* main.m */,
+			);
+			path = KPCJumpBarControlDemoTreeController;
+			sourceTree = "<group>";
+		};
 		9F3CCB3D1CE0944E005669BD /* KPCJumpBarControlDemo */ = {
 			isa = PBXGroup;
 			children = (
@@ -93,6 +143,7 @@
 				9F54FD671CD5E9F200DA73C1 /* KPCJumpBarControl */,
 				9F54FD7F1CD5EA2100DA73C1 /* Supporting files */,
 				9F3CCB3D1CE0944E005669BD /* KPCJumpBarControlDemo */,
+				9F25F6A7217F019F0031B11B /* KPCJumpBarControlDemoTreeController */,
 				9F54FD661CD5E9F200DA73C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -102,6 +153,7 @@
 			children = (
 				9F54FD651CD5E9F200DA73C1 /* KPCJumpBarControl.framework */,
 				9F3CCB3C1CE0944E005669BD /* KPCJumpBarControlDemo.app */,
+				9F25F6A5217F015A0031B11B /* KPCJumpBarControlDemoTreeController.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -146,6 +198,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		9F25F698217F015A0031B11B /* KPCJumpBarControlDemoTreeController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9F25F6A2217F015A0031B11B /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemoTreeController" */;
+			buildPhases = (
+				9F25F69B217F015A0031B11B /* Sources */,
+				9F25F69E217F015A0031B11B /* Frameworks */,
+				9F25F69F217F015A0031B11B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9F25F699217F015A0031B11B /* PBXTargetDependency */,
+			);
+			name = KPCJumpBarControlDemoTreeController;
+			productName = KPCJumpBarControlDemo;
+			productReference = 9F25F6A5217F015A0031B11B /* KPCJumpBarControlDemoTreeController.app */;
+			productType = "com.apple.product-type.application";
+		};
 		9F3CCB3B1CE0944E005669BD /* KPCJumpBarControlDemo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9F3CCB481CE0944E005669BD /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemo" */;
@@ -192,6 +262,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = onekiloparsec;
 				TargetAttributes = {
+					9F25F698217F015A0031B11B = {
+						LastSwiftMigration = 1000;
+					};
 					9F3CCB3B1CE0944E005669BD = {
 						CreatedOnToolsVersion = 7.3.1;
 						LastSwiftMigration = 0940;
@@ -217,11 +290,21 @@
 			targets = (
 				9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */,
 				9F3CCB3B1CE0944E005669BD /* KPCJumpBarControlDemo */,
+				9F25F698217F015A0031B11B /* KPCJumpBarControlDemoTreeController */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		9F25F69F217F015A0031B11B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F25F6B3217F02190031B11B /* Assets.xcassets in Resources */,
+				9F25F6C4217F04380031B11B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F3CCB3A1CE0944E005669BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -242,6 +325,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		9F25F69B217F015A0031B11B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F25F6CB217FACB40031B11B /* OutlineNode.swift in Sources */,
+				9F25F6C7217FAC850031B11B /* ItemOutlineViewDelegate.swift in Sources */,
+				9F25F6CC217FACB40031B11B /* OutlineNode+JumpBarControl.swift in Sources */,
+				9F25F6B4217F02190031B11B /* AppDelegate.swift in Sources */,
+				9FAC586F217FB0BB000BA84C /* ViewControllerWithTree.swift in Sources */,
+				9F25F6C8217FAC850031B11B /* ItemOutlineViewDataSource.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		9F3CCB381CE0944E005669BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -269,6 +365,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		9F25F699217F015A0031B11B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */;
+			targetProxy = 9F25F69A217F015A0031B11B /* PBXContainerItemProxy */;
+		};
 		9F3CCB521CE0BFD2005669BD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9F54FD641CD5E9F200DA73C1 /* KPCJumpBarControl */;
@@ -277,6 +378,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		9F25F6C1217F03CA0031B11B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9F25F6C2217F03CA0031B11B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		9F3CCB4E1CE09583005669BD /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -288,6 +397,35 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		9F25F6A3217F015A0031B11B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = KPCJumpBarControlDemoTreeController/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemoTreeController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		9F25F6A4217F015A0031B11B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = KPCJumpBarControlDemoTreeController/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemoTreeController;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
 		9F3CCB491CE0944E005669BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -298,7 +436,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -312,7 +449,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.onekiloparsec.KPCJumpBarControlDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
@@ -473,6 +609,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9F25F6A2217F015A0031B11B /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemoTreeController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9F25F6A3217F015A0031B11B /* Debug */,
+				9F25F6A4217F015A0031B11B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		9F3CCB481CE0944E005669BD /* Build configuration list for PBXNativeTarget "KPCJumpBarControlDemo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
