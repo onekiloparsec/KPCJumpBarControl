@@ -16,7 +16,6 @@ public protocol JumpBarItemProtocol: class, NSObjectProtocol {
     var children: [JumpBarItemProtocol]? { get }
     var parent: JumpBarItemProtocol? { get }
     var isSeparator: Bool { get }
-    //    var segmentIndexPath: IndexPath { get }
 }
 
 open class JumpBarItem: NSObject, JumpBarItemProtocol {
