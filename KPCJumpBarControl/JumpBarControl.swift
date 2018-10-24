@@ -157,19 +157,8 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
                 self.update(withIndexPath: treeController.selectionIndexPaths.first!)
             } else {
                 self.hasMultipleSelection = true
-                let newIndexPaths = Set(treeController.selectionIndexPaths).subtracting(Set(self.previousSelectionIndexPaths))
-                let indexedItems: [(IndexPath, JumpBarItemProtocol)] = newIndexPaths.compactMap { (indexPath) in
-                    let item = self.segmentItem(atIndexPath: indexPath)
-                    return (item != nil) ? (indexPath, item!) : nil
-                }
-                for indexedItem in indexedItems {
-                    self.delegate?.jumpBarControl(self, willSelectItem: indexedItem.1, atIndexPath: indexedItem.0)
-                }
                 let commonAncestorIndexPath = IndexPath.commonAncestor(indexPaths: treeController.selectionIndexPaths)
                 self.update(withIndexPath: commonAncestorIndexPath ?? IndexPath())
-                for indexedItem in indexedItems {
-                    self.delegate?.jumpBarControl(self, didSelectItem: indexedItem.1, atIndexPath: indexedItem.0)
-                }
             }
             self.previousSelectionIndexPaths = treeController.selectionIndexPaths
         }
@@ -284,14 +273,20 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             widthReduction = (totalWidth - self.frame.width)/CGFloat(self.selectedIndexPath!.count)
         }
         
-        for position in 0..<self.selectedIndexPath!.count {
+        let workingSelectedIndexPath = (self.hasMultipleSelection) ? self.selectedIndexPath!.appending(0) : self.selectedIndexPath!
+        for position in 0..<workingSelectedIndexPath.count {
             let segmentControl = self.segmentControlAtLevel(position)!
             var frame = segmentControl.frame
             frame.origin.x = originX
             frame.size.width -= widthReduction
             originX += frame.size.width
             segmentControl.frame = frame
-        }        
+            
+
+            if (self.hasMultipleSelection && segmentControl.isLastSegment) {
+                segmentControl.indexInPath = -1
+            }
+        }
     }
     
     fileprivate func prepareSegmentsLayout() -> CGFloat {
@@ -302,21 +297,27 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         var currentMenu = self.menu
         var totalWidth = CGFloat(0)
         
-        for (position, index) in self.selectedIndexPath!.enumerated() {
+        let workingSelectedIndexPath = (self.hasMultipleSelection) ? self.selectedIndexPath!.appending(0) : self.selectedIndexPath!
+        for (position, index) in workingSelectedIndexPath.enumerated() {
+
+            let segmentControl = self.segmentControlAtLevel(position)!
+            segmentControl.isLastSegment = (position == workingSelectedIndexPath.count-1)
             
-            let segment = self.segmentControlAtLevel(position)!
-            segment.isLastSegment = (position == self.selectedIndexPath!.count-1)
-            segment.indexInPath = index
-            segment.makeKey(true)
+            if (self.hasMultipleSelection && segmentControl.isLastSegment) {
+                segmentControl.indexInPath = -1
+                segmentControl.representedObject = JumpBarItem(withTitle: "(multiple)")
+            } else {
+                segmentControl.indexInPath = index
+                segmentControl.makeKey(true)
+                let item = currentMenu!.item(at: index)
+                currentMenu = item!.submenu
+                segmentControl.representedObject = item!.representedObject as? JumpBarItemProtocol
+            }
             
-            let item = currentMenu!.item(at: index)
-            segment.representedObject = item!.representedObject as? JumpBarItemProtocol
-            currentMenu = item!.submenu
-            
-            segment.sizeToFit()
-            totalWidth += segment.frame.width
+            segmentControl.sizeToFit()
+            totalWidth += segmentControl.frame.width
         }
-        
+
         return totalWidth
     }
     
@@ -378,6 +379,10 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     // MARK: - JumpBarSegmentControlDelegate
     
     func jumpBarSegmentControlDidReceiveMouseDown(_ segmentControl: JumpBarSegmentControl) {
+        if (segmentControl.tag == self.selectedIndexPath!.count) {
+            NSSound.beep()
+            return
+        }
         
         let subIndexPath = self.selectedIndexPath!.prefix(through: segmentControl.tag) // To be inclusive, we use 'through' rather than 'upTo'
         let clickedMenu = self.menu!.menuItemAtIndexPath(subIndexPath)!.menu

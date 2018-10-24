@@ -68,6 +68,17 @@ open class JumpBarSegmentControl : NSControl {
         return attributes
     }
     
+    fileprivate func attributesDisabled() -> [NSAttributedString.Key: NSObject] {
+        let style = NSMutableParagraphStyle()
+        style.lineBreakMode = .byTruncatingMiddle
+        
+        let attributes = [NSAttributedString.Key.foregroundColor: NSColor.lightGray,
+                          NSAttributedString.Key.font: NSFont.systemFont(ofSize: 12.0),
+                          NSAttributedString.Key.paragraphStyle: style]
+        
+        return attributes
+    }
+
     // MARK: Getter/Setters
     
     func minimumWidth() -> CGFloat {
@@ -127,10 +138,11 @@ open class JumpBarSegmentControl : NSControl {
             }
         
             if (width > 0) {
-                let attributes = self.attributes()
                 let height = CGFloat(20.0)
                 let r = CGRect(x: baseLeft-1.0, y: (self.bounds.height-height)/2.0-1, width: width, height: height)
-                obj.title.draw(in: r, withAttributes:attributes)
+                let attributes = (self.isLastSegment && self.indexInPath == -1) ? self.attributesDisabled() : self.attributes()
+                let title = (self.isLastSegment && self.indexInPath == -1) ? "(multiple)" : obj.title
+                title.draw(in: r, withAttributes:attributes)
                 baseLeft += width + KPCJumpBarItemControlMargin
             }
         }
