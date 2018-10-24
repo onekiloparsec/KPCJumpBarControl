@@ -37,3 +37,18 @@ internal func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
+extension IndexPath {
+    static func commonAncestor(indexPaths: [IndexPath]) -> IndexPath? {
+        let shortestLength = indexPaths.reduce(1000) { $0 < $1.count ? $0 : $1.count }
+        var common = IndexPath()
+        for index in 0..<shortestLength {
+            var s: Set = Set(indexPaths.map() { $0[index] })
+            if s.count == 1 {
+                common.append(s.popFirst()!)
+            } else {
+                break
+            }
+        }
+        return common.count == 0 ? nil : common
+    }
+}

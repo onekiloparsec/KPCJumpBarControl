@@ -30,6 +30,8 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     fileprivate var contentBinding: JumpBarControlBinding?
     fileprivate var selectionBinding: JumpBarControlBinding?
     public var isBound: Bool { get { return self.contentBinding != nil } }
+    fileprivate var previousSelectionIndexPaths: [IndexPath] = []
+    fileprivate var hasMultipleSelection: Bool = false
 
     // MARK: - Overrides
     
@@ -146,14 +148,30 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         }
         
         if (keyPath == "arrangedObjects") {
+            self.hasMultipleSelection = false
             self.useItemsTree(self.contentBinding!.treeController!.arrangedRootObjects())
         } else if (keyPath == "selectionIndexPaths") {
             let treeController: NSTreeController = object as! NSTreeController
             if (treeController.selectionIndexPaths.count == 1) {
+                self.hasMultipleSelection = false
                 self.select(itemAtIndexPath: treeController.selectionIndexPaths.first!)
             } else {
-                print("Bounded multiple selection! \(treeController.selectionIndexPaths)")
+                self.hasMultipleSelection = true
+                let newIndexPaths = Set(treeController.selectionIndexPaths).subtracting(Set(self.previousSelectionIndexPaths))
+                let indexedItems: [(IndexPath, JumpBarItemProtocol)] = newIndexPaths.compactMap { (indexPath) in
+                    let item = self.segmentItem(atIndexPath: indexPath)
+                    return (item != nil) ? (indexPath, item!) : nil
+                }
+                for indexedItem in indexedItems {
+                    self.delegate?.jumpBarControl(self, willSelectItem: indexedItem.1, atIndexPath: indexedItem.0)
+                }
+                let commonAncestorIndexPath = IndexPath.commonAncestor(indexPaths: treeController.selectionIndexPaths)
+                self.update(withIndexPath: commonAncestorIndexPath ?? IndexPath())
+                for indexedItem in indexedItems {
+                    self.delegate?.jumpBarControl(self, didSelectItem: indexedItem.1, atIndexPath: indexedItem.0)
+                }
             }
+            self.previousSelectionIndexPaths = treeController.selectionIndexPaths
         }
     }
 
