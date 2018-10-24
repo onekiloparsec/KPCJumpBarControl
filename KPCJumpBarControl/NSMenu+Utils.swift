@@ -11,7 +11,7 @@ import AppKit
 class MenuItem: NSMenuItem {
     override internal var image: NSImage? {
         get {
-            if let obj: JumpBarItem = self.representedObject as? JumpBarItem {
+            if let obj = self.representedObject as? JumpBarItemProtocol {
                 return obj.icon?.scaleToSize(NSMakeSize(KPCJumpBarItemIconMaxHeight, KPCJumpBarItemIconMaxHeight))
             }
             return nil
@@ -21,7 +21,7 @@ class MenuItem: NSMenuItem {
 
     override internal var title: String {
         get {
-            if let obj: JumpBarItem = self.representedObject as? JumpBarItem {
+            if let obj = self.representedObject as? JumpBarItemProtocol {
                 return obj.title
             }
             return ""

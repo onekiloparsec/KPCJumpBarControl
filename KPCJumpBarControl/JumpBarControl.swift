@@ -178,18 +178,18 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         self.layoutSegments()
     }
     
-    open func selectedSegmentItem() -> JumpBarItem? {
+    open func selectedSegmentItem() -> JumpBarItemProtocol? {
         if let ip = self.selectedIndexPath {
             return self.segmentItem(atIndexPath: ip)
         }
         return nil
     }
     
-    open func segmentItem(atIndexPath indexPath: IndexPath) -> JumpBarItem? {
+    open func segmentItem(atIndexPath indexPath: IndexPath) -> JumpBarItemProtocol? {
         guard let item = self.menu?.menuItemAtIndexPath(indexPath) else {
             return nil
         }
-        return item.representedObject as? JumpBarItem // Return representedObject as NSMenuItem are kept hidden
+        return item.representedObject as? JumpBarItemProtocol // Return representedObject, since NSMenuItem(s) are kept hidden
     }
 
     // MARK: - Activation
