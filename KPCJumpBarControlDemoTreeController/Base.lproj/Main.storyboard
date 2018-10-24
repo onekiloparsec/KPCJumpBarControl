@@ -820,6 +820,7 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController representsSharedInstance="YES" id="TF0-hP-dev"/>
             </objects>
             <point key="canvasLocation" x="74.5" y="794"/>
         </scene>

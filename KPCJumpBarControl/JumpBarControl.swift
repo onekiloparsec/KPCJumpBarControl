@@ -27,8 +27,9 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     fileprivate var hasCompressedSegments: Bool = false
     fileprivate var isKey: Bool = false
 
-    fileprivate var binding: JumpBarControlBinding?
-    public var isBound: Bool { get { return self.binding != nil } }
+    fileprivate var contentBinding: JumpBarControlBinding?
+    fileprivate var selectionBinding: JumpBarControlBinding?
+    public var isBound: Bool { get { return self.contentBinding != nil } }
 
     // MARK: - Overrides
     
@@ -101,30 +102,37 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     
     // MARK: - Content
     
-    open func bind(itemsTreeTo treeController: NSTreeController,
-                   withKeyPath treeKeyPath: String = "arrangedObjects") throws
+    open func bindItemsTree(to treeController: NSTreeController) throws
     {
-        guard self.binding == nil else {
+        guard self.contentBinding == nil else {
             throw JumpBarControlError.alreadyBound("JumpBarControl \(self) is already bound to tree and selection controllers. Unbind first.")
         }
         
-        self.binding = JumpBarControlBinding(treeController: treeController, treeKeyPath: treeKeyPath)
+        self.contentBinding = JumpBarControlBinding(treeController: treeController, treeKeyPath: "arrangedObjects")
+        self.selectionBinding = JumpBarControlBinding(treeController: treeController, treeKeyPath: "selectionIndexPaths")
         
         treeController.addObserver(self,
-                                   forKeyPath: treeKeyPath,
+                                   forKeyPath: "arrangedObjects",
                                    options: [.new, .old],
                                    context: &JumpBarControlBinding.treeObserverContext)
-        
+
+        treeController.addObserver(self,
+                                   forKeyPath: "selectionIndexPaths",
+                                   options: [.new, .old],
+                                   context: &JumpBarControlBinding.treeObserverContext)
+
         self.useItemsTree(treeController.arrangedRootObjects())
     }
     
     open func unbindItemsTreeAndSelection() {
-        guard self.binding != nil else {
+        guard self.contentBinding != nil else {
             return
         }
         
-        self.binding!.treeController?.removeObserver(self, forKeyPath: self.binding!.treeKeyPath)
-        self.binding = nil
+        self.contentBinding!.treeController?.removeObserver(self, forKeyPath: self.contentBinding!.treeKeyPath)
+        self.selectionBinding!.treeController?.removeObserver(self, forKeyPath: self.selectionBinding!.treeKeyPath)
+        self.contentBinding = nil
+        self.selectionBinding = nil
     }
     
     open override func observeValue(forKeyPath keyPath: String?,
@@ -137,16 +145,25 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             return
         }
         
-        self.useItemsTree(self.binding!.treeController!.arrangedRootObjects())
+        if (keyPath == "arrangedObjects") {
+            self.useItemsTree(self.contentBinding!.treeController!.arrangedRootObjects())
+        } else if (keyPath == "selectionIndexPaths") {
+            let treeController: NSTreeController = object as! NSTreeController
+            if (treeController.selectionIndexPaths.count == 1) {
+                self.select(itemAtIndexPath: treeController.selectionIndexPaths.first!)
+            } else {
+                print("Bounded multiple selection! \(treeController.selectionIndexPaths)")
+            }
+        }
     }
 
     open func useItemsTree(_ itemsTree: [JumpBarItemProtocol]) {
         self.segmentControls().forEach { $0.removeFromSuperview() }
 
         // At that stage, we do items all in one shot. Might be optimized later.
-        self.menu = NSMenu.menuWithSegmentsTree(itemsTree,
-                                                target:self,
-                                                action:#selector(JumpBarControl.select(itemFromMenuItem:)))
+        self.menu = NSMenu.menuWithTreeNodeObjects(itemsTree,
+                                                   target:self,
+                                                   action:#selector(JumpBarControl.select(itemFromMenuItem:)))
         
         if itemsTree.count > 0 {
             self.selectedIndexPath = IndexPath(index: 0)

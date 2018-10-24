@@ -20,9 +20,9 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
     @IBOutlet weak var selectedItemIcon: NSImageView? = nil
     @IBOutlet weak var selectedItemIndexPath: NSTextField? = nil
     
-    var treeController: NSTreeController!
-    var nodes: [OutlineNode] = []
-    @objc var selectedIndexPaths: [IndexPath] = []
+    @IBOutlet var treeController: NSTreeController!
+    @objc var nodes: [OutlineNode] = []
+    @objc var selectionIndexPaths: [IndexPath] = []
 
     var swap: Bool = true
 
@@ -30,8 +30,12 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         super.viewDidLoad()
 
         self.outlineViewDataSource = ItemOutlineViewDataSource()
-        self.outlineViewDelegate = ItemOutlineViewDelegate({ (notif) in
-            print("selected!")
+        self.outlineViewDelegate = ItemOutlineViewDelegate({ (notification) in
+            let outlineView = notification.object as! NSOutlineView
+            let indexes = outlineView.selectedRowIndexes
+            print("selected! \(indexes)")
+//            let windowCtlr = outlineView.window!.windowController as! MainWindowController
+//            self.selectedIndexPaths = [IndexPath(index: <#T##IndexPath.Element#>)]
         })
         
         self.outlineView.dataSource = self.outlineViewDataSource
@@ -51,23 +55,43 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         self.treeController.objectClass = OutlineNode.classForCoder()
         self.treeController.isEditable = true
         
+        self.treeController.bind(NSBindingName.content,
+                                 to: self,
+                                 withKeyPath: "nodes",
+                                 options: nil)
+        
+        self.treeController.bind(NSBindingName.selectionIndexPaths,
+                                 to: self,
+                                 withKeyPath: "selectionIndexPaths",
+                                 options: nil)
+
         self.outlineView.bind(NSBindingName.content,
                               to: self.treeController,
                               withKeyPath: "arrangedObjects",
                               options: nil)
         
         self.outlineView.bind(NSBindingName.selectionIndexPaths,
-                              to: self,
-                              withKeyPath: "selectedIndexPaths",
+                              to: self.treeController,
+                              withKeyPath: "selectionIndexPaths",
                               options: nil)
 
         self.jumpBar.delegate = self
         
-        try! self.jumpBar.bind(itemsTreeTo: self.treeController)
+        try! self.jumpBar.bindItemsTree(to: self.treeController)
         
-        self.treeController.addObject(OutlineNode("root1"))
-        self.treeController.setSelectionIndexPath(IndexPath(index: 0))
-        self.treeController.addObject(OutlineNode("first child"))
+        let rootNode = OutlineNode("root1")
+        rootNode.childNodes.append(OutlineNode("first child"))
+        
+        let secondChildNode = OutlineNode("second child")
+        secondChildNode.childNodes.append(OutlineNode("down there"))
+        rootNode.childNodes.append(secondChildNode)
+        
+        rootNode.childNodes.append(OutlineNode("third child"))
+        
+        self.treeController.addObject(rootNode)
+        let answer = self.treeController.setSelectionIndexPath(IndexPath(index: 0))
+        self.outlineView.expandItem(self.outlineView.item(atRow: 0))
+        print("Selected ? \(answer)")
     }
 
     // MARK: - JumpBarControlDelegate
