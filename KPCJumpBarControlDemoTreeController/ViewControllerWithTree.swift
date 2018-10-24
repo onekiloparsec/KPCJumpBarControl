@@ -87,7 +87,7 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         rootNode.childNodes.append(OutlineNode("third child", icon: NSImage(named: NSImage.Name(rawValue: "Triangle"))))
         
         self.treeController.addObject(rootNode)
-        let answer = self.treeController.setSelectionIndexPath(IndexPath(arrayLiteral: 0, 1))
+        let answer = self.treeController.setSelectionIndexPath(IndexPath(arrayLiteral: 0, 0))
         self.outlineView.expandItem(self.outlineView.item(atRow: 0))
         print("Selected ? \(answer)")
     }
@@ -112,6 +112,8 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         self.selectedItemIcon?.image = item.icon
         self.selectedItemTitle?.stringValue = item.title
         self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
+        
+        self.treeController.setSelectionIndexPath(indexPath)
     }
 }
 
