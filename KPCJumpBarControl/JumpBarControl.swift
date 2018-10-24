@@ -154,7 +154,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             let treeController: NSTreeController = object as! NSTreeController
             if (treeController.selectionIndexPaths.count == 1) {
                 self.hasMultipleSelection = false
-                self.select(itemAtIndexPath: treeController.selectionIndexPaths.first!)
+                self.update(withIndexPath: treeController.selectionIndexPaths.first!)
             } else {
                 self.hasMultipleSelection = true
                 let newIndexPaths = Set(treeController.selectionIndexPaths).subtracting(Set(self.previousSelectionIndexPaths))
