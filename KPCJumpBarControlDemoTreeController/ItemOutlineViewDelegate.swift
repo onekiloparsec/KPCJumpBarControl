@@ -21,7 +21,11 @@ class ItemOutlineViewDelegate: NSObject, NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         let node = (item is OutlineNode) ? item as! OutlineNode : (item as! NSTreeNode).representedObject as! OutlineNode
         var cellView: NSTableCellView? = nil
-        cellView = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MainOutlineSingleLineCellViewIdentifier"), owner: nil) as! NSTableCellView?
+        if (node.isRoot) {
+            cellView = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MainOutlineSectionCellViewIdentifier"), owner: nil) as! NSTableCellView?
+        } else {
+            cellView = outlineView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "MainOutlineSingleLineCellViewIdentifier"), owner: nil) as! NSTableCellView?
+        }
         cellView?.objectValue = node
         return cellView
     }

@@ -80,16 +80,14 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         try! self.jumpBar.bindItemsTree(to: self.treeController)
         
         let rootNode = OutlineNode("root1")
-        rootNode.childNodes.append(OutlineNode("first child"))
-        
-        let secondChildNode = OutlineNode("second child")
-        secondChildNode.childNodes.append(OutlineNode("down there"))
+        rootNode.childNodes.append(OutlineNode("first child", icon: NSImage(named: NSImage.Name(rawValue: "Star"))))
+        let secondChildNode = OutlineNode("second child", icon: NSImage(named: NSImage.Name(rawValue: "Polygon")))
+        secondChildNode.childNodes.append(OutlineNode("down there", icon: NSImage(named: NSImage.Name(rawValue: "Rectangle"))))
         rootNode.childNodes.append(secondChildNode)
-        
-        rootNode.childNodes.append(OutlineNode("third child"))
+        rootNode.childNodes.append(OutlineNode("third child", icon: NSImage(named: NSImage.Name(rawValue: "Triangle"))))
         
         self.treeController.addObject(rootNode)
-        let answer = self.treeController.setSelectionIndexPath(IndexPath(index: 0))
+        let answer = self.treeController.setSelectionIndexPath(IndexPath(arrayLiteral: 0, 1))
         self.outlineView.expandItem(self.outlineView.item(atRow: 0))
         print("Selected ? \(answer)")
     }

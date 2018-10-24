@@ -743,6 +743,27 @@
                                                                                 <outlet property="textField" destination="1aD-Su-xqH" id="aLH-j2-4MP"/>
                                                                             </connections>
                                                                         </tableCellView>
+                                                                        <tableCellView identifier="MainOutlineSectionCellViewIdentifier" autoresizesSubviews="NO" focusRingType="none" id="0T3-XW-vqQ">
+                                                                            <rect key="frame" x="1" y="24" width="213" height="18"/>
+                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                                                            <subviews>
+                                                                                <textField verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" id="LCf-2b-jpf">
+                                                                                    <rect key="frame" x="0.0" y="2" width="147" height="14"/>
+                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="HEADER CELL" usesSingleLineMode="YES" id="UnA-Mf-CMP">
+                                                                                        <font key="font" metaFont="smallSystemBold"/>
+                                                                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                                                                    </textFieldCell>
+                                                                                    <connections>
+                                                                                        <binding destination="0T3-XW-vqQ" name="value" keyPath="objectValue.title" id="a0s-RB-qTa"/>
+                                                                                    </connections>
+                                                                                </textField>
+                                                                            </subviews>
+                                                                            <connections>
+                                                                                <outlet property="textField" destination="LCf-2b-jpf" id="gii-23-eJp"/>
+                                                                            </connections>
+                                                                        </tableCellView>
                                                                     </prototypeCellViews>
                                                                 </tableColumn>
                                                             </tableColumns>
@@ -775,7 +796,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" id="eC2-7P-AdH">
-                                                <rect key="frame" x="191" y="178" width="37" height="17"/>
+                                                <rect key="frame" x="191" y="178" width="210" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="zsK-Ww-LTz">
                                                     <font key="font" metaFont="system"/>
@@ -789,7 +810,7 @@
                                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="vWv-7N-i4F"/>
                                             </imageView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" id="mRf-FC-igX">
-                                                <rect key="frame" x="163" y="148" width="92" height="17"/>
+                                                <rect key="frame" x="18" y="148" width="383" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Item Selected" id="Nrl-Z9-CzS">
                                                     <font key="font" metaFont="system"/>

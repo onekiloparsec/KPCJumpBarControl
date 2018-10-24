@@ -20,9 +20,10 @@ import AppKit
     
     // MARK: - Constructors
     
-    init(_ title: String) {
+    init(_ title: String, icon: NSImage? = nil) {
         self.uuid = UUID()
         self.title = title
+        self.icon = icon
     }
     
     // Outline
