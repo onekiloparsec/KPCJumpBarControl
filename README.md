@@ -26,7 +26,7 @@ A jump bar similar to Xcode's allowing to easily display and navigate across a t
 
 ![Demo Jump Bar Screenshot](http://onekilopars.ec/wp-content/uploads/2018/11/KPCJumpBarControlScreenshot2.png)
 
-![Demo JumpBar](http://www.onekilopars.ec/s/KPCJumpBarControlDemo.gif) 
+![Demo JumpBar](http://onekilopars.ec/wp-content/uploads/2018/11/KPCJumpBarControlDemo.gif) 
 
 
 Installation
