@@ -22,8 +22,9 @@ KPCJumpBarControl
 ![Platform](https://img.shields.io/cocoapods/p/KPCJumpBarControl.svg?style=flat)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
-
 A jump bar similar to Xcode's allowing to easily display and navigate across a tree of objects.
+
+![Demo Jump Bar Screenshot](http://onekilopars.ec/wp-content/uploads/2018/11/KPCJumpBarControlScreenshot2.png)
 
 ![Demo JumpBar](http://www.onekilopars.ec/s/KPCJumpBarControlDemo.gif) 
 
