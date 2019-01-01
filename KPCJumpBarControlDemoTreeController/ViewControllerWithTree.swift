@@ -102,18 +102,18 @@ class ViewControllerWithTree: NSViewController, JumpBarControlDelegate {
         print(#function)
     }
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: IndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, willSelectItems items: [JumpBarItemProtocol], atIndexPaths indexPaths: [IndexPath]) {
         print(#function)
     }
 
-     func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItem item: JumpBarItemProtocol, atIndexPath indexPath: IndexPath) {
+     func jumpBarControl(_ jumpBar: JumpBarControl, didSelectItems items: [JumpBarItemProtocol], atIndexPaths indexPaths: [IndexPath]) {
         print(#function)
         
-        self.selectedItemIcon?.image = item.icon
-        self.selectedItemTitle?.stringValue = item.title
-        self.selectedItemIndexPath?.stringValue = "IndexPath: \(indexPath.description)"
+        self.selectedItemIcon?.image = (items.count == 1) ? items.first!.icon : nil
+        self.selectedItemTitle?.stringValue = (items.count == 1) ? items.first!.title : "(multiple selection)"
+        self.selectedItemIndexPath?.stringValue = (items.count == 1) ? "IndexPath: \(indexPaths.first!.description)" : "(multiple selection)"
         
-        self.treeController.setSelectionIndexPath(indexPath)
+        self.treeController.setSelectionIndexPaths(indexPaths)
     }
 }
 

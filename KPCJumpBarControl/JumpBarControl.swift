@@ -22,8 +22,11 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     let KPCJumpBarControlTag: NSInteger = -9999999
 
     open weak var delegate: JumpBarControlDelegate? = nil
-    public fileprivate(set) var selectedIndexPath: IndexPath?
-    
+    public var selectedIndexPath: IndexPath? {
+        get { return IndexPath.commonAncestor(indexPaths: self.selectedIndexPaths) }
+    }
+    public fileprivate(set) var selectedIndexPaths: [IndexPath] = []
+
     fileprivate var hasCompressedSegments: Bool = false
     fileprivate var isKey: Bool = false
 
@@ -152,14 +155,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
             self.useItemsTree(self.contentBinding!.treeController!.arrangedRootObjects())
         } else if (keyPath == "selectionIndexPaths") {
             let treeController: NSTreeController = object as! NSTreeController
-            if (treeController.selectionIndexPaths.count == 1) {
-                self.hasMultipleSelection = false
-                self.update(withIndexPath: treeController.selectionIndexPaths.first!)
-            } else {
-                self.hasMultipleSelection = true
-                let commonAncestorIndexPath = IndexPath.commonAncestor(indexPaths: treeController.selectionIndexPaths)
-                self.update(withIndexPath: commonAncestorIndexPath ?? IndexPath())
-            }
+            self.update(withIndexPaths: treeController.selectionIndexPaths)
             self.previousSelectionIndexPaths = treeController.selectionIndexPaths
         }
     }
@@ -173,7 +169,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
                                                    action:#selector(JumpBarControl.select(itemFromMenuItem:)))
         
         if itemsTree.count > 0 {
-            self.selectedIndexPath = IndexPath(index: 0)
+            self.selectedIndexPaths = [IndexPath(index: 0)]
         }
         
         self.layoutSegments()
@@ -182,23 +178,23 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     // MARK: - Selection
     
     @objc fileprivate func select(itemFromMenuItem sender: NSMenuItem) {
-        self.select(itemAtIndexPath: sender.indexPath())
+        self.select(itemsAtIndexPaths: [sender.indexPath()])
     }
-    
-    open func select(itemAtIndexPath nextSelectedIndexPath: IndexPath) {
-        guard nextSelectedIndexPath != self.selectedIndexPath else {
+
+    open func select(itemsAtIndexPaths indexPaths: [IndexPath]) {
+        guard indexPaths.count > 0 else {
             return
         }
-        if let nextSelectedItem = self.segmentItem(atIndexPath: nextSelectedIndexPath) {
-            self.delegate?.jumpBarControl(self, willSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
-            self.update(withIndexPath: nextSelectedIndexPath)
-            self.delegate?.jumpBarControl(self, didSelectItem: nextSelectedItem, atIndexPath: nextSelectedIndexPath)
-        }
+        let items = indexPaths.map() { self.segmentItem(atIndexPath: $0)! }
+        self.delegate?.jumpBarControl(self, willSelectItems: items, atIndexPaths: indexPaths)
+        self.update(withIndexPaths: indexPaths)
+        self.delegate?.jumpBarControl(self, didSelectItems: items, atIndexPaths: indexPaths)
     }
-    
-    open func update(withIndexPath indexPath: IndexPath) {
+
+    open func update(withIndexPaths indexPaths: [IndexPath]) {
+        self.hasMultipleSelection = indexPaths.count > 1
         self.removeSegments(fromLevel: 0)
-        self.selectedIndexPath = indexPath
+        self.selectedIndexPaths = indexPaths
         self.layoutSegments()
     }
     
