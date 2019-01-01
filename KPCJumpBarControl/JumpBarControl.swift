@@ -223,8 +223,11 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     // MARK: - Layout
     
     fileprivate func removeSegments(fromLevel level: Int) {
-        if level < self.selectedIndexPath?.count {
-            for l in level..<self.selectedIndexPath!.count {
+        let maxLevel = self.selectedIndexPaths.reduce(into: 0) { (result, indexPath) in
+            result = max(result, indexPath.count)
+        }
+        if level < maxLevel {
+            for l in level..<maxLevel {
                 if let superfluousSegmentControl = self.segmentControlAtLevel(l, createIfNecessary: false) {
                     superfluousSegmentControl.removeFromSuperview()
                 }
