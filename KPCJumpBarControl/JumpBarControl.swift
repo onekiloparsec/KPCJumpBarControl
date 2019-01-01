@@ -196,7 +196,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
         }
     }
     
-    private func update(withIndexPath indexPath: IndexPath) {
+    open func update(withIndexPath indexPath: IndexPath) {
         self.removeSegments(fromLevel: 0)
         self.selectedIndexPath = indexPath
         self.layoutSegments()
