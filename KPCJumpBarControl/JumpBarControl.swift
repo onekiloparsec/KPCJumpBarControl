@@ -45,7 +45,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     override open var isEnabled: Bool {
         didSet {
             self.segmentControls().forEach({ $0.isEnabled = self.isEnabled})
-            self.setNeedsDisplay()
+            self.setNeedsDisplay(self.frame)
         }
     }
     
@@ -102,7 +102,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     }
     
     @objc open func setControlNeedsDisplay() {
-        self.setNeedsDisplay()
+        self.setNeedsDisplay(self.frame)
     }
     
     // MARK: - Content
@@ -217,7 +217,7 @@ open class JumpBarControl: NSControl, JumpBarSegmentControlDelegate {
     open func makeKey(_ flag: Bool) {
         self.isKey = flag
         self.segmentControls().forEach { $0.makeKey(flag) }
-        self.setNeedsDisplay()
+        self.setNeedsDisplay(self.frame)
     }    
     
     // MARK: - Layout

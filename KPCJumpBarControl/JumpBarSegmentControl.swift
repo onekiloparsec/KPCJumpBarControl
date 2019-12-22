@@ -44,7 +44,7 @@ open class JumpBarSegmentControl : NSControl {
         frame.size.width = width
         self.frame = frame
         
-        self.setNeedsDisplay()
+        self.setNeedsDisplay(self.frame)
     }
     
     fileprivate func attributes() -> [NSAttributedString.Key: NSObject] {
@@ -91,7 +91,7 @@ open class JumpBarSegmentControl : NSControl {
     
     func makeKey(_ flag: Bool) {
         self.isKey = flag
-        self.setNeedsDisplay()
+        self.setNeedsDisplay(self.frame)
     }
         
     // MARK: Delegate

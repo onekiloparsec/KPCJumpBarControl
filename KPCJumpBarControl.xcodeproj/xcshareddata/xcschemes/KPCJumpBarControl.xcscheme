@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1000"
+   LastUpgradeVersion = "1130"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -28,7 +28,7 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F3CCB2B1CE08FF2005669BD"
+               BlueprintIdentifier = "9FC4B5662195B5C5000F2119"
                BuildableName = "KPCJumpBarControlTests.xctest"
                BlueprintName = "KPCJumpBarControlTests"
                ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
@@ -41,18 +41,6 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9F3CCB2B1CE08FF2005669BD"
-               BuildableName = "KPCJumpBarControlTests.xctest"
-               BlueprintName = "KPCJumpBarControlTests"
-               ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
@@ -62,8 +50,18 @@
             ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
+      <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9FC4B5662195B5C5000F2119"
+               BuildableName = "KPCJumpBarControlTests.xctest"
+               BlueprintName = "KPCJumpBarControlTests"
+               ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -84,8 +82,6 @@
             ReferencedContainer = "container:KPCJumpBarControl.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
